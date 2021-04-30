@@ -16,7 +16,7 @@ namespace :fablab do
       raise "FATAL ERROR: the provider '#{args.provider}' is already enabled" if AuthProvider.active.name == args.provider
 
       # disable previous provider
-      prev_prev = AuthProvider.find_by(status: 'previous')
+      prev_prev = AuthProvider.previous
       prev_prev&.update_attribute(:status, 'pending')
 
       AuthProvider.active.update_attribute(:status, 'previous')

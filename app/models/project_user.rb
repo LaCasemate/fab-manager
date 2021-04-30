@@ -29,7 +29,7 @@ class ProjectUser < ApplicationRecord
 
   def notify_project_author_when_collaborator_valid
     NotificationCenter.call type: 'notify_project_author_when_collaborator_valid',
-                            receiver: project.author,
+                            receiver: project.author.user,
                             attached_object: self
   end
 end

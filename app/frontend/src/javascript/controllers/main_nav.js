@@ -36,12 +36,6 @@ Application.Controllers.controller('MainNavController', ['$scope', function ($sc
       class: 'reserve-machine-link'
     },
     {
-      state: 'app.public.trainings_list',
-      linkText: 'app.public.common.trainings_registrations',
-      linkIcon: 'graduation-cap',
-      class: 'reserve-training-link'
-    },
-    {
       state: 'app.public.events_list',
       linkText: 'app.public.common.events_registrations',
       linkIcon: 'tags',
@@ -67,6 +61,15 @@ Application.Controllers.controller('MainNavController', ['$scope', function ($sc
     });
   }
 
+  if ($scope.$root.modules.trainings) {
+    $scope.navLinks.splice(4, 0, {
+      state: 'app.public.trainings_list',
+      linkText: 'app.public.common.trainings_registrations',
+      linkIcon: 'graduation-cap',
+      class: 'reserve-training-link'
+    });
+  }
+
   if ($scope.$root.modules.spaces) {
     $scope.navLinks.splice(4, 0, {
       state: 'app.public.spaces_list',
@@ -88,12 +91,6 @@ Application.Controllers.controller('MainNavController', ['$scope', function ($sc
       state: 'app.public.machines_list',
       linkText: 'app.public.common.manage_the_machines',
       linkIcon: 'cogs',
-      authorizedRoles: ['admin', 'manager']
-    },
-    {
-      state: 'app.admin.trainings',
-      linkText: 'app.public.common.trainings_monitoring',
-      linkIcon: 'graduation-cap',
       authorizedRoles: ['admin', 'manager']
     },
     {
@@ -146,6 +143,15 @@ Application.Controllers.controller('MainNavController', ['$scope', function ($sc
   ].concat(Fablab.adminNavLinks);
 
   $scope.adminNavLinks = adminNavLinks;
+
+  if ($scope.$root.modules.trainings) {
+    $scope.adminNavLinks.splice(3, 0, {
+      state: 'app.admin.trainings',
+      linkText: 'app.public.common.trainings_monitoring',
+      linkIcon: 'graduation-cap',
+      authorizedRoles: ['admin', 'manager']
+    });
+  }
 
   if ($scope.$root.modules.spaces) {
     $scope.adminNavLinks.splice(3, 0, {

@@ -19,6 +19,7 @@ zu:
         my_trainings: "crwdns8825:0crwdne8825:0"
         my_events: "crwdns8827:0crwdne8827:0"
         my_invoices: "crwdns8829:0crwdne8829:0"
+        my_payment_schedules: "crwdns21050:0crwdne21050:0"
         my_wallet: "crwdns8831:0crwdne8831:0"
         #contextual help
         help: "crwdns19580:0crwdne19580:0"
@@ -83,6 +84,8 @@ zu:
         birth_date_is_required: "crwdns8937:0crwdne8937:0"
         phone_number: "crwdns8939:0crwdne8939:0"
         phone_number_is_required: "crwdns8941:0crwdne8941:0"
+        address: "crwdns21452:0crwdne21452:0"
+        address_is_required: "crwdns21454:0crwdne21454:0"
         i_authorize_Fablab_users_registered_on_the_site_to_contact_me: "crwdns8943:0crwdne8943:0"
         i_accept_to_receive_information_from_the_fablab: "crwdns8945:0crwdne8945:0"
         i_ve_read_and_i_accept_: "crwdns8947:0crwdne8947:0"
@@ -241,6 +244,7 @@ zu:
         more_information: "crwdns9177:0crwdne9177:0"
         your_subscription_expires_on_the_DATE: "crwdns9179:0{DATE}crwdne9179:0"
         no_plans: "crwdns20912:0crwdne20912:0"
+        AMOUNT_per_month: "crwdns21052:0{AMOUNT}crwdne21052:0"
         my_group: "crwdns9181:0crwdne9181:0"
         his_group: "crwdns9183:0GENDER={GENDER}crwdne9183:0"
         he_wants_to_change_group: "crwdns20396:0ROLE={ROLE}crwdne20396:0"
@@ -248,8 +252,6 @@ zu:
         summary: "crwdns9189:0crwdne9189:0"
         your_subscription_has_expired_on_the_DATE: "crwdns9191:0{DATE}crwdne9191:0"
         subscription_price: "crwdns9193:0crwdne9193:0"
-        you_ve_just_selected_a_subscription_html: "crwdns9195:0crwdne9195:0"
-        confirm_and_pay: "crwdns20280:0crwdne20280:0"
         you_ve_just_payed_the_subscription_html: "crwdns9199:0crwdne9199:0"
         thank_you_your_subscription_is_successful: "crwdns9201:0crwdne9201:0"
         your_invoice_will_be_available_soon_from_your_dashboard: "crwdns9203:0crwdne9203:0"
@@ -257,11 +259,6 @@ zu:
         the_user_s_group_was_successfully_changed: "crwdns9207:0crwdne9207:0"
         an_error_prevented_your_group_from_being_changed: "crwdns9209:0crwdne9209:0"
         an_error_prevented_to_change_the_user_s_group: "crwdns9211:0crwdne9211:0"
-        an_error_occured_during_the_payment_process_please_try_again_later: "crwdns9213:0crwdne9213:0"
-        subscription_confirmation: "crwdns9215:0crwdne9215:0"
-        here_is_the_NAME_subscription_summary: "crwdns9217:0{NAME}crwdne9217:0"
-        confirm_payment_of_html: "crwdns9219:0ROLE={ROLE}crwdnd9219:0AMOUNT={AMOUNT}crwdne9219:0" #(contexte : validate a payment of $20,00)
-        online_payment_disabled: "crwdns20248:0crwdne20248:0"
       #Fablab's events list
       events_list:
         the_fablab_s_events: "crwdns9223:0crwdne9223:0"
@@ -359,7 +356,7 @@ zu:
       tour:
         conclusion:
           title: "crwdns19646:0crwdne19646:0"
-          content: "crwdns20862:0crwdne20862:0"
+          content: "crwdns21054:0crwdne21054:0"
         welcome:
           welcome:
             title: "crwdns19650:0crwdne19650:0"

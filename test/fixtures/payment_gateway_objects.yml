@@ -1,0 +1,161 @@
+pgo_1:
+  item_type: 'InvoiceItem'
+  item_id: 1
+  gateway_object_type: 'Stripe::Subscription'
+  gateway_object_id: 'sub_8DGB4ErIc2asOv'
+
+pgo2:
+  item_type: 'Subscription'
+  item_id: 1
+  gateway_object_type: 'Stripe::Subscription'
+  gateway_object_id: 'sub_8DGB4ErIc2asOv'
+
+pgo3:
+  item_type: 'Invoice'
+  item_id: 1
+  gateway_object_type: 'Stripe::Invoice'
+  gateway_object_id: 'in_17wpf92sOmf47Nz9itj6vmJw'
+
+pgo4:
+  item_type: 'Plan'
+  item_id: 1
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyXhfyNiGkWR'
+
+pgo5:
+  item_type: 'Plan'
+  item_id: 2
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPykam7a4satn'
+
+pgo6:
+  item_type: 'Plan'
+  item_id: 3
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyM4N36h86G0'
+
+pgo7:
+  item_type: 'Plan'
+  item_id: 4
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZQAhb9nLu4jfN'
+
+pgo8:
+  item_type: 'Machine'
+  item_id: 1
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyHpMCl38iQl'
+
+pgo9:
+  item_type: 'Machine'
+  item_id: 2
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyPShaaRgSML'
+
+pgo10:
+  item_type: 'Machine'
+  item_id: 3
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyEjmdfMowhY'
+
+pgo11:
+  item_type: 'Machine'
+  item_id: 4
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPy85vZOQpAo5'
+
+pgo12:
+  item_type: 'Machine'
+  item_id: 5
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyBJEgbcpWMC'
+
+pgo13:
+  item_type: 'Machine'
+  item_id: 6
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyjCzvLmLWAz'
+
+pgo14:
+  item_type: 'Space'
+  item_id: 1
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyHjIb2owoB8'
+
+pgo15:
+  item_type: 'Training'
+  item_id: 1
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyXw6BDBBFOg'
+
+pgo16:
+  item_type: 'Training'
+  item_id: 2
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPytTl1wSB5jH'
+
+pgo17:
+  item_type: 'Training'
+  item_id: 3
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyAA1A4QfEyL'
+
+pgo18:
+  item_type: 'Training'
+  item_id: 4
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyU27NjDSmqB'
+
+pgo19:
+  item_type: 'Training'
+  item_id: 5
+  gateway_object_type: 'Stripe::Product'
+  gateway_object_id: 'prod_IZPyvdgQHMByB3'
+
+pgo20:
+  item_type: 'User'
+  item_id: 1
+  gateway_object_type: 'Stripe::Customer'
+  gateway_object_id: 'cus_8CyNk3UTi8lvCc'
+
+pgo21:
+  item_type: 'User'
+  item_id: 2
+  gateway_object_type: 'Stripe::Customer'
+  gateway_object_id: 'cus_8Di1wjdVktv5kt'
+
+pgo22:
+  item_type: 'User'
+  item_id: 3
+  gateway_object_type: 'Stripe::Customer'
+  gateway_object_id: 'cus_8CzHcwBJtlA3IL'
+
+pgo23:
+  item_type: 'User'
+  item_id: 4
+  gateway_object_type: 'Stripe::Customer'
+  gateway_object_id: 'cus_8CzKe50I0J1gaI'
+
+pgo24:
+  item_type: 'User'
+  item_id: 5
+  gateway_object_type: 'Stripe::Customer'
+  gateway_object_id: 'cus_8CzNtM08NVlSGN'
+
+pgo25:
+  item_type: 'User'
+  item_id: 6
+  gateway_object_type: 'Stripe::Customer'
+  gateway_object_id: 'cus_8CzQK5uXPeyh4K'
+
+pgo26:
+  item_type: 'User'
+  item_id: 7
+  gateway_object_type: 'Stripe::Customer'
+  gateway_object_id: 'cus_8E2ys9zDZgetWX'
+
+pgo27:
+  item_type: 'User'
+  item_id: 8
+  gateway_object_type: 'Stripe::Customer'
+  gateway_object_id: 'cus_IhIynmoJbzLpwX'

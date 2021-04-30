@@ -27,8 +27,8 @@ class API::PlansController < API::ApiController
     partner = params[:plan][:partner_id].empty? ? nil : User.find(params[:plan][:partner_id])
 
     res = PlansService.create(type, partner, plan_params)
-    if res[:errors]
-      render json: res[:errors], status: :unprocessable_entity
+    if res.errors
+      render json: res.errors, status: :unprocessable_entity
     else
       render json: res, status: :created
     end
@@ -68,7 +68,7 @@ class API::PlansController < API::ApiController
 
       @parameters = @parameters.require(:plan)
                                .permit(:base_name, :type, :group_id, :amount, :interval, :interval_count, :is_rolling,
-                                       :training_credit_nb, :ui_weight, :disabled, :monthly_payment,
+                                       :training_credit_nb, :ui_weight, :disabled, :monthly_payment, :description,
                                        plan_file_attributes: %i[id attachment _destroy],
                                        prices_attributes: %i[id amount])
     end

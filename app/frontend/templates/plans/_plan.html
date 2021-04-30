@@ -1,32 +1,24 @@
-<div class="row m-t m-b padder" ng-repeat="plansGroup in plansClassifiedByGroup" ng-if="ctrl.member.group_id == plansGroup.id || !ctrl.member" ng-show="plansAreShown">
+<div class="row m-t m-b padder  list-of-plans" ng-repeat="plansGroup in plansClassifiedByGroup" ng-if="ctrl.member.group_id == plansGroup.id || !ctrl.member" ng-show="plansAreShown">
   <div class="col-md-12 text-center">
-    <h2 class="text-u-c">{{ plansGroup.name }}</h2>
+    <h2 class="text-u-c  group-title">{{ plansGroup.name }}</h2>
   </div>
 
   <div class="row row-centered padder">
-    <div class="col-xs-12 col-md-12 col-lg-10 col-centered no-gutter">
 
+    <div class="plans-per-group">
 
-      <div ng-repeat="(key, plan) in plansGroup.plans.filter(filterDisabledPlans) | orderBy:'interval'"
-           ng-class-even="'row'">
-        <div class="pricing-panel col-xs-12 col-md-6 col-lg-6 text-center"
-             ng-class="{'col-md-12 col-lg-12':(plansGroup.plans.filter(filterDisabledPlans).length % 2 == 1 && key == plansGroup.plans.filter(filterDisabledPlans).length-1)}">
-          <!-- ng-class directive center the last item if the list length is odd -->
-
-          <plan-card plan="plan"
-                     user-id="ctrl.member.id"
-                     subscribed-plan-id="ctrl.member.subscribed_plan.id"
-                     operator="currentUser"
-                     on-select-plan="selectPlan"
-                     is-selected="isSelected(plan)">
-          </plan-card>
-
-        </div>
-      </div>
-
-      <a class="m-t-lg btn btn-small btn-default pull-right" href="#" ng-click="doNotSubscribePlan($event)">{{ 'app.shared.plan_subscribe.do_not_subscribe' | translate }}  <i class="fa fa-long-arrow-right"></i></a>
+      <plan-card ng-repeat="(key, plan) in plansGroup.plans.filter(filterDisabledPlans) | orderBy:'-ui_weight'"
+                 plan="plan"
+                 user-id="ctrl.member.id"
+                 subscribed-plan-id="ctrl.member.subscribed_plan.id"
+                 operator="currentUser"
+                 on-select-plan="selectPlan"
+                 is-selected="isSelected(plan)">
+      </plan-card>
 
     </div>
+
+    <a class="m-t-lg btn btn-small btn-default pull-right" href="#" ng-click="doNotSubscribePlan($event)">{{ 'app.shared.plan_subscribe.do_not_subscribe' | translate }}  <i class="fa fa-long-arrow-right"></i></a>
 
     <div class="row row-centered m-t-lg">
       <div class="col-xs-12 col-md-12 col-lg-10 col-centered no-gutter">

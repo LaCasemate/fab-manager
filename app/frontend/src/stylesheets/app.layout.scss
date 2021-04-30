@@ -686,3 +686,18 @@ body.container {
   text-align: center;
   vertical-align: middle;
 }
+
+.plan-description-input .medium-editor-input div[medium-editor] {
+  max-height: 5.2em;
+  overflow: hidden;
+
+  & p:nth-child(2n+3), p:nth-child(2n+4) {
+    display: none;
+  }
+}
+
+.close-modal-button {
+  position: absolute;
+  right: 13px;
+  cursor: pointer;
+}

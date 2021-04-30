@@ -5,8 +5,8 @@ class Coupon < ApplicationRecord
   has_many :invoices
   has_many :payment_schedule
 
-  after_save :create_stripe_coupon, on: [:create]
-  after_commit :delete_stripe_coupon, on: [:destroy]
+  after_create :create_gateway_coupon
+  after_commit :delete_gateway_coupon, on: [:destroy]
 
   validates :name, presence: true
   validates :code, presence: true
@@ -97,12 +97,12 @@ class Coupon < ApplicationRecord
 
   private
 
-  def create_stripe_coupon
-    StripeService.create_stripe_coupon(id)
+  def create_gateway_coupon
+    PaymentGatewayService.create_coupon(id)
   end
 
-  def delete_stripe_coupon
-    StripeWorker.perform_async(:delete_stripe_coupon, code)
+  def delete_gateway_coupon
+    PaymentGatewayService.delete_coupon(id)
   end
 
 end

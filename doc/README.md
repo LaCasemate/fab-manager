@@ -2,7 +2,7 @@
 
 ### User's manual
 The following guide describes what you can do and how to use Fab-manager.
- - [Français](fr/guide_utilisation_fab_manager_v4.5.pdf)
+ - [Français](fr/guide_utilisation_fab_manager_v4.7.pdf)
 
 ### General documentation
 Translators, contributors, developers and system administrators should start by reading this document.

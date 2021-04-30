@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'checksum'
+require 'integrity/checksum'
 require 'version'
 require 'zip'
 
@@ -86,6 +86,6 @@ class AccountingPeriod < ApplicationRecord
     columns = AccountingPeriod.columns.map(&:name)
                               .delete_if { |c| %w[id footprint created_at updated_at].include? c }
 
-    Checksum.text("#{columns.map { |c| self[c] }.join}#{previous_period ? previous_period.footprint : ''}")
+    Integrity::Checksum.text("#{columns.map { |c| self[c] }.join}#{previous_period ? previous_period.footprint : ''}")
   end
 end

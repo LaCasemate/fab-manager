@@ -171,12 +171,20 @@ Rails.application.routes.draw do
     # Fab-manager's version
     post 'version' => 'version#show'
 
-    # payments handling
-    post 'payments/confirm_payment' => 'payments/confirm_payment'
-    get 'payments/online_payment_status' => 'payments/online_payment_status'
-    get 'payments/setup_intent/:user_id' => 'payments#setup_intent'
-    post 'payments/confirm_payment_schedule' => 'payments#confirm_payment_schedule'
-    post 'payments/update_card' => 'payments#update_card'
+    # card payments handling
+    ## Stripe gateway
+    post 'stripe/confirm_payment' => 'stripe/confirm_payment'
+    get 'stripe/online_payment_status' => 'stripe/online_payment_status'
+    get 'stripe/setup_intent/:user_id' => 'stripe#setup_intent'
+    post 'stripe/confirm_payment_schedule' => 'stripe#confirm_payment_schedule'
+    post 'stripe/update_card' => 'stripe#update_card'
+
+    ## PayZen gateway
+    post 'payzen/sdk_test' => 'payzen#sdk_test'
+    post 'payzen/create_payment' => 'payzen#create_payment'
+    post 'payzen/confirm_payment' => 'payzen#confirm_payment'
+    post 'payzen/check_hash' => 'payzen#check_hash'
+    post 'payzen/create_token' => 'payzen#create_token'
 
     # FabAnalytics
     get 'analytics/data' => 'analytics#data'

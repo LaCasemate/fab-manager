@@ -1,4 +1,4 @@
-import apiClient from './api-client';
+import apiClient from './clients/api-client';
 import { AxiosResponse } from 'axios';
 import { CartItems } from '../models/payment';
 import { ComputePriceResult } from '../models/price';

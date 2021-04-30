@@ -19,6 +19,7 @@ es:
         my_trainings: "Mis cursos"
         my_events: "Mis eventos"
         my_invoices: "Mis facturas"
+        my_payment_schedules: "My payment schedules"
         my_wallet: "Mi cartera"
         #contextual help
         help: "Help"
@@ -83,6 +84,8 @@ es:
         birth_date_is_required: "La fecha de nacimiento es obligatoria."
         phone_number: "Número de telefono"
         phone_number_is_required: "El número de telefono es obligatorio."
+        address: "Address"
+        address_is_required: "Address is required"
         i_authorize_Fablab_users_registered_on_the_site_to_contact_me: "Autorizo a los usuarios registrados en este FabLab a contactarme"
         i_accept_to_receive_information_from_the_fablab: "Acepto recibir información del FabLab"
         i_ve_read_and_i_accept_: "He leido y acepto"
@@ -241,6 +244,7 @@ es:
         more_information: "Más información"
         your_subscription_expires_on_the_DATE: "Su suscripción termina {DATE}"
         no_plans: "No plans are available for your group"
+        AMOUNT_per_month: "{AMOUNT} / month"
         my_group: "My grupo"
         his_group: "{GENDER, select, male{His} female{Her} other{Its}} group"
         he_wants_to_change_group: "{ROLE, select, member{Quiero} other{El usuario quiere}} cambiar el grupo"
@@ -248,8 +252,6 @@ es:
         summary: "Summary"
         your_subscription_has_expired_on_the_DATE: "Sus suscripcion expiró el {DATE}"
         subscription_price: "Subscription price"
-        you_ve_just_selected_a_subscription_html: "You've just selected a <strong>subscription</strong>:"
-        confirm_and_pay: "Confirm and pay"
         you_ve_just_payed_the_subscription_html: "You've just paid the <strong>subscription</strong>:"
         thank_you_your_subscription_is_successful: "Gracias. Su suscripción ha tenido éxito"
         your_invoice_will_be_available_soon_from_your_dashboard: "Your invoice will be available soon from your dashboard"
@@ -257,11 +259,6 @@ es:
         the_user_s_group_was_successfully_changed: "Los usuarios del grupo han cambiado correctamente."
         an_error_prevented_your_group_from_being_changed: "Un error impidió que su grupo fuese cambiado."
         an_error_prevented_to_change_the_user_s_group: "Un error impidió cambiar los componentes del grupo."
-        an_error_occured_during_the_payment_process_please_try_again_later: "Ha ocurrido un error mientras se procesaba el pago. Intentelo en unos minutos."
-        subscription_confirmation: "Confirmar suscripción"
-        here_is_the_NAME_subscription_summary: "Resumen de la suscrpición de {NAME}:"
-        confirm_payment_of_html: "{ROLE, select, admin{Cash} other{Pay}}: {AMOUNT}" #(contexte : validate a payment of $20,00)
-        online_payment_disabled: "Payment by credit card is not available. Please contact the FabLab's reception directly."
       #Fablab's events list
       events_list:
         the_fablab_s_events: "Los eventos del FabLab"
@@ -359,7 +356,7 @@ es:
       tour:
         conclusion:
           title: "Thank you for your attention"
-          content: "<p>If you want to restart this contextual help, press <strong>F1</strong> at any time or click on « ? Help » from the user's menu.</p><p>If you need additional help, you can <a href='https://github.com/sleede/fab-manager/raw/master/doc/fr/guide_utilisation_fab_manager_v4.5.pdf' target='_blank'>check the user guide</a> (only in French for now).</p><p>The Fab-manager's team also provides personalized support (help with getting started, help with installation, customization, etc.), <a href='mailto:contact@fab-manager.com'>contact-us</a> for more info.</p>"
+          content: "<p>If you want to restart this contextual help, press <strong>F1</strong> at any time or click on « ? Help » from the user's menu.</p><p>If you need additional help, you can <a href='https://github.com/sleede/fab-manager/raw/master/doc/fr/guide_utilisation_fab_manager_v4.7.pdf' target='_blank'>check the user guide</a> (only in French for now).</p><p>The Fab-manager's team also provides personalized support (help with getting started, help with installation, customization, etc.), <a href='mailto:contact@fab-manager.com'>contact-us</a> for more info.</p>"
         welcome:
           welcome:
             title: "Welcome to Fab-manager"

@@ -203,5 +203,13 @@
 
 </div>
 
+  <div ng-if="onlinePayment.showModal">
+    <payment-modal is-open="onlinePayment.showModal"
+                   toggle-modal="toggleOnlinePaymentModal"
+                   after-success="afterOnlinePaymentSuccess"
+                   cart-items="onlinePayment.cartItems"
+                   current-user="currentUser"
+                   customer="ctrl.member"/>
+  </div>
 
 </div>

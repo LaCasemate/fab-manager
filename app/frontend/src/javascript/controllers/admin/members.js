@@ -158,7 +158,7 @@ Application.Controllers.controller('AdminMembersController', ['$scope', '$sce', 
     };
 
     // admins list
-    $scope.admins = adminsPromise.admins.filter(function (m) { return m.id !== Fablab.superadminId; });
+    $scope.admins = adminsPromise.admins.filter(function (m) { return m.id !== Fablab.adminSysId; });
 
     // Admins ordering/sorting. Default: not sorted
     $scope.orderAdmin = null;
@@ -650,8 +650,8 @@ Application.Controllers.controller('AdminMembersController', ['$scope', '$sce', 
 /**
  * Controller used in the member edition page
  */
-Application.Controllers.controller('EditMemberController', ['$scope', '$state', '$stateParams', 'Member', 'Training', 'dialogs', 'growl', 'Group', 'Subscription', 'CSRF', 'memberPromise', 'tagsPromise', '$uibModal', 'Plan', '$filter', '_t', 'walletPromise', 'transactionsPromise', 'activeProviderPromise', 'Wallet', 'phoneRequiredPromise',
-  function ($scope, $state, $stateParams, Member, Training, dialogs, growl, Group, Subscription, CSRF, memberPromise, tagsPromise, $uibModal, Plan, $filter, _t, walletPromise, transactionsPromise, activeProviderPromise, Wallet, phoneRequiredPromise) {
+Application.Controllers.controller('EditMemberController', ['$scope', '$state', '$stateParams', 'Member', 'Training', 'dialogs', 'growl', 'Group', 'Subscription', 'CSRF', 'memberPromise', 'tagsPromise', '$uibModal', 'Plan', '$filter', '_t', 'walletPromise', 'transactionsPromise', 'activeProviderPromise', 'Wallet', 'settingsPromise',
+  function ($scope, $state, $stateParams, Member, Training, dialogs, growl, Group, Subscription, CSRF, memberPromise, tagsPromise, $uibModal, Plan, $filter, _t, walletPromise, transactionsPromise, activeProviderPromise, Wallet, settingsPromise) {
   /* PUBLIC SCOPE */
 
     // API URL where the form will be posted
@@ -670,7 +670,10 @@ Application.Controllers.controller('EditMemberController', ['$scope', '$state', 
     $scope.password = { change: false };
 
     // is the phone number required in _member_form?
-    $scope.phoneRequired = (phoneRequiredPromise.setting.value === 'true');
+    $scope.phoneRequired = (settingsPromise.phone_required === 'true');
+
+    // is the address required in _member_form?
+    $scope.addressRequired = (settingsPromise.address_required === 'true');
 
     // the user subscription
     if (($scope.user.subscribed_plan != null) && ($scope.user.subscription != null)) {
@@ -990,8 +993,8 @@ Application.Controllers.controller('EditMemberController', ['$scope', '$state', 
 /**
  * Controller used in the member's creation page (admin view)
  */
-Application.Controllers.controller('NewMemberController', ['$scope', '$state', '$stateParams', 'Member', 'Training', 'Group', 'CSRF', 'phoneRequiredPromise',
-  function ($scope, $state, $stateParams, Member, Training, Group, CSRF, phoneRequiredPromise) {
+Application.Controllers.controller('NewMemberController', ['$scope', '$state', '$stateParams', 'Member', 'Training', 'Group', 'CSRF', 'settingsPromise',
+  function ($scope, $state, $stateParams, Member, Training, Group, CSRF, settingsPromise) {
     CSRF.setMetaTags();
 
     /* PUBLIC SCOPE */
@@ -1006,7 +1009,10 @@ Application.Controllers.controller('NewMemberController', ['$scope', '$state', '
     $scope.password = { change: false };
 
     // is the phone number required in _member_form?
-    $scope.phoneRequired = (phoneRequiredPromise.setting.value === 'true');
+    $scope.phoneRequired = (settingsPromise.phone_required === 'true');
+
+    // is the address required to sign-up?
+    $scope.addressRequired = (settingsPromise.address_required === 'true');
 
     // Default member's profile parameters
     $scope.user = {
@@ -1109,8 +1115,8 @@ Application.Controllers.controller('ImportMembersResultController', ['$scope', '
 /**
  * Controller used in the admin creation page (admin view)
  */
-Application.Controllers.controller('NewAdminController', ['$state', '$scope', 'Admin', 'growl', '_t', 'phoneRequiredPromise',
-  function ($state, $scope, Admin, growl, _t, phoneRequiredPromise) {
+Application.Controllers.controller('NewAdminController', ['$state', '$scope', 'Admin', 'growl', '_t', 'settingsPromise',
+  function ($state, $scope, Admin, growl, _t, settingsPromise) {
   // default admin profile
     let getGender;
     $scope.admin = {
@@ -1131,7 +1137,10 @@ Application.Controllers.controller('NewAdminController', ['$state', '$scope', 'A
     };
 
     // is the phone number required in _admin_form?
-    $scope.phoneRequired = (phoneRequiredPromise.setting.value === 'true');
+    $scope.phoneRequired = (settingsPromise.phone_required === 'true');
+
+    // is the address required in _admin_form?
+    $scope.addressRequired = (settingsPromise.address_required === 'true');
 
     /**
    * Shows the birthday datepicker

@@ -10,10 +10,9 @@ class Subscriptions::RenewAsUserTest < ActionDispatch::IntegrationTest
 
   test 'user successfully renew a subscription after it has ended' do
     plan = Plan.find_by(group_id: @user.group.id, type: 'Plan', base_name: 'Mensuel')
-    stripe_subscription = nil
 
     VCR.use_cassette('subscriptions_user_renew_success', erb: true) do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
@@ -77,7 +76,7 @@ class Subscriptions::RenewAsUserTest < ActionDispatch::IntegrationTest
     previous_expiration = @user.subscription.expired_at.to_i
 
     VCR.use_cassette('subscriptions_user_renew_failed') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method(error: :card_declined),
              cart_items: {

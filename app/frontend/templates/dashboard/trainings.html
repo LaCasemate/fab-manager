@@ -7,11 +7,33 @@
 
   </section>
 
+  <div class="row no-gutter">
+    <div class="col-md-10">
+      <div class="widget panel b-a m m-t-lg">
+        <div class="panel-heading b-b">
+          <h4 class="text-u-c"><i class="fa fa-tag m-r-xs"></i>{{ 'app.logged.dashboard.trainings.your_training_credits' |  translate }}</h4>
+        </div>
+        <div class="widget-content bg-light wrapper r-b">
+          <span ng-show="!user.subscribed_plan" translate>{{ 'app.logged.dashboard.trainings.subscribe_for_credits' }}</span>
+          <span ng-show="user.subscribed_plan" translate>{{ 'app.logged.dashboard.trainings.register_for_free' }}</span>
+          <ul ng-if="user.subscribed_plan" class="list-unstyled">
+            <li ng-repeat="c in user.subscribed_plan.training_credits" ng-show="!hasUsedTrainingCredit(user.training_credits, c.training_id)">
+              {{getTrainingName(c.training_id)}}
+              <button type="button" class="btn btn-default m-l btn-sm" ui-sref="app.logged.trainings_reserve({id: c.training_id})" translate>
+                {{ 'app.logged.dashboard.trainings.book_here' }}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="row no-gutter">
 
     <div class="col-md-4">
-      <div class="widget panel b-a m m-t-lg">
+      <div class="widget panel b-a m">
         <div class="panel-heading b-b">
           <h4 class="text-u-c"><i class="fa fa-tag m-r-xs"></i> {{ 'app.logged.dashboard.trainings.your_next_trainings' | translate }}</h4>
         </div>

@@ -267,106 +267,53 @@
   }
 }
 
-.pricing-panel {
-  border: 1px solid $border-color;
+.list-of-plans {
+  .active-group ~ .active-group .group-title {
+    /* select all active groups but the first (the first have no margin at the top) */
+    margin: 3em auto 1em;
+  }
+  .group-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 2em;
+    width: 83.33%;
+    box-sizing: border-box;
+    margin: 0 auto 1em;
+    $border: 5px;
+    background: #FFF;
+    background-clip: padding-box;
+    border: solid $border transparent;
 
-  &:first-child {
-    border-right: none;
-
-    @include border-radius(3px 0 0 3px);
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      z-index: -1;
+      margin: -$border;
+      border-radius: inherit;
+    }
   }
 
-  &:last-child {
-    @include border-radius(0 3px 3px 0);
-  }
+  .plans-per-group {
+    & {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      border: 1px solid transparent;
+    }
 
-  .title {
-    margin: 10px 0;
-    font-size: rem-calc(16);
-    text-transform: uppercase;
-    color: black;
-  }
+    & > * {
+      width: 50%;
+    }
 
-  .content {
-    padding: 15px 0;
-    background-color: $bg-gray;
-
-    .wrap, .wrap-monthly {
-      width: 130px;
-      height: 130px;
-      display: inline-block;
-      background: white;
-
-      @include border-radius(50%, 50%, 50%, 50%);
-
-      border: 3px solid;
-
-      .price {
-        width: 114px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        @include border-radius(50%, 50%, 50%, 50%);
+    @media screen and (max-width: 992px) {
+      & > * {
+        width: 100%;
       }
     }
-
-    .wrap-monthly {
-      & > .price {
-        & > .amount {
-          padding-top: 4px;
-          line-height: 1.2em;
-        }
-
-        & > .period {
-          padding-top: 4px;
-        }
-      }
-    }
-    .price {
-      position: relative;
-      top: 5px;
-      left: 5px;
-      height: 114px;
-      background-color: black;
-
-      .amount {
-        padding-left: 4px;
-        padding-right: 4px;
-        font-weight: bold;
-        font-size: rem-calc(17);
-        color: white;
-      }
-
-      .period {
-        position: relative;
-        top: -6px;
-        font-size: rem-calc(14);
-        color: white;
-      }
-    }
-  }
-
-  .cta-button {
-    margin: 20px 0;
-
-    .subscribe-button {
-      @extend .btn;
-      @extend .rounded;
-
-      outline: 0;
-      font-weight: 600;
-      font-size: rem-calc(16);
-      background-color: white;
-      padding-left: 30px;
-      padding-right: 30px;
-    }
-    button.subscribe-button:focus, button.subscribe-button:hover {
-      outline: 0;
-    }
-  }
-  .info-link {
-    margin-top: 1em;
   }
 }
 
@@ -798,5 +745,17 @@ input[type=date].form-control {
   .schedule-switch {
     vertical-align: middle;
     margin-left: 1em;
+  }
+}
+
+.medium-editor-input {
+  display: table-cell;
+  border: 1px solid #c0c0c0;
+  border-radius: 0.2em;
+  padding: 0.5em;
+  width: 100%;
+
+  p {
+    margin-bottom: 0;
   }
 }

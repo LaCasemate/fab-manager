@@ -49,6 +49,7 @@ class API::AuthProvidersController < API::ApiController
   def active
     authorize AuthProvider
     @provider = AuthProvider.active
+    @previous = AuthProvider.previous
   end
 
 

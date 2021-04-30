@@ -62,7 +62,7 @@
       <a ng-href="{{shareOnTwitter()}}" target="_blank" class="btn btn-twitter btn-lg m-t"><i class="fa fa-twitter m-r"></i> {{ 'app.public.projects_show.share_on_twitter' | translate }}</a>
     </div>
 
-    <div class="wrapper-lg">
+    <div class="wrapper-lg" ng-if="disqusShortname">
       <dir-disqus disqus-shortname="{{ disqusShortname }}" disqus-identifier="project_{{ project.id }}" disqus-url="{{ projectUrl }}" ready-to-bind="{{ project }}">
       </dir-disqus>
     </div>

@@ -8,7 +8,7 @@
            class="form-control"
            ng-maxlength="24"
            ng-model="plan.base_name"
-           required="required"/>
+           required="true"/>
     <span class="help-block error" ng-show="planForm['plan[base_name]'].$dirty && planForm['plan[base_name]'].$error.required" translate>{{ 'app.shared.plan.name_is_required' }}</span>
     <span class="help-block error" ng-show="planForm['plan[base_name]'].$dirty && planForm['plan[base_name]'].$error.maxlength" translate>{{ 'app.shared.plan.name_length_must_be_less_than_24_characters' }}</span>
 </div>
@@ -18,7 +18,7 @@
             name="plan[type]"
             class="form-control"
             ng-model="plan.type"
-            required="required"
+            required="true"
             ng-disabled="method == 'PATCH'">
         <option value="Plan" ng-selected="plan.type == 'Plan'" translate>{{ 'app.shared.plan.standard' }}</option>
         <option value="PartnerPlan" ng-selected="plan.type == 'PartnerPlan'" translate>{{ 'app.shared.plan.partner' }}</option>
@@ -31,7 +31,7 @@
             name="plan[group_id]"
             class="form-control"
             ng-model="plan.group_id"
-            required="required"
+            required="true"
             ng-if="method !== 'PATCH'"
             ng-options="item.id as translateLabel(item, 'name') group by translateLabel(item, 'category') for item in groups track by item.id">
     </select>
@@ -55,7 +55,7 @@
             class="form-control"
             ng-model="plan.interval"
             ng-disabled="method == 'PATCH'"
-            required="required">
+            required="true">
         <option value="week" ng-selected="plan.interval == 'week'" translate>{{ 'app.shared.plan.week' }}</option>
         <option value="month" ng-selected="plan.interval == 'month'" translate>{{ 'app.shared.plan.month' }}</option>
         <option value="year" ng-selected="plan.interval == 'year'" translate>{{ 'app.shared.plan.year' }}</option>
@@ -71,7 +71,7 @@
          type="number"
          ng-model="plan.interval_count"
          ng-disabled="method == 'PATCH'"
-         required="required"
+         required="true"
          min="1"/>
   <span class="help-block" ng-show="planForm['plan[interval_count]'].$dirty && planForm['plan[interval_count]'].$error.required" translate>{{ 'app.shared.plan.number_of_periods_is_required' }}</span>
 </div>
@@ -125,6 +125,21 @@
   <span ng-if="method == 'PATCH'">{{ (plan.monthly_payment ? 'app.shared.buttons.yes' : 'app.shared.buttons.no') | translate }}</span>
   <input type="hidden" id="plan_monthly_input" name="plan[monthly_payment]" value="{{plan.monthly_payment}}" />
   <span class="help-block" translate>{{ 'app.shared.plan.monthly_payment_info' }}</span>
+</div>
+
+<div class="input-group m-t-md plan-description-input">
+  <label for="plan[description]" class="control-label m-r-md" translate>{{ 'app.shared.plan.description' }}</label>
+  <div class="medium-editor-input">
+    <div ng-model="plan.description"
+         medium-editor
+         options='{
+           "placeholder": "{{ "app.shared.plan.type_a_short_description" | translate }}",
+           "buttons": ["bold", "italic", "anchor", "unorderedlist", "header2" ],
+           "targetBlank": true,
+         }'>
+    </div>
+  </div>
+  <input type="hidden" id="plan[description]" name="plan[description]" value="{{plan.description}}" />
 </div>
 
 <!-- PDF description attachement -->

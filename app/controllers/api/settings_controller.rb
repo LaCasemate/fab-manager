@@ -32,8 +32,11 @@ class API::SettingsController < API::ApiController
       db_setting = Setting.find_or_initialize_by(name: setting[:name])
       next unless SettingService.before_update(db_setting)
 
-      db_setting.save && db_setting.history_values.create(value: setting[:value], invoicing_profile: current_user.invoicing_profile)
-      SettingService.after_update(db_setting)
+      if db_setting.save
+        db_setting.history_values.create(value: setting[:value], invoicing_profile: current_user.invoicing_profile)
+        SettingService.after_update(db_setting)
+      end
+
       @settings.push db_setting
     end
   end

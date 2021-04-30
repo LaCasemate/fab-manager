@@ -16,6 +16,7 @@ class PaymentSchedule < PaymentDocument
   belongs_to :reservation, foreign_type: 'Reservation', foreign_key: 'scheduled_id'
 
   has_many :payment_schedule_items
+  has_many :payment_gateway_objects, as: :item
 
   before_create :add_environment
   after_create :update_reference, :chain_record
@@ -47,6 +48,14 @@ class PaymentSchedule < PaymentDocument
     payment_schedule_items.order(due_date: :asc)
   end
 
+  def gateway_payment_mean
+    payment_gateway_objects.map(&:gateway_object).find(&:payment_mean?)
+  end
+
+  def gateway_subscription
+    payment_gateway_objects.map(&:gateway_object).find { |item| !item.payment_mean? }
+  end
+
   def user
     invoicing_profile.user
   end
@@ -57,18 +66,14 @@ class PaymentSchedule < PaymentDocument
     File.binwrite(file, pdf)
   end
 
-  def check_footprint
-    payment_schedule_items.map(&:check_footprint).all? && footprint == compute_footprint
+  def footprint_children
+    payment_schedule_items
   end
 
-  def post_save(setup_intent_id)
-    return unless payment_method == 'stripe'
+  def post_save(gateway_method_id)
+    return unless payment_method == 'card'
 
-    StripeService.create_stripe_subscription(self, setup_intent_id)
-  end
-
-  def self.columns_out_of_footprint
-    %w[stp_subscription_id]
+    PaymentGatewayService.new.create_subscription(self, gateway_method_id)
   end
 
   private

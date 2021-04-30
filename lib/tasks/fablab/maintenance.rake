@@ -50,8 +50,8 @@ namespace :fablab do
 
     desc 'generate current code checksum'
     task checksum: :environment do
-      require 'checksum'
-      puts Checksum.code
+      require 'integrity/checksum'
+      puts Integrity::Checksum.code
     end
 
     desc 'delete users with accounts marked with is_active=false'
@@ -98,11 +98,11 @@ namespace :fablab do
 
     desc 'save the footprint original data'
     task save_footprint_data: :environment do
-      [Invoice, InvoiceItem, HistoryValue].each do |klass|
+      [Invoice, InvoiceItem, HistoryValue, PaymentSchedule, PaymentScheduleItem].each do |klass|
         klass.all.each do |item|
           FootprintDebug.create!(
             footprint: item.footprint,
-            data: FootprintService.footprint_data(klass, item, klass == 'HistoryValue' ? 'created_at' : 'id'),
+            data: FootprintService.footprint_data(klass, item),
             klass: klass
           )
         end

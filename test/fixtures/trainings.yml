@@ -7,7 +7,6 @@ training_1:
   nb_total_places:
   slug: formation-imprimante-3d
   description:
-  stp_product_id: prod_IZPyXw6BDBBFOg
 
 training_2:
   id: 2
@@ -17,7 +16,6 @@ training_2:
   nb_total_places:
   slug: formation-laser-vinyle
   description:
-  stp_product_id: prod_IZPytTl1wSB5jH
 
 training_3:
   id: 3
@@ -27,7 +25,6 @@ training_3:
   nb_total_places:
   slug: formation-petite-fraiseuse-numerique
   description:
-  stp_product_id: prod_IZPyAA1A4QfEyL
 
 training_4:
   id: 4
@@ -37,7 +34,6 @@ training_4:
   nb_total_places:
   slug: formation-shopbot-grande-fraiseuse
   description:
-  stp_product_id: prod_IZPyU27NjDSmqB
 
 training_5:
   id: 5
@@ -47,4 +43,3 @@ training_5:
   nb_total_places:
   slug: formation-logiciel-2d
   description:
-  stp_product_id: prod_IZPyvdgQHMByB3

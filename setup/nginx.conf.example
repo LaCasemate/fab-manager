@@ -7,7 +7,7 @@ server {
   server_name MAIN_DOMAIN;
   root /usr/src/app/public;
 
-  location ^~ /assets/ {
+  location ^~ /packs/ {
     gzip_static on;
     expires max;
     add_header Cache-Control public;
@@ -43,7 +43,7 @@ server {
     root /usr/src/app/public/;
     rewrite ^(.*)$ /maintenance.html break;
   }
-  
+
   location /.well-known/acme-challenge {
     root /etc/letsencrypt/webrootauth;
     default_type "text/plain";

@@ -111,7 +111,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * @returns {float}
      */
     $scope.findTrainingsPricing = function (trainingsPricings, trainingId, groupId) {
-      for (let trainingsPricing of Array.from(trainingsPricings)) {
+      for (const trainingsPricing of Array.from(trainingsPricings)) {
         if ((trainingsPricing.training_id === trainingId) && (trainingsPricing.group_id === groupId)) {
           return trainingsPricing;
         }
@@ -138,7 +138,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * @returns {Object} Plan, inherits from $resource
      */
     $scope.getPlanFromId = function (id) {
-      for (let plan of Array.from($scope.plans)) {
+      for (const plan of Array.from($scope.plans)) {
         if (plan.id === parseInt(id)) {
           return plan;
         }
@@ -151,7 +151,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * @returns {Object} Group, inherits from $resource
      */
     $scope.getGroupFromId = function (groups, id) {
-      for (let group of Array.from(groups)) {
+      for (const group of Array.from(groups)) {
         if (group.id === parseInt(id)) {
           return group;
         }
@@ -313,7 +313,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * @param [id] {number} credit id for edition, create a new credit object if not provided
      */
     $scope.saveMachineCredit = function (data, id) {
-      for (let mc of Array.from($scope.machineCredits)) {
+      for (const mc of Array.from($scope.machineCredits)) {
         if ((mc.plan_id === data.plan_id) && (mc.creditable_id === data.creditable_id) && ((id === null) || (mc.id !== id))) {
           growl.error(_t('app.admin.pricing.error_a_credit_linking_this_machine_with_that_subscription_already_exists'));
           if (!id) {
@@ -383,7 +383,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * @param [id] {number} credit id for edition, create a new credit object if not provided
      */
     $scope.saveSpaceCredit = function (data, id) {
-      for (let sc of Array.from($scope.spaceCredits)) {
+      for (const sc of Array.from($scope.spaceCredits)) {
         if ((sc.plan_id === data.plan_id) && (sc.creditable_id === data.creditable_id) && ((id === null) || (sc.id !== id))) {
           growl.error(_t('app.admin.pricing.error_a_credit_linking_this_space_with_that_subscription_already_exists'));
           if (!id) {
@@ -459,7 +459,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * Retrieve a price from prices array by a machineId and a groupId
      */
     $scope.findPriceBy = function (prices, machineId, groupId) {
-      for (let price of Array.from(prices)) {
+      for (const price of Array.from(prices)) {
         if ((price.priceable_id === machineId) && (price.group_id === groupId)) {
           return price;
         }
@@ -603,7 +603,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
     /**
      * Load the next 10 coupons
      */
-    $scope.loadMore = function() {
+    $scope.loadMore = function () {
       $scope.couponsPage++;
       Coupon.query({ page: $scope.couponsPage, filter: $scope.filter.coupon }, function (data) {
         $scope.coupons = $scope.coupons.concat(data);
@@ -613,19 +613,19 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
     /**
      * Reset the list of coupons according to the newly selected filter
      */
-    $scope.updateCouponFilter = function() {
+    $scope.updateCouponFilter = function () {
       $scope.couponsPage = 1;
       Coupon.query({ page: $scope.couponsPage, filter: $scope.filter.coupon }, function (data) {
         $scope.coupons = data;
       });
-    }
+    };
 
     /**
      * Return the exemple price based on the configuration of the default slot duration.
      * @param type {string} 'hourly_rate' | *
      * @returns {number} price for "SLOT_DURATION" minutes.
      */
-    $scope.examplePrice = function(type) {
+    $scope.examplePrice = function (type) {
       const hourlyRate = 10;
 
       if (type === 'hourly_rate') {
@@ -634,7 +634,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
 
       const price = (hourlyRate / 60) * $scope.slotDuration;
       return $filter('currency')(price);
-    }
+    };
 
     /**
      * Setup the feature-tour for the admin/pricing page.
@@ -660,14 +660,16 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
         content: _t('app.admin.tour.pricing.new_plan.content'),
         placement: 'bottom'
       });
-      uitour.createStep({
-        selector: '.plans-pricing .trainings-tab',
-        stepId: 'trainings',
-        order: 2,
-        title: _t('app.admin.tour.pricing.trainings.title'),
-        content: _t('app.admin.tour.pricing.trainings.content'),
-        placement: 'bottom'
-      });
+      if ($scope.$root.modules.trainings) {
+        uitour.createStep({
+          selector: '.plans-pricing .trainings-tab',
+          stepId: 'trainings',
+          order: 2,
+          title: _t('app.admin.tour.pricing.trainings.title'),
+          content: _t('app.admin.tour.pricing.trainings.content'),
+          placement: 'bottom'
+        });
+      }
       uitour.createStep({
         selector: '.plans-pricing .machines-tab',
         stepId: 'machines',
@@ -733,7 +735,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
       if (settingsPromise.feature_tour_display !== 'manual' && $scope.currentUser.profile.tours.indexOf('pricing') < 0) {
         uitour.start();
       }
-    }
+    };
 
     /* PRIVATE SCOPE */
 
@@ -746,7 +748,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
       // adds empty array for plan which hasn't any credits yet
       return (function () {
         const result = [];
-        for (let plan of Array.from($scope.plans)) {
+        for (const plan of Array.from($scope.plans)) {
           if ($scope.trainingCreditsGroups[plan.id] == null) {
             result.push($scope.trainingCreditsGroups[plan.id] = []);
           } else {
@@ -763,7 +765,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * @param id {number}
      * @returns {number} item index in the provided array
      */
-    var findItemIdxById = function (items, id) {
+    const findItemIdxById = function (items, id) {
       return (items.map(function (item) { return item.id; })).indexOf(id);
     };
 
@@ -771,7 +773,7 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * Group the given credits array into a map associating the plan ID with its associated trainings/machines
      * @return {Object} the association map
      */
-    var groupCreditsByPlan = function (credits) {
+    const groupCreditsByPlan = function (credits) {
       const creditsMap = {};
       angular.forEach(credits, function (c) {
         if (!creditsMap[c.plan_id]) {
@@ -787,11 +789,11 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * @param trainingId {number|string} training ID
      * @param planId {number|string} plan ID
      */
-    var findTrainingCredit = function (trainingId, planId) {
+    const findTrainingCredit = function (trainingId, planId) {
       trainingId = parseInt(trainingId);
       planId = parseInt(planId);
 
-      for (let credit of Array.from($scope.trainingCredits)) {
+      for (const credit of Array.from($scope.trainingCredits)) {
         if ((credit.plan_id === planId) && (credit.creditable_id === trainingId)) {
           return credit;
         }
@@ -803,8 +805,8 @@ Application.Controllers.controller('EditPricingController', ['$scope', '$state',
      * @param id {number} training ID
      * @returns {Object} Training inherited from $resource
      */
-    var getTrainingFromId = function (id) {
-      for (let training of Array.from($scope.trainings)) {
+    const getTrainingFromId = function (id) {
+      for (const training of Array.from($scope.trainings)) {
         if (training.id === parseInt(id)) {
           return training;
         }

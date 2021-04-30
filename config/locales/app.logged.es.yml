@@ -109,6 +109,10 @@ es:
           your_previous_trainings: "Sus cursos anteriores"
           your_approved_trainings: "Sus cursos aprobados"
           no_trainings: "No trainings"
+          your_training_credits: "Your training credits"
+          subscribe_for_credits: "Subscribe to benefit from free trainings"
+          register_for_free: "Register for free to the following trainings:"
+          book_here: "Book here"
         #dashboard: my events
         events:
           your_next_events: "Sus próximos eventos"
@@ -125,6 +129,9 @@ es:
           download_the_invoice: "Download the invoice"
           download_the_credit_note: "Download the refund invoice"
           no_invoices_for_now: "No invoices for now."
+        payment_schedules:
+          no_payment_schedules: "No payment schedules to display"
+          load_more: "Load more"
       #public profil of a member
       members_show:
         members_list: "Lista de miembros"

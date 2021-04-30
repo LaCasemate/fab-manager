@@ -1,4 +1,4 @@
-import apiClient from './api-client';
+import apiClient from './clients/api-client';
 import { AxiosResponse } from 'axios';
 import { CustomAsset, CustomAssetName } from '../models/custom-asset';
 import wrapPromise, { IWrapPromise } from '../lib/wrap-promise';

@@ -1,0 +1,79 @@
+.payment-modal {
+  .fab-modal-content {
+    padding-bottom: 0;
+  }
+  .gateway-form {
+    background-color: #f4f3f3;
+    border: 1px solid #ddd;
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+
+    .payment-errors {
+      padding: 4px 0;
+      color: #9e2146;
+      overflow: auto;
+      margin-bottom: 1.2em;
+    }
+  }
+  .terms-of-sales {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 1.4rem;
+    font-weight: 600;
+    input {
+      display: inline;
+      margin-right: 0.5em;
+    }
+    label {
+      display: inline;
+    }
+  }
+  .stripe-modal-icons {
+    text-align: center;
+
+    .fa.fa-lock {
+      top: 7px;
+      color: #9edd78;
+    }
+
+    img {
+      margin-right: 10px;
+    }
+  }
+
+  .payment-schedule-info {
+    border: 1px solid #faebcc;
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #fcf8e3;
+    color: #8a6d3b;
+    margin-top: 1em;
+
+    p {
+      font-size: small;
+      margin-bottom: 0.5em;
+    }
+  }
+  .validate-btn {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 0 0 6px 6px;
+    border-top: 0;
+    padding: 16px;
+    color: #fff;
+    background-color: #1d98ec;
+    margin-bottom: 15px;
+
+    &[disabled] {
+      background-color: lighten(#1d98ec, 20%);
+    }
+  }
+
+  .payment-pending {
+    @extend .validate-btn;
+    @extend .validate-btn[disabled];
+    text-align: center;
+    padding: 4px;
+  }
+}

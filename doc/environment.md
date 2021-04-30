@@ -111,13 +111,14 @@ The check will run every weeks and if the threshold is exceeded, an alert will b
 
 Credentials for the first admin user created when seeding the project.
 By default, these variables are not present in the env file, because they are only used once, when running the database seed with the command `rails db:seed`.
-<a name="SUPERADMIN_EMAIL"></a>
+<a name="ADMINSYS_EMAIL"></a>
 
-    SUPERADMIN_EMAIL
+    ADMINSYS_EMAIL
 
 Optional email of the administrator account in charge of the system administration.
-If specified, it will be hidden from the administrators list and it will exclusively receive the notifications related to the system administration.
-If not specified, every admins will receive system administration notifications.
+If specified, he will be hidden from the administrators list, and he will exclusively receive the notifications related to the system administration.
+If not specified, every administrator will receive system administration notifications.
+Please note that setting this parameter does not automatically create the corresponding account in Fab-manager: you must specify here the email of an existing admin account. 
 <a name="FORCE_VERSION_CHECK"></a>
 
     FORCE_VERSION_CHECK

@@ -26,12 +26,16 @@ welcome_message()
 
 system_requirements()
 {
-  if [ "$(whoami)" = "root" ]; then
+  if is_root; then
     echo "It is not recommended to run this script as root. As a normal user, elevation will be prompted if needed."
     read -rp "Continue anyway? (Y/n) " confirm </dev/tty
     if [[ "$confirm" = "n" ]]; then exit 1; fi
   else
-    local _groups=("sudo" "docker")
+    if [ "$(has_sudo)" = 'no_sudo' ]; then
+      echo "You are not allowed to sudo. Please add $(whoami) to the sudoers before continuing."
+      exit 1
+    fi
+    local _groups=("docker")
     for _group in "${_groups[@]}"; do
       echo -e "detecting group $_group for current user..."
       if ! groups | grep "$_group"; then
@@ -53,6 +57,46 @@ system_requirements()
   printf "\e[92m[ ✔ ] All requirements successfully checked.\e[39m \n\n"
 }
 
+is_root()
+{
+  return $(id -u)
+}
+
+has_sudo()
+{
+  local prompt
+
+  prompt=$(sudo -nv 2>&1)
+  if [ $? -eq 0 ]; then
+    echo "has_sudo__pass_set"
+  elif echo $prompt | grep -q '^sudo:'; then
+    echo "has_sudo__needs_pass"
+  else
+    echo "no_sudo"
+  fi
+}
+
+elevate_cmd()
+{
+  local cmd=$@
+
+  HAS_SUDO=$(has_sudo)
+
+  case "$HAS_SUDO" in
+  has_sudo__pass_set)
+    sudo $cmd
+    ;;
+  has_sudo__needs_pass)
+    echo "Please supply sudo password for the following command: sudo $cmd"
+    sudo $cmd
+    ;;
+  *)
+    echo "Please supply root password for the following command: su -c \"$cmd\""
+    su -c "$cmd"
+    ;;
+  esac
+}
+
 read_email()
 {
   local email
@@ -66,17 +110,20 @@ read_email()
 
 config()
 {
+  SERVICE="fabmanager"
   echo 'We recommend nginx to serve the application over the network (internet). You can use your own solution or let this script install and configure nginx for Fab-manager.'
+  printf 'If you want to setup install Fab-manager behind a reverse proxy, you may not need to install the integrated nginx.\n'
   read -rp 'Do you want install nginx? (Y/n) ' NGINX </dev/tty
   if [ "$NGINX" != "n" ]; then
     # if the user doesn't want nginx, let him use its own solution for HTTPS
-    printf "\n\nWe recommend let's encrypt to secure the application with HTTPS. You can use your own certificate or let this script install and configure let's encrypt for Fab-manager.\n"
+    printf "\n\nWe highly recommend to secure the application with HTTPS. You can use your own certificate or let this script install and configure let's encrypt for Fab-manager."
+    printf "\nIf this server is publicly available on the internet, you can use Let's encrypt to automatically generate and renew a valid SSL certificate for free.\n"
     read -rp "Do you want install let's encrypt? (Y/n) " LETSENCRYPT </dev/tty
     if [ "$LETSENCRYPT" != "n" ]; then
       printf "\n\nLet's encrypt requires an email address to receive notifications about certificate expiration.\n"
       read_email
     fi
-    # if the user doesn't want nginx, let him configure his own solution
+    # if the user wants to install nginx, configure the domains
     printf "\n\nWhat's the domain name where the instance will be active (eg. fab-manager.com)?\n"
     read_domain
     MAIN_DOMAIN=("${DOMAINS[0]}")
@@ -110,8 +157,8 @@ prepare_files()
   read -rp "Continue? (Y/n) " confirm </dev/tty
   if [[ "$confirm" = "n" ]]; then exit 1; fi
 
-  sudo mkdir -p "$FABMANAGER_PATH/config"
-  sudo chown -R "$(whoami)" "$FABMANAGER_PATH"
+  elevate_cmd mkdir -p "$FABMANAGER_PATH/config"
+  elevate_cmd chown -R "$(whoami)" "$FABMANAGER_PATH"
 
   mkdir -p "$FABMANAGER_PATH/elasticsearch/config"
 
@@ -147,7 +194,7 @@ prepare_files()
 }
 
 yq() {
-  docker run --rm -i -v "${FABMANAGER_PATH}:/workdir" mikefarah/yq yq "$@"
+  docker run --rm -i -v "${FABMANAGER_PATH}:/workdir" mikefarah/yq:4 "$@"
 }
 
 prepare_nginx()
@@ -160,16 +207,29 @@ prepare_nginx()
   else
     # if nginx is not installed, remove its associated block from docker-compose.yml
     echo "Removing nginx..."
-    yq d -i docker-compose.yml services.nginx
-    read -rp "Do you want to map the Fab-manager's service to an external network? (Y/n) " confirm </dev/tty
+    yq -i eval 'del(.services.nginx)' docker-compose.yml
+    printf "The two following configurations are useful if you want to install Fab-manager behind a reverse proxy...\n"
+    read -rp "- Do you want to map the Fab-manager's service to an external network? (Y/n) " confirm </dev/tty
     if [ "$confirm" != "n" ]; then
       echo "Adding a network configuration to the docker-compose.yml file..."
-      yq w -i docker-compose.yml networks.web.external true
-      yq w -i docker-compose.yml networks.db ''
-      yq w -i docker-compose.yml services.fabmanager.networks[+] web
-      yq w -i docker-compose.yml services.fabmanager.networks[+] db
-      yq w -i docker-compose.yml services.postgres.networks[+] db
-      yq w -i docker-compose.yml services.redis.networks[+] db
+      yq -i eval '.networks.web.external = "true"' docker-compose.yml
+      yq -i eval '.networks.db = null' docker-compose.yml
+      yq -i eval '.services.fabmanager.networks += ["web"]' docker-compose.yml
+      yq -i eval '.services.fabmanager.networks += ["db"]' docker-compose.yml
+      yq -i eval '.services.postgres.networks += ["db"]' docker-compose.yml
+      yq -i eval '.services.redis.networks += ["db"]' docker-compose.yml
+    fi
+    read -rp "- Do you want to rename the Fab-manager's service? (Y/n) " confirm </dev/tty
+    if [ "$confirm" != "n" ]; then
+      current="$(yq eval '.services.*.image | select(. == "sleede/fab-manager*") | path | .[-2]' docker-compose.yml)"
+      printf "=======================\n- \e[1mCurrent value: %s\e[21m\n- New value? (leave empty to keep the current value)\n" "$current"
+      read -rp "  > " value </dev/tty
+      echo "======================="
+      if [ "$value" != "" ]; then
+        escaped=$(printf '%s\n' "$value" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^a-zA-Z0-9-]/_/g')
+        yq -i eval ".services.$escaped = .services.$current | del(.services.$current)" docker-compose.yml
+        SERVICE="$escaped"
+      fi
     fi
   fi
 }
@@ -189,9 +249,9 @@ prepare_letsencrypt()
     echo "Now downloading and configuring the certificate signing bot..."
     docker pull certbot/certbot:latest
     sed -i.bak "s:/apps/fabmanager:$FABMANAGER_PATH:g" "$FABMANAGER_PATH/letsencrypt/systemd/letsencrypt.service"
-    sudo cp "$FABMANAGER_PATH/letsencrypt/systemd/letsencrypt.service" /etc/systemd/system/letsencrypt.service
-    sudo cp "$FABMANAGER_PATH/letsencrypt/systemd/letsencrypt.timer" /etc/systemd/system/letsencrypt.timer
-    sudo systemctl daemon-reload
+    elevate_cmd cp "$FABMANAGER_PATH/letsencrypt/systemd/letsencrypt.service" /etc/systemd/system/letsencrypt.service
+    elevate_cmd cp "$FABMANAGER_PATH/letsencrypt/systemd/letsencrypt.timer" /etc/systemd/system/letsencrypt.timer
+    elevate_cmd systemctl daemon-reload
   fi
 }
 
@@ -236,7 +296,7 @@ configure_env_file()
   doc=$(\curl -sSL https://raw.githubusercontent.com/sleede/fab-manager/master/doc/environment.md)
   variables=(DEFAULT_HOST DEFAULT_PROTOCOL DELIVERY_METHOD SMTP_ADDRESS SMTP_PORT SMTP_USER_NAME SMTP_PASSWORD SMTP_AUTHENTICATION \
    SMTP_ENABLE_STARTTLS_AUTO SMTP_OPENSSL_VERIFY_MODE SMTP_TLS LOG_LEVEL MAX_IMAGE_SIZE MAX_CAO_SIZE MAX_IMPORT_SIZE DISK_SPACE_MB_ALERT \
-   SUPERADMIN_EMAIL APP_LOCALE RAILS_LOCALE MOMENT_LOCALE SUMMERNOTE_LOCALE ANGULAR_LOCALE FULLCALENDAR_LOCALE INTL_LOCALE INTL_CURRENCY\
+   ADMINSYS_EMAIL APP_LOCALE RAILS_LOCALE MOMENT_LOCALE SUMMERNOTE_LOCALE ANGULAR_LOCALE FULLCALENDAR_LOCALE INTL_LOCALE INTL_CURRENCY\
    POSTGRESQL_LANGUAGE_ANALYZER TIME_ZONE WEEK_STARTING_DAY D3_DATE_FORMAT UIB_DATE_FORMAT EXCEL_DATE_FORMAT)
   for variable in "${variables[@]}"; do
     local var_doc current
@@ -245,16 +305,17 @@ configure_env_file()
     printf "\n\n\n==== \e[4m%s\e[24m ====\n" "$variable"
     printf "**** \e[1mDocumentation:\e[21m ****\n"
     echo "$var_doc"
-    printf "=======================\n- \e[1mCurrent value: %s\e[21m\n- New value? (leave empty to keep current value)\n" "$current"
+    printf "=======================\n- \e[1mCurrent value: %s\e[21m\n- New value? (leave empty to keep the current value)\n" "$current"
     read -rp "  > " value </dev/tty
     echo "======================="
     if [ "$value" != "" ]; then
-      escaped=$(printf '%s\n' "$value" | sed -e 's/[\/&]/\\&/g')
-      sed -i.bak "s/$current/$variable=$escaped/g" "$FABMANAGER_PATH/config/env"
+      esc_val=$(printf '%s\n' "$value" | sed -e 's/\//\\\//g')
+      esc_curr=$(printf '%s\n' "$current" | sed -e 's/\//\\\//g')
+      sed -i.bak "s/$esc_curr/$variable=$esc_val/g" "$FABMANAGER_PATH/config/env"
     fi
   done
   # we automatically generate the SECRET_KEY_BASE
-  secret=$(cd "$FABMANAGER_PATH" && docker-compose run --rm fabmanager bundle exec rake secret)
+  secret=$(cd "$FABMANAGER_PATH" && docker-compose run --rm "$SERVICE" bundle exec rake secret)
   sed -i.bak "s/SECRET_KEY_BASE=/SECRET_KEY_BASE=$secret/g" "$FABMANAGER_PATH/config/env"
 }
 
@@ -284,20 +345,20 @@ setup_assets_and_databases()
   read -rp "Continue? (Y/n) " confirm </dev/tty
   if [ "$confirm" = "n" ]; then return; fi
 
-  cd "$FABMANAGER_PATH" && docker-compose run --rm fabmanager bundle exec rake db:create # create the database
-  cd "$FABMANAGER_PATH" && docker-compose run --rm fabmanager bundle exec rake db:migrate # run all the migrations
+  cd "$FABMANAGER_PATH" && docker-compose run --rm "$SERVICE" bundle exec rake db:create # create the database
+  cd "$FABMANAGER_PATH" && docker-compose run --rm "$SERVICE" bundle exec rake db:migrate # run all the migrations
   # prompt default admin email/password
   printf "\n\nWe will now create the default administrator of Fab-manager.\n"
   read_email
   PASSWORD=$(read_password)
-  printf "\nOK. We will fulfill the database now...\n"
-  cd "$FABMANAGER_PATH" && docker-compose run --rm -e ADMIN_EMAIL="$EMAIL" -e ADMIN_PASSWORD="$PASSWORD" fabmanager bundle exec rake db:seed # seed the database
+  printf "\nOK. We will fill the database now...\n"
+  cd "$FABMANAGER_PATH" && docker-compose run --rm -e ADMIN_EMAIL="$EMAIL" -e ADMIN_PASSWORD="$PASSWORD" "$SERVICE" bundle exec rake db:seed # seed the database
 
   # now build the assets
-  cd "$FABMANAGER_PATH" && docker-compose run --rm fabmanager bundle exec rake assets:precompile
+  cd "$FABMANAGER_PATH" && docker-compose run --rm "$SERVICE" bundle exec rake assets:precompile
 
   # and prepare elasticsearch
-  cd "$FABMANAGER_PATH" && docker-compose run --rm fabmanager bundle exec rake fablab:es:build_stats
+  cd "$FABMANAGER_PATH" && docker-compose run --rm "$SERVICE" bundle exec rake fablab:es:build_stats
 }
 
 stop()
@@ -314,14 +375,14 @@ enable_ssl()
 {
   if [ "$LETSENCRYPT" != "n" ]; then
     # generate certificate
-    sudo systemctl start letsencrypt.service
+    elevate_cmd systemctl start letsencrypt.service
     # serve http content over ssl
     mv "$FABMANAGER_PATH/config/nginx/fabmanager.conf" "$FABMANAGER_PATH/config/nginx/fabmanager.conf.nossl"
     mv "$FABMANAGER_PATH/config/nginx/fabmanager.conf.ssl" "$FABMANAGER_PATH/config/nginx/fabmanager.conf"
     stop
     start
-    sudo systemctl enable letsencrypt.timer
-    sudo systemctl start letsencrypt.timer
+    elevate_cmd systemctl enable letsencrypt.timer
+    elevate_cmd systemctl start letsencrypt.timer
   fi
 }
 

@@ -13,8 +13,8 @@
 
 'use strict';
 
-Application.Controllers.controller('CompleteProfileController', ['$scope', '$rootScope', '$state', '$window', '_t', 'growl', 'CSRF', 'Auth', 'Member', 'settingsPromise', 'activeProviderPromise', 'groupsPromise', 'cguFile', 'memberPromise', 'Session', 'dialogs', 'AuthProvider', 'phoneRequiredPromise',
-  function ($scope, $rootScope, $state, $window, _t, growl, CSRF, Auth, Member, settingsPromise, activeProviderPromise, groupsPromise, cguFile, memberPromise, Session, dialogs, AuthProvider, phoneRequiredPromise) {
+Application.Controllers.controller('CompleteProfileController', ['$scope', '$rootScope', '$state', '$window', '_t', 'growl', 'CSRF', 'Auth', 'Member', 'settingsPromise', 'activeProviderPromise', 'groupsPromise', 'cguFile', 'memberPromise', 'Session', 'dialogs', 'AuthProvider',
+  function ($scope, $rootScope, $state, $window, _t, growl, CSRF, Auth, Member, settingsPromise, activeProviderPromise, groupsPromise, cguFile, memberPromise, Session, dialogs, AuthProvider) {
   /* PUBLIC SCOPE */
 
     // API URL where the form will be posted
@@ -48,7 +48,10 @@ Application.Controllers.controller('CompleteProfileController', ['$scope', '$roo
     $scope.cgu = cguFile.custom_asset;
 
     // is the phone number required in _member_form?
-    $scope.phoneRequired = (phoneRequiredPromise.setting.value === 'true');
+    $scope.phoneRequired = (settingsPromise.phone_required === 'true');
+
+    // is the address required in _member_form?
+    $scope.addressRequired = (settingsPromise.address_required === 'true');
 
     // Angular-Bootstrap datepicker configuration for birthday
     $scope.datePicker = {
@@ -198,6 +201,14 @@ Application.Controllers.controller('CompleteProfileController', ['$scope', '$roo
         };
         $window.location.href = activeProviderPromise.link_to_sso_connect;
       });
+    };
+
+    /**
+     * Hide the new account messages.
+     * If hidden, the page will be used only to complete the current user's profile.
+     */
+    $scope.hideNewAccountConfirmation = function () {
+      return !$scope.activeProvider.previous_provider || $scope.activeProvider.previous_provider.id === $scope.activeProvider.id;
     };
 
     /* PRIVATE SCOPE */

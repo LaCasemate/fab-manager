@@ -100,6 +100,7 @@ es:
       subject: "Se ha creado una nueva cuenta"
       body:
         new_account_created: "Se ha creado un nuevo usuario en la web:"
+        user_of_group_html: "The user has registered in the group <strong>%{GROUP}</strong>"
         account_for_organization: "Esta cuenta gestiona una organización :"
     notify_admin_subscribed_plan:
       subject: "Se ha adquirido un plan de suscripción"
@@ -272,6 +273,7 @@ es:
       subject: "A refund has been generated"
       body:
         refund_created: "A refund of %{AMOUNT} has been generated on invoice %{INVOICE} of user %{USER}"
+        wallet_refund_created: "A refund of %{AMOUNT} has been generated for the credit of the wallet of user %{USER}"
         download: "Click here to download this refund invoice"
     notify_admins_role_update:
       subject: "The role of a user has changed"
@@ -287,5 +289,30 @@ es:
       subject: "Stripe synchronization"
       body:
         members_sync: "All members were successfully synchronized on Stripe."
+    notify_member_payment_schedule_ready:
+      subject: "Your payment schedule"
+      body:
+        please_find_attached_html: "Please find attached your payment schedule, issued on {DATE}, with an amount of {AMOUNT} concerning your {TYPE, select, Reservation{reservation} other{subscription}}." #messageFormat interpolation
+        schedule_in_your_dashboard_html: "You can find this payment schedule at any time from %{DASHBOARD} on the Fab Lab's website."
+        your_dashboard: "your dashboard"
+    notify_admin_payment_schedule_failed:
+      subject: "[URGENT] Card debit failure"
+      body:
+        remember: "In accordance with the %{REFERENCE} payment schedule, a debit by card of %{AMOUNT} was scheduled on %{DATE}."
+        error: "Unfortunately, this card debit was unable to complete successfully."
+        action: "Please contact the member as soon as possible, then go to the payment schedule management interface to resolve the problem. After about 24 hours, the card subscription will be cancelled."
+    notify_member_payment_schedule_failed:
+      subject: "[URGENT] Card debit failure"
+      body:
+        remember: "In accordance with your %{REFERENCE} payment schedule, a debit by card of %{AMOUNT} was scheduled on %{DATE}."
+        error: "Unfortunately, this card debit was unable to complete successfully."
+        action_html: "Please check %{DASHBOARD} or contact a manager before 24 hours, otherwise your subscription may be interrupted."
+        your_dashboard: "your dashboard"
+    notify_admin_payment_schedule_check_deadline:
+      subject: "Payment deadline"
+      body:
+        remember: "In accordance with the %{REFERENCE} payment schedule, %{AMOUNT} was due to be debited on %{DATE}."
+        date: "This is a reminder to cash the scheduled check as soon as possible."
+        confirm: "Do not forget to confirm the receipt in your payment schedule management interface, so that the corresponding invoice will be generated."
     shared:
       hello: "¡Hola %{user_name}!"

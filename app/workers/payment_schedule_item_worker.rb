@@ -18,23 +18,27 @@ class PaymentScheduleItemWorker
 
   def check_item(psi)
     # the following depends on the payment method (stripe/check)
-    if psi.payment_schedule.payment_method == 'stripe'
+    # FIXME
+    if psi.payment_schedule.payment_method == 'card'
       ### Stripe
       stripe_key = Setting.get('stripe_secret_key')
-      stp_subscription = Stripe::Subscription.retrieve(psi.payment_schedule.stp_subscription_id, api_key: stripe_key)
+      stp_subscription = psi.payment_schedule.gateway_subscription.retrieve
       stp_invoice = Stripe::Invoice.retrieve(stp_subscription.latest_invoice, api_key: stripe_key)
       if stp_invoice.status == 'paid'
         ##### Stripe / Successfully paid
-        PaymentScheduleService.new.generate_invoice(psi, stp_invoice)
-        psi.update_attributes(state: 'paid', payment_method: 'stripe', stp_invoice_id: stp_invoice.id)
+        PaymentScheduleService.new.generate_invoice(psi, payment_method: 'card', payment_id: stp_invoice.payment_intent, payment_type: 'Stripe::PaymentIntent') # FIXME
+        psi.update_attributes(state: 'paid', payment_method: 'card', stp_invoice_id: stp_invoice.id)
       elsif stp_subscription.status == 'past_due' || stp_invoice.status == 'open'
         ##### Stripe / Payment error
-        NotificationCenter.call type: 'notify_admin_payment_schedule_failed',
-                                receiver: User.admins_and_managers,
-                                attached_object: psi
-        NotificationCenter.call type: 'notify_member_payment_schedule_failed',
-                                receiver: psi.payment_schedule.user,
-                                attached_object: psi
+        if psi.state == 'new'
+          # notify only for new deadlines, to prevent spamming
+          NotificationCenter.call type: 'notify_admin_payment_schedule_failed',
+                                  receiver: User.admins_and_managers,
+                                  attached_object: psi
+          NotificationCenter.call type: 'notify_member_payment_schedule_failed',
+                                  receiver: psi.payment_schedule.user,
+                                  attached_object: psi
+        end
         stp_payment_intent = Stripe::PaymentIntent.retrieve(stp_invoice.payment_intent, api_key: stripe_key)
         psi.update_attributes(state: stp_payment_intent.status,
                               stp_invoice_id: stp_invoice.id,
@@ -42,8 +46,8 @@ class PaymentScheduleItemWorker
       else
         psi.update_attributes(state: 'error')
       end
-    else
-      ### Check
+    elsif psi.state == 'new'
+      ### Check (only new deadlines, to prevent spamming)
       NotificationCenter.call type: 'notify_admin_payment_schedule_check_deadline',
                               receiver: User.admins_and_managers,
                               attached_object: psi

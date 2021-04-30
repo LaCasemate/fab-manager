@@ -1,0 +1,36 @@
+.payzen-modal {
+  .payzen-form {
+    .hidden {
+      display: none;
+    }
+    .loader {
+      text-align: center;
+    }
+    .loader-overlay {
+      position: absolute;
+      top: 65px;
+      left: 190px;
+      z-index: 1;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      width: inherit;
+
+      .kr-payment-button {
+        display: none;
+      }
+
+      .kr-form-error {
+        display: none;
+      }
+    }
+  }
+  .payzen-modal-icons {
+    text-align: center;
+
+    img {
+      margin-right: 10px;
+    }
+  }
+}

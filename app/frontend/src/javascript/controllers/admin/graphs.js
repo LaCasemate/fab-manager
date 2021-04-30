@@ -51,6 +51,9 @@ Application.Controllers.controller('GraphsController', ['$scope', '$state', '$ro
     // active tab will be set here
     $scope.selectedIndex = null;
 
+    // ui-bootstrap active tab index
+    $scope.selectedTab = 0;
+
     // for palmares graphs, filters values are stored here
     $scope.ranking = {
       sortCriterion: 'ca',
@@ -101,9 +104,11 @@ Application.Controllers.controller('GraphsController', ['$scope', '$state', '$ro
      * Callback called when the active tab is changed.
      * Recover the current tab and store its value in $scope.selectedIndex
      * @param tab {Object} elasticsearch statistic structure
+     * @param index {number} index of the tab in the $scope.statistics array
      */
-    $scope.setActiveTab = function (tab) {
+    $scope.setActiveTab = function (tab, index) {
       $scope.selectedIndex = tab;
+      $scope.selectedTab = index;
       $scope.ranking.groupCriterion = 'subType';
       if (tab.ca) {
         $scope.ranking.sortCriterion = 'ca';
@@ -111,6 +116,18 @@ Application.Controllers.controller('GraphsController', ['$scope', '$state', '$ro
         $scope.ranking.sortCriterion = tab.types[0].key;
       }
       return refreshChart();
+    };
+
+    /**
+     * Returns true if the provided tab must be hidden due to some global or local configuration
+     * @param tab {Object} elasticsearch statistic structure (from statistic_indices table)
+     */
+    $scope.hiddenTab = function (tab) {
+      if (tab.graph) {
+        return !((tab.es_type_key === 'subscription' && !$rootScope.modules.plans) ||
+          (tab.es_type_key === 'training' && !$rootScope.modules.trainings));
+      }
+      return false;
     };
 
     /**
@@ -137,11 +154,20 @@ Application.Controllers.controller('GraphsController', ['$scope', '$state', '$ro
         $scope.$watch(scope => scope.ranking.groupCriterion
           , (newValue, oldValue) => refreshChart());
         return refreshChart();
+
+        // set the default tab to "machines" if "subscriptions" are disabled
+        if (!$rootScope.modules.plans) {
+          const idx = $scope.statistics.findIndex(s => s.es_type_key === 'machine');
+          $scope.setActiveTab($scope.statistics[idx], idx);
+        } else {
+          const idx = $scope.statistics.findIndex(s => s.es_type_key === 'subscription');
+          $scope.setActiveTab($scope.statistics[idx], idx);
+        }
       });
 
       // workaround for angular-bootstrap::tabs behavior: on tab deletion, another tab will be selected
       // which will cause every tabs to reload, one by one, when the view is closed
-      return $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if ((fromState.name === 'app.admin.stats_graphs') && (Object.keys(fromParams).length === 0)) {
           return $scope.preventRefresh = true;
         }

@@ -14,31 +14,23 @@
 </section>
 
 
-<div class="row no-gutter">
+<div class="row no-gutter list-of-plans">
   <div class="col-sm-12 col-md-9 b-r">
 
-    <div class="row m-t m-b padder" ng-repeat="plansGroup in plansClassifiedByGroup | groupFilter:ctrl.member">
-
+    <div class="row m-t m-b padder" ng-repeat="plansGroup in plansClassifiedByGroup | groupFilter:ctrl.member" ng-class="{'active-group': plansGroup.actives > 0}">
       <div ng-show="plansGroup.actives > 0">
-        <div class="col-md-12 text-center">
-          <h2 class="text-u-c">{{plansGroup.name}}</h2>
-        </div>
+        <h2 class="text-u-c group-title">{{plansGroup.name}}</h2>
         <div class="row row-centered padder">
-          <div class="col-xs-12 col-md-12 col-lg-10 col-centered no-gutter">
+          <div class="plans-per-group">
 
-            <!-- ng-class directive center the last item if the list length is odd -->
-            <div class="pricing-panel col-xs-12 col-md-6 col-lg-6 text-center"
-                 ng-class="{'col-md-12 col-lg-12 b-r':(plansGroup.plans.filter(filterDisabledPlans).length % 2 == 1 && key == plansGroup.plans.filter(filterDisabledPlans).length-1)}"
-                 ng-repeat="(key, plan) in plansGroup.plans.filter(filterDisabledPlans) | orderBy: '-ui_weight'">
-
-                <plan-card plan="plan"
+                <plan-card ng-repeat="(key, plan) in plansGroup.plans.filter(filterDisabledPlans) | orderBy: '-ui_weight'"
+                           plan="plan"
                            user-id="ctrl.member.id"
                            subscribed-plan-id="ctrl.member.subscribed_plan.id"
                            operator="currentUser"
                            on-select-plan="selectPlan"
-                           is-selected="isSelected(plan)">
+                           is-selected="isSelected(plan)"
                 </plan-card>
-            </div>
           </div>
 
 

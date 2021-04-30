@@ -113,6 +113,18 @@ zu:
     subscription_of_NAME_extended_starting_from_STARTDATE_until_ENDDATE: "crwdns3373:0%{NAME}crwdnd3373:0%{STARTDATE}crwdnd3373:0%{ENDDATE}crwdne3373:0"
     and: 'crwdns3375:0crwdne3375:0'
     invoice_text_example: "crwdns20848:0crwdne20848:0"
+  #PDF payment schedule generation
+  payment_schedules:
+    schedule_reference: "crwdns21094:0%{REF}crwdne21094:0"
+    schedule_issued_on_DATE: "crwdns21096:0%{DATE}crwdne21096:0"
+    object: "crwdns21098:0%{ITEM}crwdne21098:0"
+    subscription_of_NAME_for_DURATION_starting_from_DATE: "crwdns21100:0%{NAME}crwdnd21100:0%{DURATION}crwdnd21100:0%{DATE}crwdne21100:0"
+    deadlines: "crwdns21102:0crwdne21102:0"
+    deadline_date: "crwdns21104:0crwdne21104:0"
+    deadline_amount: "crwdns21106:0crwdne21106:0"
+    total_amount: "crwdns21108:0crwdne21108:0"
+    settlement_by_METHOD: "crwdns21110:0METHOD={METHOD}crwdne21110:0"
+    settlement_by_wallet: "crwdns21112:0%{AMOUNT}crwdne21112:0"
   #CVS accounting export (columns headers)
   accounting_export:
     journal_code: "crwdns3377:0crwdne3377:0"
@@ -201,7 +213,6 @@ zu:
     start_date: "crwdns3519:0crwdne3519:0"
     expiration_date: "crwdns3521:0crwdne3521:0"
     amount: "crwdns3523:0crwdne3523:0"
-    payment_method: "crwdns3525:0crwdne3525:0"
     local_payment: "crwdns3527:0crwdne3527:0"
     online_payment: "crwdns3529:0crwdne3529:0"
     deleted_user: "crwdns20888:0crwdne20888:0"
@@ -345,6 +356,14 @@ zu:
         user_NAME_changed_ROLE_html: "crwdns20454:0%{NAME}crwdnd20454:0%{ROLE}crwdne20454:0"
       notify_admin_members_stripe_sync:
         all_members_sync: "crwdns20850:0crwdne20850:0"
+      notify_user_when_payment_schedule_ready:
+        your_schedule_is_ready_html: "crwdns21114:0%{REFERENCE}crwdnd21114:0%{AMOUNT}crwdnd21114:0%{SCHEDULE_ID}crwdne21114:0"
+      notify_admin_payment_schedule_failed:
+        schedule_failed: "crwdns21116:0%{DATE}crwdnd21116:0%{REFERENCE}crwdne21116:0"
+      notify_member_payment_schedule_failed:
+        schedule_failed: "crwdns21118:0%{DATE}crwdnd21118:0%{REFERENCE}crwdne21118:0"
+      notify_admin_payment_schedule_check_deadline:
+        schedule_deadline: "crwdns21120:0%{DATE}crwdnd21120:0%{REFERENCE}crwdne21120:0"
   #statistics tools for admins
   statistics:
     subscriptions: "crwdns3689:0crwdne3689:0"

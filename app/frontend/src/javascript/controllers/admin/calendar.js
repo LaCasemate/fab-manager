@@ -400,6 +400,9 @@ Application.Controllers.controller('AdminCalendarController', ['$scope', '$state
     const calendarSelectCb = function (start, end, jsEvent, view) {
       start = moment.tz(start.toISOString(), Fablab.timezone);
       end = moment.tz(end.toISOString(), Fablab.timezone);
+      if (view.name === 'month') {
+        end = end.subtract(1, 'day').startOf('day');
+      }
 
       // check if slot is not in the past
       const today = new Date();
@@ -412,7 +415,7 @@ Application.Controllers.controller('AdminCalendarController', ['$scope', '$state
       const slots = Math.trunc((end.valueOf() - start.valueOf()) / (60 * 1000)) / SLOT_MULTIPLE;
       if (!Number.isInteger(slots)) {
         // otherwise, round it to upper decimal
-        const upper = Math.ceil(slots) * SLOT_MULTIPLE;
+        const upper = (Math.ceil(slots) || 1) * SLOT_MULTIPLE;
         end = moment(start).add(upper, 'minutes');
       }
 
@@ -665,7 +668,7 @@ Application.Controllers.controller('CreateEventModalController', ['$scope', '$ui
       $scope.selectedPlans = [];
       $scope.selectedPlansBinding = {};
       if (count === 0) {
-        plansPromise.forEach(function (plan) {
+        plansPromise.filter(p => !p.disabled).forEach(function (plan) {
           $scope.selectedPlans.push(plan);
           $scope.selectedPlansBinding[plan.id] = true;
         });
@@ -706,6 +709,7 @@ Application.Controllers.controller('CreateEventModalController', ['$scope', '$ui
     $scope.next = function () {
       if ($scope.step === 1) { return validateType(); }
       if ($scope.step === 2) { return validateSelection(); }
+      if ($scope.step === 3) { return validateTimes(); }
       if ($scope.step === 5) { return validateRecurrence(); }
       return $scope.step++;
     };
@@ -775,16 +779,16 @@ Application.Controllers.controller('CreateEventModalController', ['$scope', '$ui
       $scope.$watch('availability.slot_duration', function (newValue, oldValue, scope) {
         if (newValue === undefined) return;
 
-        start = moment($scope.start);
-        start.add(newValue * $scope.slots_nb, 'minutes');
-        $scope.end = start.toDate();
+        const startSlot = moment($scope.start);
+        startSlot.add(newValue * $scope.slots_nb, 'minutes');
+        $scope.end = startSlot.toDate();
       });
 
       // When the number of slot changes, we increment the availability to match the value
       $scope.$watch('slots_nb', function (newValue, oldValue, scope) {
-        start = moment($scope.start);
-        start.add($scope.availability.slot_duration * newValue, 'minutes');
-        $scope.end = start.toDate();
+        const startSlot = moment($scope.start);
+        startSlot.add($scope.availability.slot_duration * newValue, 'minutes');
+        $scope.end = startSlot.toDate();
       });
 
       // When we configure a machine/space availability, do not let the user change the end time, as the total
@@ -793,7 +797,8 @@ Application.Controllers.controller('CreateEventModalController', ['$scope', '$ui
       $scope.$watch('availability.available_type', function (newValue, oldValue, scope) {
         if (isTypeDivided(newValue)) {
           $scope.endDateReadOnly = true;
-          const slotsCurrentRange = Math.trunc(($scope.end.valueOf() - $scope.start.valueOf()) / (60 * 1000)) / $scope.availability.slot_duration;
+          const slotDuration = $scope.availability.slot_duration || parseInt(slotDurationPromise.setting.value, 10);
+          const slotsCurrentRange = Math.trunc(($scope.end.valueOf() - $scope.start.valueOf()) / (60 * 1000)) / slotDuration;
           if (!Number.isInteger(slotsCurrentRange)) {
             // otherwise, round it to upper decimal
             const upperSlots = Math.ceil(slotsCurrentRange);
@@ -812,29 +817,25 @@ Application.Controllers.controller('CreateEventModalController', ['$scope', '$ui
       // When the start date is changed, if we are configuring a machine/space availability,
       // maintain the relative length of the slot (ie. change the end time accordingly)
       $scope.$watch('start', function (newValue, oldValue, scope) {
-        // for machine or space availabilities, adjust the end time
-        if ($scope.isTypeDivided()) {
-          end = moment($scope.end);
-          end.add(moment(newValue).diff(oldValue), 'milliseconds');
-          $scope.end = end.toDate();
-        } else { // for training availabilities
-          // prevent the admin from setting the beginning after the end
-          if (moment(newValue).add($scope.availability.slot_duration, 'minutes').isAfter($scope.end)) {
-            $scope.start = oldValue;
-          }
-        }
+        // adjust the end time
+        const endSlot = moment($scope.end);
+        endSlot.add(moment(newValue).diff(oldValue), 'milliseconds');
+        $scope.end = endSlot.toDate();
+
         // update availability object
         $scope.availability.start_at = $scope.start;
       });
 
       // Maintain consistency between the end time and the date object in the availability object
       $scope.$watch('end', function (newValue, oldValue, scope) {
-      // we prevent the admin from setting the end of the availability before its beginning
-        if (moment($scope.start).add($scope.availability.slot_duration, 'minutes').isAfter(newValue)) {
-          $scope.end = oldValue;
+        if (newValue.valueOf() !== oldValue.valueOf()) {
+          // we prevent the admin from setting the end of the availability before its beginning
+          if (moment($scope.start).add($scope.availability.slot_duration, 'minutes').isAfter(newValue)) {
+            $scope.end = oldValue;
+          }
+          // update availability object
+          $scope.availability.end_at = $scope.end;
         }
-        // update availability object
-        $scope.availability.end_at = $scope.end;
       });
     };
 
@@ -852,6 +853,24 @@ Application.Controllers.controller('CreateEventModalController', ['$scope', '$ui
       if ($scope.availability.available_type === 'machines') {
         if ($scope.selectedMachines.length === 0) {
           return growl.error(_t('app.admin.calendar.you_should_select_at_least_a_machine'));
+        }
+      }
+      $scope.step++;
+    };
+
+    /**
+     * Validates that the slots/availability date and times are correct
+     */
+    const validateTimes = function () {
+      if (moment($scope.end).isSameOrBefore($scope.start)) {
+        return growl.error(_t('app.admin.calendar.inconsistent_times'));
+      }
+      if ($scope.isTypeDivided()) {
+        if (!$scope.slots_nb) {
+          return growl.error(_t('app.admin.calendar.min_one_slot'));
+        }
+        if (!$scope.availability.slot_duration) {
+          return growl.error(_t('app.admin.calendar.min_slot_duration'));
         }
       }
       $scope.step++;

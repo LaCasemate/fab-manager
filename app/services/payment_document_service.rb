@@ -9,7 +9,7 @@ class PaymentDocumentService
       reference = replace_invoice_number_pattern(pattern)
       reference = replace_date_pattern(reference, date)
 
-      if document.class == Avoir
+      if document.is_a? Avoir
         # information about refund/avoir (R[text])
         reference.gsub!(/R\[([^\]]+)\]/, '\1')
 
@@ -17,16 +17,16 @@ class PaymentDocumentService
         reference.gsub!(/X\[([^\]]+)\]/, ''.to_s)
         # remove information about payment schedule (S[text])
         reference.gsub!(/S\[([^\]]+)\]/, ''.to_s)
-      elsif document.class == PaymentSchedule
+      elsif document.is_a? PaymentSchedule
         # information about payment schedule
         reference.gsub!(/S\[([^\]]+)\]/, '\1')
         # remove information about online selling (X[text])
         reference.gsub!(/X\[([^\]]+)\]/, ''.to_s)
         # remove information about refunds (R[text])
         reference.gsub!(/R\[([^\]]+)\]/, ''.to_s)
-      elsif document.class == Invoice
+      elsif document.is_a? Invoice
         # information about online selling (X[text])
-        if document.paid_with_stripe?
+        if document.paid_by_card?
           reference.gsub!(/X\[([^\]]+)\]/, '\1')
         else
           reference.gsub!(/X\[([^\]]+)\]/, ''.to_s)

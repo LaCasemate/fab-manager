@@ -224,7 +224,7 @@
 
       <div class="form-group">
         <div class="input-group">
-          <span class="input-group-addon help-cursor" title="{{ 'app.shared.user.used_for_invoicing' | translate }}"><i class="fa fa-map-marker"></i> </span>
+          <span class="input-group-addon help-cursor" title="{{ 'app.shared.user.used_for_invoicing' | translate }}"><i class="fa fa-map-marker"></i> <span class="exponent" ng-show="addressRequired"><i class="fa fa-asterisk" aria-hidden="true"></i></span></span>
           <input type="hidden"
                  name="user[invoicing_profile_attributes][address_attributes][id]"
                  ng-value="user.invoicing_profile.address.id" />
@@ -234,7 +234,8 @@
                  class="form-control"
                  id="user_address"
                  ng-disabled="preventField['profile.address'] && user.invoicing_profile.address.address && !userForm['user[invoicing_profile_attributes][address_attributes][address]'].$dirty"
-                 placeholder="{{ 'app.shared.user.address' | translate }}"/>
+                 placeholder="{{ 'app.shared.user.address' | translate }}"
+                 ng-required="addressRequired"/>
         </div>
       </div>
 

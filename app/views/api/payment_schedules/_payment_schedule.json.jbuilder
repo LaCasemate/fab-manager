@@ -16,5 +16,5 @@ end
 json.items payment_schedule.payment_schedule_items do |item|
   json.extract! item, :id, :due_date, :state, :invoice_id, :payment_method
   json.amount item.amount / 100.00
-  json.client_secret item.payment_intent.client_secret if item.stp_invoice_id && item.state == 'requires_action'
+  json.client_secret item.payment_intent.client_secret if item.payment_gateway_object && item.state == 'requires_action'
 end

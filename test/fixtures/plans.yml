@@ -16,7 +16,6 @@ plan_1:
   ui_weight: 1
   interval_count: 1
   slug: mensuel
-  stp_product_id: prod_IZPyXhfyNiGkWR
 
 plan_2:
   id: 2
@@ -35,7 +34,6 @@ plan_2:
   ui_weight: 5
   interval_count: 2
   slug: sleede
-  stp_product_id: prod_IZPykam7a4satn
 
 plan_3:
   id: 3
@@ -55,7 +53,6 @@ plan_3:
   ui_weight: 0
   interval_count: 1*
   slug: mensuel-tarif-reduit
-  stp_product_id: prod_IZPyM4N36h86G0
 
 plan_schedulable:
   id: 4
@@ -75,4 +72,3 @@ plan_schedulable:
   interval_count: 1
   monthly_payment: true
   slug: abonnement-mensualisable
-  stp_product_id: prod_IZQAhb9nLu4jfN

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 wb = xlsx_package.workbook
 
-header = wb.styles.add_style :b => true, :bg_color => Stylesheet.primary.upcase.gsub('#', 'FF'), :fg_color => 'FFFFFFFF'
-date = wb.styles.add_style :format_code => Rails.application.secrets.excel_date_format
+header = wb.styles.add_style b: true, bg_color: Stylesheet.primary.upcase.gsub('#', 'FF'), fg_color: 'FFFFFFFF'
+date = wb.styles.add_style format_code: Rails.application.secrets.excel_date_format
 
 wb.add_worksheet(name: t('export_subscriptions.subscriptions')) do |sheet|
 
@@ -9,25 +11,24 @@ wb.add_worksheet(name: t('export_subscriptions.subscriptions')) do |sheet|
   # heading labels
   columns = [t('export_subscriptions.id'), t('export_subscriptions.customer'), t('export_subscriptions.email'),
              t('export_subscriptions.subscription'), t('export_subscriptions.period'), t('export_subscriptions.start_date'),
-             t('export_subscriptions.expiration_date'), t('export_subscriptions.amount'), t('export_subscriptions.payment_method')]
-  sheet.add_row columns, :style => header
+             t('export_subscriptions.expiration_date'), t('export_subscriptions.amount')]
+  sheet.add_row columns, style: header
 
   # data rows
   @subscriptions.each do |sub|
     data = [
-        sub.user&.id,
-        sub.user&.profile&.full_name || t('export_subscriptions.deleted_user'),
-        sub.user&.email,
-        sub.plan.human_readable_name(group: true),
-        t("duration.#{sub.plan.interval}", count: sub.plan.interval_count),
-        sub.created_at.to_date,
-        sub.expired_at.to_date,
-        number_to_currency(sub.plan.amount / 100.00),
-        (sub.stp_subscription_id.nil?)? t('export_subscriptions.local_payment') : t('export_subscriptions.online_payment')
+      sub.user&.id,
+      sub.user&.profile&.full_name || t('export_subscriptions.deleted_user'),
+      sub.user&.email,
+      sub.plan.human_readable_name(group: true),
+      t("duration.#{sub.plan.interval}", count: sub.plan.interval_count),
+      sub.created_at.to_date,
+      sub.expired_at.to_date,
+      number_to_currency(sub.plan.amount / 100.00)
     ]
     styles = [nil, nil, nil, nil, nil, date, date, nil, nil]
-    types = [:integer, :string, :string, :string, :string, :date, :date, :string, :string]
+    types = %i[integer string string string string date date string string]
 
-    sheet.add_row data, :style =>  styles, :types => types
+    sheet.add_row data, style: styles, types: types
   end
 end

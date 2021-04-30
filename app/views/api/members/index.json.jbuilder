@@ -54,7 +54,6 @@ json.array!(@members) do |member|
           json.id member.subscription.id
           json.expired_at member.subscription.expired_at.iso8601
           json.canceled_at member.subscription&.canceled_at&.iso8601
-          json.stripe member.subscription.stp_subscription_id.present?
           json.plan do
             json.id member.subscription.plan.id
             json.name member.subscription.plan.name

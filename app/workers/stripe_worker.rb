@@ -2,10 +2,13 @@
 
 # This worker perform various requests to the Stripe API (payment service)
 class StripeWorker
+  require 'stripe/helper'
   include Sidekiq::Worker
   sidekiq_options queue: :stripe
 
   def perform(action, *params)
+    return false unless Stripe::Helper.enabled?
+
     send(action, *params)
   end
 
@@ -30,9 +33,9 @@ class StripeWorker
 
   def create_or_update_stp_product(class_name, id)
     object = class_name.constantize.find(id)
-    if !object.stp_product_id.nil?
+    if !object.payment_gateway_object.nil?
       Stripe::Product.update(
-        object.stp_product_id,
+        object.payment_gateway_object.gateway_object_id,
         { name: object.name },
         { api_key: Setting.get('stripe_secret_key') }
       )
@@ -46,12 +49,15 @@ class StripeWorker
           }
         }, { api_key: Setting.get('stripe_secret_key') }
       )
-      object.update_attributes(stp_product_id: product.id)
+      pgo = PaymentGatewayObject.new(item: object)
+      pgo.gateway_object = product
+      pgo.save!
       puts "Stripe product was created for the #{class_name} \##{id}"
     end
 
   rescue Stripe::InvalidRequestError
-    STDERR.puts "WARNING: saved stp_product_id (#{object.stp_product_id}) does not match on Stripe, recreating..."
+    obj_id = object.payment_gateway_object.gateway_object_id
+    STDERR.puts "WARNING: saved payment_gateway_object#id (#{obj_id}) does not match on Stripe, recreating..."
     product = Stripe::Product.create(
       {
         name: object.name,
@@ -61,7 +67,9 @@ class StripeWorker
         }
       }, { api_key: Setting.get('stripe_secret_key') }
     )
-    object.update_attributes(stp_product_id: product.id)
+    pgo = PaymentGatewayObject.new(item: object)
+    pgo.gateway_object = product
+    pgo.save!
     puts "Stripe product was created for the #{class_name} \##{id}"
   end
 end

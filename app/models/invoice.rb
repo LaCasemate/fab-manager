@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'checksum'
-
 # Invoice correspond to a single purchase made by an user. This purchase may
 # include reservation(s) and/or a subscription
 class Invoice < PaymentDocument
@@ -23,6 +21,7 @@ class Invoice < PaymentDocument
 
   has_one :avoir, class_name: 'Invoice', foreign_key: :invoice_id, dependent: :destroy
   has_one :payment_schedule_item
+  has_one :payment_gateway_object, as: :item
   belongs_to :operator_profile, foreign_key: :operator_profile_id, class_name: 'InvoicingProfile'
 
   before_create :add_environment
@@ -151,7 +150,7 @@ class Invoice < PaymentDocument
   def payment_means
     res = []
     res.push(means: :wallet, amount: wallet_amount) if wallet_transaction && wallet_amount.positive?
-    if paid_with_stripe?
+    if paid_by_card?
       res.push(means: :card, amount: amount_paid)
     else
       res.push(means: :other, amount: amount_paid)
@@ -159,12 +158,12 @@ class Invoice < PaymentDocument
     res
   end
 
-  def check_footprint
-    invoice_items.map(&:check_footprint).all? && footprint == compute_footprint
+  def footprint_children
+    invoice_items
   end
 
-  def paid_with_stripe?
-    stp_payment_intent_id? || stp_invoice_id? || payment_method == 'stripe'
+  def paid_by_card?
+    !payment_gateway_object.nil? && payment_method == 'card'
   end
 
   private

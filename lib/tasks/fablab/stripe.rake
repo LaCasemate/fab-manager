@@ -43,6 +43,16 @@ namespace :fablab do
       SyncMembersOnStripeWorker.new.perform
       puts 'Done'
     end
+    desc 'sync coupons to the stripe database'
+    task sync_coupons: :environment do
+      puts 'We create all non-existing coupons on stripe. This may take a while, please wait...'
+      Coupon.all.each do |c|
+        Stripe::Coupon.retrieve(c.code, api_key: Setting.get('stripe_secret_key'))
+      rescue Stripe::InvalidRequestError
+        StripeService.create_stripe_coupon(c.id)
+      end
+      puts 'Done'
+    end
 
     desc 'set stp_product_id to all plans/machines/trainings/spaces'
     task set_product_id: :environment do
@@ -58,6 +68,13 @@ namespace :fablab do
       end
       Space.all.each do |s|
         w.perform(:create_or_update_stp_product, Space.name, s.id)
+      end
+    end
+
+    desc 'set stripe as the default payment gateway'
+    task set_gateway: :environment do
+      if Setting.find_by(name: 'stripe_public_key').try(:value) && Setting.find_by(name: 'stripe_secret_key').try(:value)
+        Setting.set('payment_gateway', 'stripe') unless Setting.find_by(name: 'payment_gateway').try(:value)
       end
     end
 

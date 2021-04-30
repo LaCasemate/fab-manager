@@ -65,7 +65,6 @@ if member.subscription
     json.id member.subscription.id
     json.expired_at member.subscription.expired_at.iso8601
     json.canceled_at member.subscription.canceled_at.iso8601 if member.subscription.canceled_at
-    json.stripe member.subscription.stp_subscription_id.present?
     json.plan do # TODO, refactor: duplicates subscribed_plan
       json.id member.subscription.plan.id
       json.base_name member.subscription.plan.base_name

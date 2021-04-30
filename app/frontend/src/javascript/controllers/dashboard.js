@@ -12,7 +12,7 @@
  */
 'use strict';
 
-Application.Controllers.controller('DashboardController', ['$scope', 'memberPromise', 'SocialNetworks', function ($scope, memberPromise, SocialNetworks) {
+Application.Controllers.controller('DashboardController', ['$scope', 'memberPromise', 'trainingsPromise', 'SocialNetworks', function ($scope, memberPromise, trainingsPromise, SocialNetworks) {
   // Current user's profile
   $scope.user = memberPromise;
 
@@ -20,6 +20,24 @@ Application.Controllers.controller('DashboardController', ['$scope', 'memberProm
   $scope.social = {
     showAllLinks: false,
     networks: SocialNetworks
+  };
+
+  /**
+   * Check if the member has used his training credits for the given credit
+   * @param trainingCredits array of credits used by the member
+   * @param trainingId id of the training to find
+   */
+  $scope.hasUsedTrainingCredit = function (trainingCredits, trainingId) {
+    return trainingCredits.find(tc => tc.training_id === trainingId);
+  };
+
+  /**
+   * Return the name associated with the provided training ID
+   * @param trainingId training identifier
+   * @return {string}
+   */
+  $scope.getTrainingName = function (trainingId) {
+    return trainingsPromise.find(t => t.id === trainingId).name;
   };
 
   /* PRIVATE SCOPE */

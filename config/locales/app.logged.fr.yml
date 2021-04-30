@@ -109,6 +109,10 @@ fr:
           your_previous_trainings: "Vos formations passées"
           your_approved_trainings: "Vos formations validées"
           no_trainings: "Aucune formation"
+          your_training_credits: "Vos crédits formation"
+          subscribe_for_credits: "Abonnez-vous pour bénéficier de formations gratuites"
+          register_for_free: "Inscrivez-vous gratuitement aux formations suivantes :"
+          book_here: "Réserver"
         #dashboard: my events
         events:
           your_next_events: "Vos prochains événements"

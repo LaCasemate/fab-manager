@@ -1,3 +1,34 @@
+user_1:
+  id: 1
+  username: admin
+  email: admin@fab-manager.com
+  encrypted_password: "$2a$10$LtQ2OggropcXpmcsPTEPruuGZrwuFYGOo8qjh.po91YDna/K4/Bbe"
+  reset_password_token:
+  reset_password_sent_at:
+  remember_created_at:
+  sign_in_count: 8
+  current_sign_in_at: 2016-04-05 08:36:08.361260000 Z
+  last_sign_in_at: 2016-04-05 08:34:28.227054000 Z
+  current_sign_in_ip: 127.0.0.1
+  last_sign_in_ip: 127.0.0.1
+  confirmation_token:
+  confirmed_at: 2016-04-05 08:40:21.514533000 Z
+  confirmation_sent_at: 2001-01-01 14:11:33.852719000 Z
+  unconfirmed_email:
+  failed_attempts: 0
+  unlock_token:
+  locked_at:
+  created_at: 2001-01-01 14:11:33.852719000 Z
+  updated_at: 2016-04-05 08:36:08.362215000 Z
+  is_allow_contact: true
+  group_id: 3
+  slug: admin
+  is_active: true
+  provider:
+  uid:
+  auth_token:
+  merged_at:
+  is_allow_newsletter: true
 
 user_2:
   id: 2
@@ -23,107 +54,7 @@ user_2:
   updated_at: 2016-04-04 15:00:43.556308000 Z
   is_allow_contact: true
   group_id: 1
-  stp_customer_id: cus_8Di1wjdVktv5kt
   slug: jdupond
-  is_active: true
-  provider:
-  uid:
-  auth_token:
-  merged_at:
-  is_allow_newsletter: true
-
-user_4:
-  id: 4
-  username: kdumas
-  email: kevin.dumas@orange.fr
-  encrypted_password: "$2a$10$N6Q4SHkkUtwlnMNFvN6nF.rkmLFTIPsARk7xEuR1Dws7Dy2sSrSOW"
-  reset_password_token:
-  reset_password_sent_at:
-  remember_created_at:
-  sign_in_count: 0
-  current_sign_in_at:
-  last_sign_in_at:
-  current_sign_in_ip:
-  last_sign_in_ip:
-  confirmation_token:
-  confirmed_at: 2016-04-04 15:11:02.968494000 Z
-  confirmation_sent_at: 2016-04-04 15:10:42.376191000 Z
-  unconfirmed_email:
-  failed_attempts: 0
-  unlock_token:
-  locked_at:
-  created_at: 2016-04-04 15:10:42.340868000 Z
-  updated_at: 2016-04-04 15:11:02.969182000 Z
-  is_allow_contact: true
-  group_id: 2
-  stp_customer_id: cus_8CzKe50I0J1gaI
-  slug: kdumas
-  is_active: true
-  provider:
-  uid:
-  auth_token:
-  merged_at:
-  is_allow_newsletter: false
-
-user_6:
-  id: 6
-  username: GilbertPartenaire
-  email: gilbert.partenaire@nicolas.com
-  encrypted_password: "$2a$10$UtWcIYMd2aOtQjw6OFL4cuMV1MB20Bfs/opzJDqWXqu8woUo.2cLu"
-  reset_password_token:
-  reset_password_sent_at:
-  remember_created_at:
-  sign_in_count: 0
-  current_sign_in_at:
-  last_sign_in_at:
-  current_sign_in_ip:
-  last_sign_in_ip:
-  confirmation_token:
-  confirmed_at: 2016-04-04 15:18:14.124111000 Z
-  confirmation_sent_at: 2016-04-04 15:17:12.522028000 Z
-  unconfirmed_email:
-  failed_attempts: 0
-  unlock_token:
-  locked_at:
-  created_at: 2016-04-04 15:17:12.522028000 Z
-  updated_at: 2016-04-04 15:17:12.522028000 Z
-  is_allow_contact: true
-  group_id: 1
-  stp_customer_id: cus_8CzQK5uXPeyh4K
-  slug: gilbertpartenaire
-  is_active: true
-  provider:
-  uid:
-  auth_token:
-  merged_at:
-  is_allow_newsletter: true
-
-user_5:
-  id: 5
-  username: vlonchamp
-  email: vanessa.lonchamp@sfr.fr
-  encrypted_password: "$2a$10$HOEk.QyGwpd9nsk2gVXGSuAxig9jMrNFHVqYMW1.Sp41EtN7rdBbG"
-  reset_password_token:
-  reset_password_sent_at:
-  remember_created_at:
-  sign_in_count: 1
-  current_sign_in_at: 2016-04-04 15:34:23.343596000 Z
-  last_sign_in_at: 2016-04-04 15:34:23.343596000 Z
-  current_sign_in_ip: 37.64.230.6
-  last_sign_in_ip: 37.67.211.2
-  confirmation_token: 59cfd407491c4e1d95a9f91f81e710a62a83a6fd7171ad22823b4c4395312c4d
-  confirmed_at: 2016-04-04 15:18:12.122101000 Z
-  confirmation_sent_at: 2016-04-04 15:14:08.599603000 Z
-  unconfirmed_email:
-  failed_attempts: 0
-  unlock_token:
-  locked_at:
-  created_at: 2016-04-04 15:14:08.563152000 Z
-  updated_at: 2016-04-04 15:34:23.344613000 Z
-  is_allow_contact: true
-  group_id: 2
-  stp_customer_id: cus_8CzNtM08NVlSGN
-  slug: vlonchamp
   is_active: true
   provider:
   uid:
@@ -155,7 +86,6 @@ user_3:
   updated_at: 2016-04-05 08:35:05.678582000 Z
   is_allow_contact: false
   group_id: 1
-  stp_customer_id: cus_8CzHcwBJtlA3IL
   slug: pdurand
   is_active: true
   provider:
@@ -164,32 +94,63 @@ user_3:
   merged_at:
   is_allow_newsletter: false
 
-user_1:
-  id: 1
-  username: admin
-  email: admin@fab-manager.com
-  encrypted_password: "$2a$10$LtQ2OggropcXpmcsPTEPruuGZrwuFYGOo8qjh.po91YDna/K4/Bbe"
+user_4:
+  id: 4
+  username: kdumas
+  email: kevin.dumas@orange.fr
+  encrypted_password: "$2a$10$N6Q4SHkkUtwlnMNFvN6nF.rkmLFTIPsARk7xEuR1Dws7Dy2sSrSOW"
   reset_password_token:
   reset_password_sent_at:
   remember_created_at:
-  sign_in_count: 8
-  current_sign_in_at: 2016-04-05 08:36:08.361260000 Z
-  last_sign_in_at: 2016-04-05 08:34:28.227054000 Z
-  current_sign_in_ip: 127.0.0.1
-  last_sign_in_ip: 127.0.0.1
+  sign_in_count: 0
+  current_sign_in_at:
+  last_sign_in_at:
+  current_sign_in_ip:
+  last_sign_in_ip:
   confirmation_token:
-  confirmed_at: 2016-04-05 08:40:21.514533000 Z
-  confirmation_sent_at: 2001-01-01 14:11:33.852719000 Z
+  confirmed_at: 2016-04-04 15:11:02.968494000 Z
+  confirmation_sent_at: 2016-04-04 15:10:42.376191000 Z
   unconfirmed_email:
   failed_attempts: 0
   unlock_token:
   locked_at:
-  created_at: 2001-01-01 14:11:33.852719000 Z
-  updated_at: 2016-04-05 08:36:08.362215000 Z
+  created_at: 2016-04-04 15:10:42.340868000 Z
+  updated_at: 2016-04-04 15:11:02.969182000 Z
   is_allow_contact: true
-  group_id: 3
-  stp_customer_id: cus_8CyNk3UTi8lvCc
-  slug: admin
+  group_id: 2
+  slug: kdumas
+  is_active: true
+  provider:
+  uid:
+  auth_token:
+  merged_at:
+  is_allow_newsletter: false
+
+user_5:
+  id: 5
+  username: vlonchamp
+  email: vanessa.lonchamp@sfr.fr
+  encrypted_password: "$2a$10$HOEk.QyGwpd9nsk2gVXGSuAxig9jMrNFHVqYMW1.Sp41EtN7rdBbG"
+  reset_password_token:
+  reset_password_sent_at:
+  remember_created_at:
+  sign_in_count: 1
+  current_sign_in_at: 2016-04-04 15:34:23.343596000 Z
+  last_sign_in_at: 2016-04-04 15:34:23.343596000 Z
+  current_sign_in_ip: 37.64.230.6
+  last_sign_in_ip: 37.67.211.2
+  confirmation_token: 59cfd407491c4e1d95a9f91f81e710a62a83a6fd7171ad22823b4c4395312c4d
+  confirmed_at: 2016-04-04 15:18:12.122101000 Z
+  confirmation_sent_at: 2016-04-04 15:14:08.599603000 Z
+  unconfirmed_email:
+  failed_attempts: 0
+  unlock_token:
+  locked_at:
+  created_at: 2016-04-04 15:14:08.563152000 Z
+  updated_at: 2016-04-04 15:34:23.344613000 Z
+  is_allow_contact: true
+  group_id: 2
+  slug: vlonchamp
   is_active: true
   provider:
   uid:
@@ -197,6 +158,37 @@ user_1:
   merged_at:
   is_allow_newsletter: true
 
+user_6:
+  id: 6
+  username: GilbertPartenaire
+  email: gilbert.partenaire@nicolas.com
+  encrypted_password: "$2a$10$UtWcIYMd2aOtQjw6OFL4cuMV1MB20Bfs/opzJDqWXqu8woUo.2cLu"
+  reset_password_token:
+  reset_password_sent_at:
+  remember_created_at:
+  sign_in_count: 0
+  current_sign_in_at:
+  last_sign_in_at:
+  current_sign_in_ip:
+  last_sign_in_ip:
+  confirmation_token:
+  confirmed_at: 2016-04-04 15:18:14.124111000 Z
+  confirmation_sent_at: 2016-04-04 15:17:12.522028000 Z
+  unconfirmed_email:
+  failed_attempts: 0
+  unlock_token:
+  locked_at:
+  created_at: 2016-04-04 15:17:12.522028000 Z
+  updated_at: 2016-04-04 15:17:12.522028000 Z
+  is_allow_contact: true
+  group_id: 1
+  slug: gilbertpartenaire
+  is_active: true
+  provider:
+  uid:
+  auth_token:
+  merged_at:
+  is_allow_newsletter: true
 
 user_7:
   id: 7
@@ -222,7 +214,6 @@ user_7:
   updated_at: 2016-04-07 11:00:37.643112000 Z
   is_allow_contact: true
   group_id: 1
-  stp_customer_id: cus_8E2ys9zDZgetWX
   slug: lseguin
   is_active: true
   provider:
@@ -255,7 +246,6 @@ user_8:
   updated_at: 2021-01-04 14:36:39.729052932 Z
   is_allow_contact: true
   group_id: 1
-  stp_customer_id: cus_IhIynmoJbzLpwX
   slug: atiermoulin
   is_active: true
   provider:

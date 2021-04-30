@@ -14,8 +14,15 @@
         <div class="row m-t-lg">
             <div class="col-md-6">
                 <h4 translate>{{ 'app.admin.settings.news_of_the_home_page' }}</h4>
-                <div ng-model="homeBlogpostSetting.value" class="well" medium-editor options='{"placeholder": "{{ "app.admin.settings.type_your_news_here" | translate }}",
-                  "buttons": ["bold", "italic", "anchor", "header1", "header2" ]}'></div>
+                <div ng-model="homeBlogpostSetting.value"
+                     class="well"
+                     medium-editor
+                     options='{
+                       "placeholder": "{{ "app.admin.settings.type_your_news_here" | translate }}",
+                       "buttons": ["bold", "italic", "anchor", "header1", "header2" ],
+                       "targetBlank": true
+                     }'>
+                </div>
                 <span class="help-block text-info text-xs"><i class="fa fa-lightbulb-o"></i> {{ 'app.admin.settings.leave_it_empty_to_not_bring_up_any_news_on_the_home_page' | translate }}</span>
                 <button name="button" class="btn btn-warning" ng-click="save(homeBlogpostSetting)" translate>{{ 'app.shared.buttons.save' }}</button>
             </div>

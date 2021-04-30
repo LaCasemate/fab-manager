@@ -13,8 +13,8 @@ class API::SubscriptionsController < API::ApiController
   # otherwise, they must use payments_controller#confirm_payment.
   # Managers can create subscriptions for other users
   def create
-    user_id = current_user.admin? || current_user.manager? ? params[:subscription][:user_id] : current_user.id
-    transaction = transaction_amount(current_user.admin? || (current_user.manager? && current_user.id != user_id), user_id)
+    user_id = current_user.admin? || current_user.manager? ? params[:customer_id] : current_user.id
+    transaction = transaction_amount(user_id)
 
     authorize SubscriptionContext.new(Subscription, transaction[:amount], user_id)
 
@@ -50,16 +50,16 @@ class API::SubscriptionsController < API::ApiController
 
   private
 
-  def transaction_amount(is_admin, user_id)
+  def transaction_amount(user_id)
+    cs = CartService.new(current_user)
+    cart = cs.from_hash(customer_id: user_id,
+                        subscription: {
+                          plan_id: subscription_params[:plan_id]
+                        },
+                        coupon_code: coupon_params[:coupon_code],
+                        payment_schedule: params[:payment_schedule])
+    price_details = cart.total
     user = User.find(user_id)
-    price_details = Price.compute(is_admin,
-                                  user,
-                                  nil,
-                                  [],
-                                  plan_id: subscription_params[:plan_id],
-                                  nb_places: nil,
-                                  tickets: nil,
-                                  coupon_code: coupon_params[:coupon_code])
 
     # Subtract wallet amount from total
     total = price_details[:total]

@@ -213,6 +213,24 @@
           </div>
         </div>
 
+        <div class="form-group required-row">
+          <div class="col-sm-12">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-map-marker"></i> </span>
+              <input type="text"
+                     name="address"
+                     ng-model="user.invoicing_profile_attributes.address_attributes.address"
+                     class="form-control"
+                     placeholder="{{ 'app.public.common.address' | translate }}"
+                     ng-required="addressRequired"/>
+            </div>
+            <span ng-show="addressRequired" class="exponent help-cursor" title="{{ 'app.public.common.used_for_invoicing' | translate }}">
+              <i class="fa fa-asterisk" aria-hidden="true"></i>
+            </span>
+            <span class="help-block" ng-show="signupForm.address.$dirty && signupForm.address.$error.required" translate>{{ 'app.public.common.address_is_required' }}</span>
+          </div>
+        </div>
+
         <div class="form-group" ng-class="{'has-error': signupForm.is_allow_contact.$dirty && signupForm.is_allow_contact.$invalid}">
           <div class="col-sm-12 checkbox-group">
             <input type="checkbox"

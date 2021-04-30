@@ -60,7 +60,7 @@
                          show-button-bar="false"
                          placeholder="{{ 'app.admin.stats_graphs.start' | translate }}"
                          ng-click="toggleStartDatePicker($event)"
-                         required="required"/>
+                         required="true"/>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default btn-search-datepicker" ng-click="toggleStartDatePicker($event)">
                           <i class="glyphicon glyphicon-calendar"></i>
@@ -83,7 +83,7 @@
                          show-button-bar="false"
                          placeholder="{{ 'app.admin.stats_graphs.end' | translate }}"
                          ng-click="toggleEndDatePicker($event)"
-                         required="required"/>
+                         required="true"/>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default btn-search-datepicker" ng-click="toggleEndDatePicker($event)">
                           <i class="glyphicon glyphicon-calendar"></i>
@@ -102,7 +102,7 @@
       </form>
 
       <uib-tabset justified="true">
-        <uib-tab ng-repeat="stat in statistics" heading="{{stat.label}}" select="setActiveTab(stat)" ng-if="stat.graph && !(stat.es_type_key == 'subscription' && modules.plans)" class="row">
+        <uib-tab ng-repeat="(index, stat) in statistics" heading="{{stat.label}}" select="setActiveTab(stat, index)" ng-if="hiddenTab(stat)" index="index" class="row">
 
           <div ng-if="stat.graph.chart_type == 'discreteBarChart'">
             <div id="rankingFilters">

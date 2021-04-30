@@ -13,8 +13,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 
-Application.Controllers.controller('EventsController', ['$scope', '$state', 'Event', 'categoriesPromise', 'themesPromise', 'ageRangesPromise', 'settingsPromise',
-  function ($scope, $state, Event, categoriesPromise, themesPromise, ageRangesPromise, settingsPromise) {
+Application.Controllers.controller('EventsController', ['$scope', '$state', 'Event', 'categoriesPromise', 'themesPromise', 'ageRangesPromise',
+  function ($scope, $state, Event, categoriesPromise, themesPromise, ageRangesPromise) {
   /* PUBLIC SCOPE */
 
     // The events displayed on the page
@@ -178,11 +178,16 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
     // Message displayed to the end user about rules that applies to events reservations
     $scope.eventExplicationsAlert = settingsPromise.event_explications_alert;
 
+    // online payments (by card)
+    $scope.onlinePayment = {
+      showModal: false,
+      cartItems: undefined
+    };
+
     /**
      * Callback to delete the provided event (admins only)
-     * @param event {$resource} angular's Event $resource
      */
-    $scope.deleteEvent = function (event) {
+    $scope.deleteEvent = function () {
       // open a confirmation dialog
       const modalInstance = $uibModal.open({
         animation: true,
@@ -195,7 +200,7 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
       });
       // once the dialog was closed, do things depending on the result
       modalInstance.result.then(function (res) {
-        if (res.status == 'success') {
+        if (res.status === 'success') {
           $state.go('app.public.events_list');
         }
       });
@@ -205,7 +210,7 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
      * Callback to call when the number of tickets to book changes in the current booking
      */
     $scope.changeNbPlaces = function () {
-      // compute the total remaning places
+      // compute the total remaining places
       let remain = $scope.event.nb_free_places - $scope.reserve.nbReservePlaces;
       for (let ticket in $scope.reserve.tickets) {
         remain -= $scope.reserve.tickets[ticket];
@@ -299,7 +304,7 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
     $scope.payEvent = function () {
     // first, we check that a user was selected
       if (Object.keys($scope.ctrl.member).length > 0) {
-        const reservation = mkReservation($scope.ctrl.member, $scope.reserve, $scope.event);
+        const reservation = mkReservation($scope.reserve, $scope.event);
 
         return Wallet.getWalletByUser({ user_id: $scope.ctrl.member.id }, function (wallet) {
           const amountToPay = helpers.getAmountToPay($scope.reserve.amountTotal, wallet.amount);
@@ -308,7 +313,7 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
             if (settingsPromise.online_payment_module !== 'true') {
               growl.error(_t('app.public.events_show.online_payment_disabled'));
             } else {
-              return payByStripe(reservation);
+              return payOnline(reservation);
             }
           } else {
             if (AuthService.isAuthorized('admin')
@@ -328,32 +333,36 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
      * Callback to validate the booking of a free event
      */
     $scope.validReserveEvent = function () {
-      const reservation = {
-        user_id: $scope.ctrl.member.id,
-        reservable_id: $scope.event.id,
-        reservable_type: 'Event',
-        slots_attributes: [],
-        nb_reserve_places: $scope.reserve.nbReservePlaces,
-        tickets_attributes: []
-      };
+      const cartItems = {
+        customer_id: $scope.ctrl.member.id,
+        reservation: {
+          reservable_id: $scope.event.id,
+          reservable_type: 'Event',
+          slots_attributes: [],
+          nb_reserve_places: $scope.reserve.nbReservePlaces,
+          tickets_attributes: []
+        }
+      }
       // a single slot is used for events
-      reservation.slots_attributes.push({
+      cartItems.reservation.slots_attributes.push({
         start_at: $scope.event.start_date,
         end_at: $scope.event.end_date,
         availability_id: $scope.event.availability.id
       });
       // iterate over reservations per prices
       for (let price_id in $scope.reserve.tickets) {
-        const seats = $scope.reserve.tickets[price_id];
-        reservation.tickets_attributes.push({
-          event_price_category_id: price_id,
-          booked: seats
-        });
+        if (Object.prototype.hasOwnProperty.call($scope.reserve.tickets, price_id)) {
+          const seats = $scope.reserve.tickets[price_id];
+          cartItems.reservation.tickets_attributes.push({
+            event_price_category_id: price_id,
+            booked: seats
+          });
+        }
       }
       // set the attempting marker
       $scope.attempting = true;
       // save the reservation to the API
-      return Reservation.save({ reservation }, function (reservation) {
+      return Reservation.save(cartItems, function (reservation) {
       // reservation successfull
         afterPayment(reservation);
         return $scope.attempting = false;
@@ -372,7 +381,7 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
 
     /**
      * Callback to cancel a reservation
-     * @param reservation {{id:number, reservable_id:number, nb_reserve_places:number}}
+     * @param reservation {{id:number, reservable_id:number, nb_reserve_places:number, slots_attributes:[{id: number, canceled_at: string}], total_booked_seats: number}}
      */
     $scope.cancelReservation = function(reservation) {
       dialogs.confirm({
@@ -386,13 +395,13 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
         }
       }, function() { // cancel confirmed
         Slot.cancel({
-          id: reservation.slots[0].id
+          id: reservation.slots_attributes[0].id
         }, function() { // successfully canceled
           let index;
           growl.success(_t('app.public.events_show.reservation_was_successfully_cancelled'));
           index = $scope.reservations.indexOf(reservation);
           $scope.event.nb_free_places = $scope.event.nb_free_places + reservation.total_booked_seats;
-          $scope.reservations[index].slots[0].canceled_at = new Date();
+          $scope.reservations[index].slots_attributes[0].canceled_at = new Date();
         }, function(error) {
           growl.warning(_t('app.public.events_show.cancellation_failed'));
         });
@@ -401,11 +410,11 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
 
     /**
      * Test if the provided reservation has been cancelled
-     * @param reservation {Reservation}
+     * @param reservation {{slots_attributes: [{canceled_at: string}]}}
      * @returns {boolean}
      */
     $scope.isCancelled = function(reservation) {
-      return !!(reservation.slots[0].canceled_at);
+      return !!(reservation.slots_attributes[0].canceled_at);
     }
 
     /**
@@ -442,10 +451,9 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
                 return eventToPlace = e;
               }
             });
-            $scope.reservation.slots[0].start_at = eventToPlace.start_date;
-            $scope.reservation.slots[0].end_at = eventToPlace.end_date;
-            $scope.reservation.slots[0].availability_id = eventToPlace.availability_id;
-            $scope.reservation.slots_attributes = $scope.reservation.slots;
+            $scope.reservation.slots_attributes[0].start_at = eventToPlace.start_date;
+            $scope.reservation.slots_attributes[0].end_at = eventToPlace.end_date;
+            $scope.reservation.slots_attributes[0].availability_id = eventToPlace.availability_id;
             $scope.attempting = true;
             Reservation.update({ id: reservation.id }, { reservation: $scope.reservation }, function (reservation) {
               $uibModalInstance.close(reservation);
@@ -482,10 +490,10 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
 
     /**
      * Checks if the provided reservation is able to be moved (date change)
-     * @param reservation {{slots:[], total_booked_seats:number}}
+     * @param reservation {{slots_attributes:[], total_booked_seats:number}}
      */
     $scope.reservationCanModify = function (reservation) {
-      const slotStart = moment(reservation.slots[0].start_at);
+      const slotStart = moment(reservation.slots_attributes[0].start_at);
       const now = moment();
 
       let isAble = false;
@@ -497,12 +505,11 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
 
     /**
      * Checks if the provided reservation is able to be cancelled
-     * @param reservation {{slots:[]}}
+     * @param reservation {{slots_attributes:[]}}
      */
     $scope.reservationCanCancel = function(reservation) {
-      var now, slotStart;
-      slotStart = moment(reservation.slots[0].start_at);
-      now = moment();
+      const slotStart = moment(reservation.slots_attributes[0].start_at);
+      const now = moment();
       return $scope.enableBookingCancel && slotStart.diff(now, "hours") >= $scope.cancelBookingDelay;
     };
 
@@ -513,8 +520,8 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
     $scope.computeEventAmount = function () {
     // first we check that a user was selected
       if (Object.keys($scope.ctrl.member).length > 0) {
-        const r = mkReservation($scope.ctrl.member, $scope.reserve, $scope.event);
-        return Price.compute(mkRequestParams(r, $scope.coupon.applied), function (res) {
+        const r = mkReservation($scope.reserve, $scope.event);
+        return Price.compute(mkCartItems(r, $scope.coupon.applied), function (res) {
           $scope.reserve.amountTotal = res.price;
           return $scope.reserve.totalNoCoupon = res.price_without_coupon;
         });
@@ -545,6 +552,28 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
       }
     };
 
+    /**
+     * This will open/close the online payment modal
+     */
+    $scope.toggleOnlinePaymentModal = (beforeApply) => {
+      setTimeout(() => {
+        $scope.onlinePayment.showModal = !$scope.onlinePayment.showModal;
+        if (typeof beforeApply === 'function') {
+          beforeApply();
+        }
+        $scope.$apply();
+      }, 50);
+    };
+
+    /**
+     * Invoked atfer a successful card payment
+     * @param reservation {*} reservation
+     */
+    $scope.afterOnlinePaymentSuccess = (reservation) => {
+      $scope.toggleOnlinePaymentModal();
+      afterPayment(reservation);
+    };
+
     /* PRIVATE SCOPE */
 
     /**
@@ -561,7 +590,7 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
       // initialize the "reserve" object with the event's data
       resetEventReserve();
 
-      // if non-admin, get the current user's reservations into $scope.reservations
+      // get the current user's reservations into $scope.reservations
       if ($scope.currentUser) {
         getReservations($scope.event.id, 'Event', $scope.currentUser.id);
       }
@@ -589,15 +618,13 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
     };
 
     /**
-     * Create an hash map implementing the Reservation specs
-     * @param member {Object} User as retreived from the API: current user / selected user if current is admin
+     * Create a hash map implementing the Reservation specs
      * @param reserve {Object} Reservation parameters (places...)
      * @param event {Object} Current event
-     * @return {{user_id:number, reservable_id:number, reservable_type:string, slots_attributes:Array<Object>, nb_reserve_places:number}}
+     * @return {{reservable_id:number, reservable_type:string, slots_attributes:Array<Object>, nb_reserve_places:number}}
      */
-    const mkReservation = function (member, reserve, event) {
+    const mkReservation = function (reserve, event) {
       const reservation = {
-        user_id: member.id,
         reservable_id: event.id,
         reservable_type: 'Event',
         slots_attributes: [],
@@ -629,15 +656,16 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
      * Format the parameters expected by /api/prices/compute or /api/reservations and return the resulting object
      * @param reservation {Object} as returned by mkReservation()
      * @param coupon {Object} Coupon as returned from the API
+     * @param paymentMethod {string} 'card' | ''
      * @return {{reservation:Object, coupon_code:string}}
      */
-    const mkRequestParams = function (reservation, coupon) {
-      const params = {
+    const mkCartItems = function (reservation, coupon, paymentMethod = '') {
+      return {
+        customer_id: $scope.ctrl.member.id,
         reservation,
-        coupon_code: ((coupon ? coupon.code : undefined))
+        coupon_code: ((coupon ? coupon.code : undefined)),
+        payment_method: paymentMethod,
       };
-
-      return params;
     };
 
     /**
@@ -669,71 +697,15 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
      * Open a modal window which trigger the stripe payment process
      * @param reservation {Object} to book
      */
-    const payByStripe = function (reservation) {
-      $uibModal.open({
-        templateUrl: '/stripe/payment_modal.html',
-        size: 'md',
-        resolve: {
-          reservation () {
-            return reservation;
-          },
-          price () {
-            return Price.compute(mkRequestParams(reservation, $scope.coupon.applied)).$promise;
-          },
-          wallet () {
-            return Wallet.getWalletByUser({ user_id: reservation.user_id }).$promise;
-          },
-          cgv () {
-            return CustomAsset.get({ name: 'cgv-file' }).$promise;
-          },
-          objectToPay () {
-            return {
-              eventToReserve: $scope.event,
-              reserve: $scope.reserve,
-              member: $scope.ctrl.member
-            };
-          },
-          coupon () {
-            return $scope.coupon.applied;
-          },
-          cartItems () {
-            return mkRequestParams(reservation, $scope.coupon.applied);
-          },
-          stripeKey: ['Setting', function (Setting) { return Setting.get({ name: 'stripe_public_key' }).$promise; }]
-        },
-        controller: ['$scope', '$uibModalInstance', '$state', 'reservation', 'price', 'cgv', 'Auth', 'Reservation', 'growl', 'wallet', 'helpers', '$filter', 'coupon', 'cartItems', 'stripeKey',
-          function ($scope, $uibModalInstance, $state, reservation, price, cgv, Auth, Reservation, growl, wallet, helpers, $filter, coupon, cartItems, stripeKey) {
-            // User's wallet amount
-            $scope.wallet = wallet;
-
-            // Price
-            $scope.price = price.price;
-
-            // Amount to pay
-            $scope.amount = helpers.getAmountToPay(price.price, wallet.amount);
-
-            // Cart items
-            $scope.cartItems = cartItems;
-
-            // CGV
-            $scope.cgv = cgv.custom_asset;
-
-            // Reservation
-            $scope.reservation = reservation;
-
-            // Used in wallet info template to interpolate some translations
-            $scope.numberFilter = $filter('number');
-
-            // stripe publishable key
-            $scope.stripeKey = stripeKey.setting.value;
-
-            // Callback to handle the post-payment and reservation
-            $scope.onPaymentSuccess = function (reservation) {
-              $uibModalInstance.close(reservation);
-            };
-          }
-        ]
-      }).result['finally'](null).then(function (reservation) { afterPayment(reservation); });
+    const payOnline = function (reservation) {
+      // check that the online payment is enabled
+      if (settingsPromise.online_payment_module !== 'true') {
+        growl.error(_t('app.shared.cart.online_payment_disabled'));
+      } else {
+        $scope.toggleOnlinePaymentModal(() => {
+          $scope.onlinePayment.cartItems = mkCartItems(reservation, 'card');
+        });
+      }
     };
 
     /**
@@ -749,16 +721,16 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
             return reservation;
           },
           price () {
-            return Price.compute(mkRequestParams(reservation, $scope.coupon.applied)).$promise;
+            return Price.compute(mkCartItems(reservation, $scope.coupon.applied)).$promise;
           },
           wallet () {
-            return Wallet.getWalletByUser({ user_id: reservation.user_id }).$promise;
+            return Wallet.getWalletByUser({ user_id: $scope.ctrl.member.id }).$promise;
           },
           coupon () {
             return $scope.coupon.applied;
           },
           cartItems () {
-            return mkRequestParams(reservation, $scope.coupon.applied);
+            return mkCartItems(reservation, $scope.coupon.applied);
           },
         },
         controller: ['$scope', '$uibModalInstance', '$state', 'reservation', 'price', 'Auth', 'Reservation', 'wallet', 'helpers', '$filter', 'coupon', 'cartItems',
@@ -795,7 +767,7 @@ Application.Controllers.controller('ShowEventController', ['$scope', '$state', '
             // Callback to validate the payment
             $scope.ok = function () {
               $scope.attempting = true;
-              return Reservation.save(mkRequestParams($scope.reservation, coupon), function (reservation) {
+              return Reservation.save(mkCartItems($scope.reservation, coupon), function (reservation) {
                 $uibModalInstance.close(reservation);
                 return $scope.attempting = true;
               }

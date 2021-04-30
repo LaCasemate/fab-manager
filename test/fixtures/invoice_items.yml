@@ -2,19 +2,17 @@
 invoice_item_1:
   id: 1
   invoice_id: 1
-  stp_invoice_item_id: sub_8DGB4ErIc2asOv
   amount: 10000
   created_at: 2012-03-12 11:03:31.651441000 Z
   updated_at: 2012-03-12 11:03:31.651441000 Z
   description: Sleede - standard, association - month
   subscription_id: 1
   invoice_item_id:
-  footprint: 931e8b6f5579f2e7eda625bdf5962da89892957abb25480603ae985e6e108059
+  footprint: a8159facb52418d4b5e9089c6b5d63260d364e506e42959bf593e22b9fbc75e3
 
 invoice_item_2:
   id: 2
   invoice_id: 2
-  stp_invoice_item_id:
   amount: 2000
   created_at: 2012-03-12 13:40:22.342717000 Z
   updated_at: 2012-03-12 13:40:22.342717000 Z
@@ -22,54 +20,50 @@ invoice_item_2:
     d'emploi - month
   subscription_id: 2
   invoice_item_id:
-  footprint: abbf95b8d506ed6207343edbf8ee63893cd02508de6d25347999d7dbc755c6fb
+  footprint: 647c9f3f4b402cd61d3fbf55dc4be3832b6111f8438dcfc51010d2f626f1e710
 
 invoice_item_3:
   id: 3
   invoice_id: 3
-  stp_invoice_item_id:
   amount: 3000
   created_at: 2015-06-10 11:20:01.341130000 Z
   updated_at: 2015-06-10 11:20:01.341130000 Z
   description: Mensuel - standard, association - month
   subscription_id: 3
   invoice_item_id:
-  footprint: caf3b7e54e0191d8f262e01acc4e66f29f9d27abe52e595fb3b71724a32cfe90
+  footprint: acb83d8083349073da133721f99ad9094d8739cee3b71b58d668f3947ad72a80
 
 invoice_item_4:
   id: 4
   invoice_id: 4
-  stp_invoice_item_id:
   amount: 0
   created_at: 2016-04-05 08:35:52.934725000 Z
   updated_at: 2016-04-05 08:35:52.934725000 Z
   description: Formation Laser / Vinyle April 11, 2012 08:00 - 12:00 PM
   subscription_id:
   invoice_item_id:
-  footprint: 71d095aa4d49ebac39f7efdc5c9de2354ea8efeec7c35a6708143fb66dd66b0b
+  footprint: 3f126c4491694667ab27cfdb47c07a09206af53a8b1f1d28d44163eb86af38ec
 
 invoice_item_5:
   id: 5
   invoice_id: 5
-  stp_invoice_item_id:
   amount: 1500
   created_at: 2016-04-05 08:36:46.856021000 Z
   updated_at: 2016-04-05 08:36:46.856021000 Z
   description: Imprimante 3D June 15, 2015 12:00 - 01:00 PM
   subscription_id:
   invoice_item_id:
-  footprint: d4d856ee04f27b5e35f43056b46f139df73ffdfaad1716636f569164c52c5e5b
+  footprint: 87d8628ce5a04a4dac5b1ada61efaec6c88b47da7786000f7d0c3473b0fc0b9c
 
 invoice_item_6:
   id: 6
   invoice_id: 6
-  stp_invoice_item_id:
   amount: 3000
   created_at: 2016-04-05 08:36:46.856021000 Z
   updated_at: 2016-04-05 08:36:46.856021000 Z
   description: Mensuel - standard, association - month
   subscription_id: 3
   invoice_item_id:
-  footprint: 79e42a65be85a40978c19c493af436ea893d15b7e054e9991bb4d3bb3d80913d
+  footprint: 8260f054db6b70570db87488b3d4ffe170c9b290abead53ecec21ff3d9c78a9e
 
 

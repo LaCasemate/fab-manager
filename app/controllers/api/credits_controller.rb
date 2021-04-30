@@ -47,6 +47,6 @@ class API::CreditsController < API::ApiController
   end
 
   def credit_params
-    params.require(:credit).permit!
+    params.require(:credit).permit(:creditable_id, :creditable_type, :plan_id, :hours)
   end
 end

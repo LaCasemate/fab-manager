@@ -49,17 +49,18 @@ Application.Directives.directive('selectMultipleSetting', ['Setting', 'growl', '
               titleNew: function () { return $scope.titleNew; },
               descriptionNew: function () { return $scope.descriptionNew; }
             },
-            controller: function ($scope, $uibModalInstance, titleNew, descriptionNew) {
-              $scope.value = undefined;
-              $scope.titleNew = titleNew;
-              $scope.descriptionNew = descriptionNew;
-              $scope.ok = function () {
-                $uibModalInstance.close($scope.value);
-              };
-              $scope.dismiss = function () {
-                $uibModalInstance.dismiss('cancel');
-              };
-            }
+            controller: ['$scope', '$uibModalInstance', 'titleNew', 'descriptionNew',
+              function ($scope, $uibModalInstance, titleNew, descriptionNew) {
+                $scope.value = undefined;
+                $scope.titleNew = titleNew;
+                $scope.descriptionNew = descriptionNew;
+                $scope.ok = function () {
+                  $uibModalInstance.close($scope.value);
+                };
+                $scope.dismiss = function () {
+                  $uibModalInstance.dismiss('cancel');
+                };
+              }]
           }).result.finally(null).then(function (val) {
             const options = Array.from($scope.options);
             if (typeof $scope.beforeAdd === 'function') { val = $scope.beforeAdd(val); }

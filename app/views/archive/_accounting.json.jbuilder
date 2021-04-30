@@ -2,7 +2,13 @@
 
 json.invoices do
   json.array!(invoices) do |invoice|
-    json.extract! invoice[:invoice], :id, :stp_invoice_id, :stp_payment_intent_id, :created_at, :reference, :footprint
+    json.extract! invoice[:invoice], :id, :payment_method, :created_at, :reference, :footprint
+    if invoice[:invoice].payment_gateway_object
+      json.payment_gateway_object do
+        json.id invoice[:invoice].payment_gateway_object.gateway_object_id
+        json.type invoice[:invoice].payment_gateway_object.gateway_object_type
+      end
+    end
     json.total number_to_currency(invoice[:invoice].total / 100.0)
     json.invoiced do
       json.type invoice[:invoice].invoiced_type
@@ -25,7 +31,13 @@ json.invoices do
       end
     end
     json.invoice_items invoice[:invoice].invoice_items do |item|
-      json.extract! item, :id, :stp_invoice_item_id, :created_at, :description, :footprint
+      json.extract! item, :id, :created_at, :description, :footprint
+      if item.payment_gateway_object
+        json.payment_gateway_object do
+          json.id item.payment_gateway_object.gateway_object_id
+          json.type item.payment_gateway_object.gateway_object_type
+        end
+      end
       json.partial! 'archive/vat', price: item.amount, vat_rate: invoice[:vat_rate]
     end
   end

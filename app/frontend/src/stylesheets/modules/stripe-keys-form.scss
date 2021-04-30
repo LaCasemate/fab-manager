@@ -1,0 +1,27 @@
+.stripe-keys-form {
+  & {
+    margin-top: 1em;
+  }
+
+  .stripe-keys-info {
+    border: 1px solid #bce8f1;
+    border-radius: 4px;
+    color: #31708f;
+    background-color: #d9edf7;
+    padding: 15px;
+  }
+
+  .stripe-public-input, .stripe-secret-input {
+    display: block;
+    margin: 7px;
+
+    .key-valid {
+      background-color: #7bca38;
+    }
+
+    .key-invalid {
+      background-color: #d92227;
+      color: white;
+    }
+  }
+}

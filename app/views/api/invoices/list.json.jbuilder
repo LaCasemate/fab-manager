@@ -12,7 +12,7 @@ json.array!(@invoices) do |invoice|
   json.has_avoir invoice.refunded?
   json.is_avoir invoice.is_a?(Avoir)
   json.is_subscription_invoice invoice.subscription_invoice?
-  json.stripe invoice.paid_with_stripe?
+  json.online_payment invoice.paid_by_card?
   json.date invoice.is_a?(Avoir) ? invoice.avoir_date : invoice.created_at
   json.prevent_refund invoice.prevent_refund?
   json.chained_footprint invoice.check_footprint

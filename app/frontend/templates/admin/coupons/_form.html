@@ -4,7 +4,7 @@
          name="coupon[name]"
          class="form-control"
          ng-model="coupon.name"
-         required="required"/>
+         required="true"/>
   <span class="help-block error" ng-show="couponForm['coupon[name]'].$dirty && couponForm['coupon[name]'].$error.required" translate>{{ 'app.shared.coupon.name_is_required' }}</span>
 </div>
 
@@ -16,7 +16,7 @@
          ng-model="coupon.code"
          ng-pattern="/^[A-Z0-9\-]+$/"
          ng-disabled="mode == 'EDIT'"
-         required="required"/>
+         required="true"/>
   <span class="help-block error" ng-show="couponForm['coupon[code]'].$dirty && couponForm['coupon[code]'].$error.required" translate>{{ 'app.shared.coupon.code_is_required' }}</span>
   <span class="help-block error" ng-show="couponForm['coupon[code]'].$dirty && couponForm['coupon[code]'].$error.pattern" translate>{{ 'app.shared.coupon.code_must_be_composed_of_capital_letters_digits_and_or_dashes' }}</span>
 </div>
@@ -28,7 +28,7 @@
           class="form-control"
           ng-model="coupon.type"
           ng-disabled="mode == 'EDIT'"
-          required="required">
+          required="true">
     <option value="percent_off" translate>{{ 'app.shared.coupon.percentage' }}</option>
     <option value="amount_off" translate>{{ 'app.shared.coupon.amount' }}</option>
   </select>
@@ -73,7 +73,7 @@
           name="coupon[validity_per_user]"
           class="form-control"
           ng-model="coupon.validity_per_user"
-          required="required"
+          required="true"
           ng-disabled="mode == 'EDIT'"
           ng-options="validityName(validity) for validity in validities">
   </select>

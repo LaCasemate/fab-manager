@@ -73,10 +73,13 @@ zu:
         labels: "crwdns6795:0crwdne6795:0"
         none: "crwdns6797:0crwdne6797:0"
         slot_successfully_deleted: "crwdns6799:0{START}crwdnd6799:0{END}crwdne6799:0"
-        slots_deleted: "crwdns6801:0{START}crwdnd6801:0{one other}crwdnd6801:0{COUNT}crwdne6801:0"
+        slots_deleted: "crwdns21456:0START={START}crwdnd21456:0COUNT={COUNT}crwdnd21456:0COUNT={COUNT}crwdne21456:0"
         unable_to_delete_the_slot: "crwdns6803:0{START}crwdnd6803:0{END}crwdne6803:0"
         slots_not_deleted: "crwdns6805:0TOTAL={TOTAL}crwdnd6805:0COUNT={COUNT}crwdnd6805:0COUNT={COUNT}crwdnd6805:0COUNT={COUNT}crwdne6805:0"
         you_should_select_at_least_a_machine: "crwdns6807:0crwdne6807:0"
+        inconsistent_times: "crwdns21458:0crwdne21458:0"
+        min_one_slot: "crwdns21460:0crwdne21460:0"
+        min_slot_duration: "crwdns21462:0crwdne21462:0"
         export_is_running_you_ll_be_notified_when_its_ready: "crwdns6809:0crwdne6809:0"
         actions: "crwdns6811:0crwdne6811:0"
         block_reservations: "crwdns6813:0crwdne6813:0"
@@ -346,7 +349,7 @@ zu:
         confirmation_required: "crwdns7221:0crwdne7221:0"
         do_you_really_want_to_delete_this_coupon: "crwdns7223:0crwdne7223:0"
         coupon_was_successfully_deleted: "crwdns7225:0crwdne7225:0"
-        unable_to_delete_the_specified_coupon_already_in_use: "crwdns7227:0crwdne7227:0"
+        unable_to_delete_the_specified_coupon_already_in_use: "crwdns21056:0crwdne21056:0"
         unable_to_delete_the_specified_coupon_an_unexpected_error_occurred: "crwdns7229:0crwdne7229:0"
         send_a_coupon: "crwdns7231:0crwdne7231:0"
         coupon: "crwdns7233:0crwdne7233:0"
@@ -414,6 +417,7 @@ zu:
         credit_note: "crwdns7333:0crwdne7333:0"
         display_more_invoices: "crwdns7335:0crwdne7335:0"
         no_invoices_for_now: "crwdns7337:0crwdne7337:0"
+        payment_schedules_list: "crwdns21058:0crwdne21058:0"
         invoicing_settings: "crwdns7339:0crwdne7339:0"
         warning_invoices_disabled: "crwdns7341:0crwdne7341:0"
         change_logo: "crwdns7343:0crwdne7343:0"
@@ -440,6 +444,7 @@ zu:
         important_notes: "crwdns7385:0crwdne7385:0"
         address_and_legal_information: "crwdns7387:0crwdne7387:0"
         invoice_reference: "crwdns7389:0crwdne7389:0"
+        text: "crwdns21060:0crwdne21060:0"
         year: "crwdns7391:0crwdne7391:0"
         month: "crwdns7393:0crwdne7393:0"
         day: "crwdns7395:0crwdne7395:0"
@@ -447,6 +452,7 @@ zu:
         online_sales: "crwdns7399:0crwdne7399:0"
         wallet: "crwdns7401:0crwdne7401:0"
         refund: "crwdns7403:0crwdne7403:0"
+        payment_schedule: "crwdns21062:0crwdne21062:0"
         model: "crwdns7405:0crwdne7405:0"
         documentation: "crwdns7407:0crwdne7407:0"
         2_digits_year: "crwdns7409:0crwdne7409:0"
@@ -469,9 +475,10 @@ zu:
         eg_XVL_will_add_VL_to_the_invoices_settled_with_stripe: 'crwdns7443:0[/VL]crwdne7443:0'
         add_a_notice_regarding_refunds_only_if_the_invoice_is_concerned: "crwdns7445:0crwdne7445:0"
         this_will_never_be_added_when_an_online_sales_notice_is_present: "crwdns7447:0crwdne7447:0"
-        eg_RA_will_add_A_to_the_refund_invoices: 'crwdns7449:0[/A]crwdne7449:0'
-        add_a_notice_regarding_the_wallet_only_if_the_invoice_is_concerned: "crwdns7451:0crwdne7451:0"
-        eg_WPM_will_add_PM_to_the_invoices_settled_with_wallet: 'crwdns7453:0[/PM]crwdne7453:0'
+        eg_RA_will_add_A_to_the_refund_invoices: 'crwdns21064:0[/A]crwdne21064:0'
+        add_a_notice_regarding_payment_schedule: "crwdns21066:0crwdne21066:0"
+        this_will_never_be_added_with_other_notices: "crwdns21068:0crwdne21068:0"
+        eg_SE_to_schedules: 'crwdns21070:0[/E]crwdne21070:0'
         code: "crwdns7455:0crwdne7455:0"
         enable_the_code: "crwdns7457:0crwdne7457:0"
         enabled: "crwdns7459:0crwdne7459:0"
@@ -636,6 +643,14 @@ zu:
           currency_info_html: "crwdns20606:0crwdne20606:0"
           currency_alert_html: "crwdns20608:0crwdne20608:0"
           stripe_currency: "crwdns20610:0crwdne20610:0"
+        payment_schedules:
+          filter_schedules: "crwdns21072:0crwdne21072:0"
+          no_payment_schedules: "crwdns21074:0crwdne21074:0"
+          load_more: "crwdns21076:0crwdne21076:0"
+        document_filters:
+          reference: "crwdns21078:0crwdne21078:0"
+          customer: "crwdns21080:0crwdne21080:0"
+          date: "crwdns21082:0crwdne21082:0"
       #management of users, labels, groups, and so on
       members:
         users_management: "crwdns7735:0crwdne7735:0"
@@ -812,11 +827,13 @@ zu:
         credits_will_remain_unchanged: "crwdns8003:0crwdne8003:0"
         you_intentionally_decide_to_extend_the_user_s_subscription_by_charging_him_again_for_his_current_subscription: "crwdns8005:0crwdne8005:0"
         credits_will_be_reset: "crwdns8007:0crwdne8007:0"
+        payment_scheduled: "crwdns21084:0crwdne21084:0"
         until_expiration_date: "crwdns8009:0crwdne8009:0"
         you_successfully_changed_the_expiration_date_of_the_user_s_subscription: "crwdns8011:0crwdne8011:0"
         a_problem_occurred_while_saving_the_date: "crwdns8013:0crwdne8013:0"
         new_subscription: "crwdns8015:0crwdne8015:0"
         you_are_about_to_purchase_a_subscription_to_NAME: "crwdns8017:0{NAME}crwdne8017:0"
+        with_schedule: "crwdns21086:0crwdne21086:0"
         subscription_successfully_purchased: "crwdns8019:0crwdne8019:0"
         a_problem_occurred_while_taking_the_subscription: "crwdns8021:0crwdne8021:0"
         wallet: "crwdns8023:0crwdne8023:0"
@@ -1059,6 +1076,7 @@ zu:
         machines_sort_by: "crwdns8409:0crwdne8409:0"
         fab_analytics: "crwdns19862:0crwdne19862:0"
         phone_required: "crwdns20626:0crwdne20626:0"
+        address_required: "crwdns21444:0crwdne21444:0"
         tracking_id: "crwdns20628:0crwdne20628:0"
         facebook_app_id: "crwdns20630:0crwdne20630:0"
         twitter_analytics: "crwdns20632:0crwdne20632:0"
@@ -1083,6 +1101,10 @@ zu:
         plans_info_html: "crwdns20664:0crwdne20664:0"
         enable_plans: "crwdns20666:0crwdne20666:0"
         plans_module: "crwdns20668:0crwdne20668:0"
+        trainings: "crwdns21436:0crwdne21436:0"
+        trainings_info_html: "crwdns21438:0crwdne21438:0"
+        enable_trainings: "crwdns21440:0crwdne21440:0"
+        trainings_module: "crwdns21442:0crwdne21442:0"
         invoicing: "crwdns20670:0crwdne20670:0"
         invoicing_info_html: "crwdns20672:0crwdne20672:0"
         enable_invoicing: "crwdns20674:0crwdne20674:0"
@@ -1091,6 +1113,9 @@ zu:
         phone: "crwdns20680:0crwdne20680:0"
         phone_is_required: "crwdns20682:0crwdne20682:0"
         phone_required_info: "crwdns20684:0crwdne20684:0"
+        address: "crwdns21446:0crwdne21446:0"
+        address_required_info_html: "crwdns21448:0crwdne21448:0"
+        address_is_required: "crwdns21450:0crwdne21450:0"
         captcha: "crwdns20686:0crwdne20686:0"
         captcha_info_html: "crwdns20688:0crwdne20688:0"
         site_key: "crwdns20690:0crwdne20690:0"
@@ -1236,7 +1261,7 @@ zu:
       tour:
         conclusion:
           title: "crwdns19898:0crwdne19898:0"
-          content: "crwdns20860:0crwdne20860:0"
+          content: "crwdns21088:0crwdne21088:0"
         trainings:
           welcome:
             title: "crwdns19902:0crwdne19902:0"
@@ -1319,6 +1344,9 @@ zu:
           refund:
             title: "crwdns19994:0crwdne19994:0"
             content: "crwdns19996:0crwdne19996:0"
+          payment-schedules:
+            title: "crwdns21090:0crwdne21090:0"
+            content: "crwdns21092:0crwdne21092:0"
           settings:
             title: "crwdns19998:0crwdne19998:0"
             content: "crwdns20000:0crwdne20000:0"

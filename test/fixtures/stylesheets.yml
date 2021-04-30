@@ -31,8 +31,8 @@ stylesheet_1:
          .btn-warning:hover, .editable-buttons button[type=submit].btn-primary:hover, .btn-warning:focus, .editable-buttons button[type=submit].btn-primary:focus, .btn-warning.focus, .editable-buttons button.focus[type=submit].btn-primary, .btn-warning:active, .editable-buttons button[type=submit].btn-primary:active, .btn-warning.active, .editable-buttons button.active[type=submit].btn-primary, .open > .btn-warning.dropdown-toggle, .editable-buttons .open > button.dropdown-toggle[type=submit].btn-primary { background-color: #998500 !important; border-color: #998500 !important; }
          .btn-warning-full { border-color: #ffdd00; background-color: #ffdd00; }
          .heading .heading-btn a:hover { background-color: #ffdd00; }
-         .pricing-panel .content .wrap { border-color: #ffdd00; }
-         .pricing-panel .cta-button .btn:hover, .pricing-panel .cta-button .custom-invoice .modal-body .elements li:hover, .custom-invoice .modal-body .elements .pricing-panel .cta-button li:hover { background-color: #ffdd00 !important; }
+         .plan-card .content .wrap { border-color: #ffdd00; }
+         .plan-card .cta-button .btn:hover, .plan-card .cta-button .custom-invoice .modal-body .elements li:hover, .custom-invoice .modal-body .elements .plan-card .cta-button li:hover { background-color: #ffdd00 !important; }
          a.label:hover, .form-control.form-control-ui-select .select2-choices a.select2-search-choice:hover, a.label:focus, .form-control.form-control-ui-select .select2-choices a.select2-search-choice:focus { color: #cb1117; }
          .about-picture { background: linear-gradient( rgba(255,255,255,0.12), rgba(255,255,255,0.13) ), linear-gradient( rgba(203, 17, 23, 0.78), rgba(203, 17, 23, 0.82) ), url('/about-fablab.jpg') no-repeat; }
          .social-icons > div:hover { background-color: #ffdd00; }

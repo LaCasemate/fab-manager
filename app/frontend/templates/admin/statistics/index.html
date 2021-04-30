@@ -31,8 +31,8 @@
   <div class="row">
 
     <div class="col-md-12">
-      <uib-tabset justified="true">
-        <uib-tab ng-repeat="stat in statistics" heading="{{stat.label}}" select="setActiveTab(stat)" ng-hide="hiddenTab(stat)">
+      <uib-tabset justified="true" active="selectedTab">
+        <uib-tab ng-repeat="(index, stat) in statistics" heading="{{stat.label}}" select="setActiveTab(stat, index)" index="index" ng-hide="hiddenTab(stat)">
           <form id="filters_form" name="filters_form" class="form-inline m-t-md m-b-lg" novalidate="novalidate">
             <div id="agePickerPane" class="form-group datepicker-container" style="z-index:102;">
               <button id="agePickerExpand" class="btn btn-default" type="button" ng-click="agePicker.show = !agePicker.show">
@@ -57,13 +57,13 @@
                   <li><span translate>{{ 'app.admin.statistics.start' }}</span>
                     <div class="input-group black">
                       <span class="input-group-addon"><i class="fa fa-birthday-cake"></i></span>
-                      <input type="number" class="form-control"  ng-model="agePicker.start" name="ageStart" required="required"/>
+                      <input type="number" class="form-control"  ng-model="agePicker.start" name="ageStart" required="true"/>
                     </div>
                   </li>
                   <li><span translate>{{ 'app.admin.statistics.end' }}</span>
                     <div class="input-group black">
                       <span class="input-group-addon"><i class="fa fa-birthday-cake"></i></span>
-                      <input type="number" class="form-control"  ng-model="agePicker.end" name="ageEnd" required="required"/>
+                      <input type="number" class="form-control"  ng-model="agePicker.end" name="ageEnd" required="true"/>
                     </div>
                   </li>
                 </ul>
@@ -98,7 +98,7 @@
                               ng-options="f.label for f in filters track by f.key"
                               ng-change="customFilter.value =  null"
                               name="customFilterCriterion"
-                              required="required"
+                              required="true"
                               class="form-control">
                         <option value=""></option>
                       </select>
@@ -109,7 +109,7 @@
                       <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
                       <ng-switch on="getCustomValueInputType(customFilter.criterion)">
 
-                        <input ng-switch-when="input_number" type="number" class="form-control customMenuInput" ng-model="customFilter.value" name="customFilterValue" required="required"/>
+                        <input ng-switch-when="input_number" type="number" class="form-control customMenuInput" ng-model="customFilter.value" name="customFilterValue" required="true"/>
 
                         <div ng-switch-when="input_date" class="input-group black" id="customDatePick">
                           <input type="text"
@@ -120,7 +120,7 @@
                                  is-open="customFilter.datePicker.opened"
                                  min-date="customFilter.datePicker.minDate"
                                  max-date="customFilter.datePicker.maxDate"
-                                 required="required"
+                                 required="true"
                                  datepicker-options="customFilter.datePicker.options"
                                  show-button-bar="false"
                                  ng-click="toggleCustomDatePicker($event)"/>
@@ -136,7 +136,7 @@
                                 ng-model="customFilter.value"
                                 ng-options="v.label for v in customFilter.criterion.values"
                                 name="customFilterValue"
-                                required="required">
+                                required="true">
                         </select>
 
                         <input ng-switch-default
@@ -144,7 +144,7 @@
                                class="form-control customMenuInput"
                                ng-model="customFilter.value"
                                name="customFilterValue"
-                               required="required"/>
+                               required="true"/>
                       </ng-switch>
                     </div>
                   </li>
@@ -194,7 +194,7 @@
                              show-button-bar="false"
                              placeholder="{{ 'app.admin.statistics.start' | translate }}"
                              ng-click="toggleStartDatePicker($event)"
-                             required="required"/>
+                             required="true"/>
                           <span class="input-group-btn">
                             <button type="button" class="btn btn-default btn-search-datepicker" ng-click="toggleStartDatePicker($event)">
                               <i class="glyphicon glyphicon-calendar"></i>
@@ -217,7 +217,7 @@
                              show-button-bar="false"
                              placeholder="{{ 'app.admin.statistics.end' | translate }}"
                              ng-click="toggleEndDatePicker($event)"
-                             required="required"/>
+                             required="true"/>
                           <span class="input-group-btn">
                             <button type="button" class="btn btn-default btn-search-datepicker" ng-click="toggleEndDatePicker($event)">
                               <i class="glyphicon glyphicon-calendar"></i>

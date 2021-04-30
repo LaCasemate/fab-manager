@@ -109,6 +109,10 @@ en:
           your_previous_trainings: "Your previous trainings"
           your_approved_trainings: "Your approved trainings"
           no_trainings: "No trainings"
+          your_training_credits: "Your training credits"
+          subscribe_for_credits: "Subscribe to benefit from free trainings"
+          register_for_free: "Register for free to the following trainings:"
+          book_here: "Book here"
         #dashboard: my events
         events:
           your_next_events: "Your next events"

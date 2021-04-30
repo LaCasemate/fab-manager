@@ -14,8 +14,8 @@ module Prices
 
       post '/api/prices/compute',
            params: {
+             customer_id: user.id,
              reservation: {
-               user_id: user.id,
                reservable_id: printer_training.id,
                reservable_type: printer_training.class.name,
                slots_attributes: [
@@ -49,11 +49,10 @@ module Prices
 
       post '/api/prices/compute',
            params: {
+             customer_id: user.id,
              reservation: {
-               user_id: user.id,
                reservable_id: laser.id,
                reservable_type: laser.class.name,
-               plan_id: plan.id,
                slots_attributes: [
                  {
                    availability_id: availability.id,
@@ -68,6 +67,9 @@ module Prices
                    start_at: (availability.start_at + 1.hour).strftime('%Y-%m-%d %H:%M:%S.%9N Z')
                  }
                ]
+             },
+             subscription: {
+               plan_id: plan.id
              }
            }.to_json,
            headers: default_headers

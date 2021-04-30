@@ -5,7 +5,7 @@ export interface IFablab {
   statisticsModule: boolean,
   defaultHost: string,
   trackingId: string,
-  superadminId: number,
+  adminSysId: number,
   baseHostUrl: string,
   locale: string,
   moment_locale: string,

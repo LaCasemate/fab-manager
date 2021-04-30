@@ -29,7 +29,7 @@
         if (!promise) {
           promise = $uibModal.open({
             templateUrl: '/shared/deviseModal.html',
-            controller: function ($scope, $uibModalInstance) {
+            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
               const user = $scope.user = {};
               $scope.login = function () {
                 $uibModalInstance.close(user);
@@ -37,7 +37,7 @@
               $scope.dismiss = function () {
                 $uibModalInstance.dismiss('cancel');
               };
-            }
+            }]
           }).result.finally(reset).then(Auth.login);
         }
         retryRequestAfterLogin();

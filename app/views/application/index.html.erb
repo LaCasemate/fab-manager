@@ -19,17 +19,28 @@
     </script>
     <script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
   <% end %>
-  <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+
+  <% require 'pay_zen/helper' %>
+  <% if PayZen::Helper.enabled? %>
+    <% endpoint = Setting.get('payzen_endpoint') %>
+    <%=stylesheet_link_tag "#{endpoint}/static/js/krypton-client/V4.0/ext/classic-reset.css" %>
+    <%=javascript_include_tag "#{endpoint}/static/js/krypton-client/V4.0/ext/classic.js" %>
+    <% if Rails.env.development? %>
+      <%=javascript_include_tag "#{endpoint}/static/js/krypton-client/V4.0/ext/classic.js.map" %>
+    <% end %>
+  <% end %>
+
   <script type="text/javascript">
       var Fablab = Fablab || {};
 
       Fablab.plansModule = ('<%= Setting.get('plans_module') %>' === 'true');
       Fablab.spacesModule = ('<%= Setting.get('spaces_module') %>' === 'true');
+      Fablab.trainingsModule = ('<%= Setting.get('trainings_module') %>' === 'true');
       Fablab.walletModule = ('<%= Setting.get('wallet_module') %>' === 'true');
       Fablab.statisticsModule = ('<%= Setting.get('statistics_module') %>' === 'true');
       Fablab.defaultHost = "<%= Rails.application.secrets.default_host %>";
       Fablab.trackingId = "<%= Setting.get('tracking_id') %>";
-      Fablab.superadminId = parseInt("<%= User.superadmin&.id %>", 10);
+      Fablab.adminSysId = parseInt("<%= User.adminsys&.id %>", 10);
       Fablab.baseHostUrl = "<%= Rails.application.secrets.default_host %>";
 
       // i18n stuff

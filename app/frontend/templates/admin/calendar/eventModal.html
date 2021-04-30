@@ -6,7 +6,7 @@
 <div class="modal-body" ng-show="step === 1">
   <label class="m-t-sm" translate>{{ 'app.admin.calendar.what_kind_of_slot_do_you_want_to_create' }}</label>
   <div class="form-group">
-    <div class="radio">
+    <div class="radio" ng-show="$root.modules.trainings">
       <label>
         <input type="radio" id="training" name="available_type" value="training" ng-model="availability.available_type">
         <span translate>{{ 'app.admin.calendar.training' }}</span>
@@ -80,7 +80,7 @@
     <div class="row">
       <div class="col-md-5">
         <div class="input-group">
-          <input type="number" class="form-control" ng-model="slots_nb" step="1" />
+          <input type="number" class="form-control" ng-model="slots_nb" step="1" min="1" required="true" />
           <span class="input-group-addon" translate>{{ 'app.admin.calendar.slots' }}</span>
         </div>
         </div>
@@ -89,7 +89,7 @@
       </p>
       <div class="col-md-5">
         <div class="input-group">
-          <input type="number" class="form-control" ng-model="availability.slot_duration" step="5" />
+          <input type="number" class="form-control" ng-model="availability.slot_duration" step="5" min="1" required="true" />
           <span class="input-group-addon" translate>{{ 'app.admin.calendar.minutes' }}</span>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import apiClient from './api-client';
+import apiClient from './clients/api-client';
 import { AxiosResponse } from 'axios';
 import {
   CancelScheduleResponse,
@@ -6,7 +6,6 @@ import {
   PaymentSchedule,
   PaymentScheduleIndexRequest, RefreshItemResponse
 } from '../models/payment-schedule';
-import wrapPromise, { IWrapPromise } from '../lib/wrap-promise';
 
 export default class PaymentScheduleAPI {
   async list (query: PaymentScheduleIndexRequest): Promise<Array<PaymentSchedule>> {

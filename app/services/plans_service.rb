@@ -20,7 +20,7 @@ class PlansService
           { errors: plan.errors }
         end
       end
-    rescue Stripe::InvalidRequestError => e
+    rescue PaymentGatewayError => e
       { errors: e.message }
     end
   end

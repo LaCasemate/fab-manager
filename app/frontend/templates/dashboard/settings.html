@@ -84,7 +84,7 @@
           <div ng-hide="cookiesStatus" translate>{{ 'app.logged.dashboard.settings.cookies_unset' }}</div>
           <button ng-click="resetCookies()" ng-show="cookiesStatus" class="btn text-black btn-warning-full btn-sm m-t-xs" translate>{{ 'app.logged.dashboard.settings.reset_cookies' }}</button>
         </div>
-        <div class="widget-content no-bg text-center auto wrapper" ng-hide="isSuperAdmin">
+        <div class="widget-content no-bg text-center auto wrapper" ng-hide="isAdminSys">
           <button class="btn text-white btn-danger btn-sm" ng-click="deleteUser(user)"><i class="fa fa-warning m-r-xs"></i> {{ 'app.logged.dashboard.settings.delete_my_account' | translate }}</button>
         </div>
       </div>

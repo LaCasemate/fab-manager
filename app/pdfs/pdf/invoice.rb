@@ -306,7 +306,7 @@ class PDF::Invoice < Prawn::Document
         end
 
         # payment method
-        payment_verbose = if invoice.paid_with_stripe?
+        payment_verbose = if invoice.paid_by_card?
                             I18n.t('invoices.settlement_by_debit_card')
                           else
                             I18n.t('invoices.settlement_done_at_the_reception')

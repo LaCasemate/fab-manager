@@ -98,12 +98,34 @@ export enum SettingName {
   ConfirmationRequired = 'confirmation_required',
   WalletModule = 'wallet_module',
   StatisticsModule = 'statistics_module',
-  UpcomingEventsShown = 'upcoming_events_shown'
+  UpcomingEventsShown = 'upcoming_events_shown',
+  PaymentSchedulePrefix = 'payment_schedule_prefix',
+  TrainingsModule = 'trainings_module',
+  AddressRequired = 'address_required',
+  PaymentGateway = 'payment_gateway',
+  PayZenUsername = 'payzen_username',
+  PayZenPassword = 'payzen_password',
+  PayZenEndpoint = 'payzen_endpoint',
+  PayZenPublicKey = 'payzen_public_key',
+  PayZenHmacKey = 'payzen_hmac',
+  PayZenCurrency = 'payzen_currency'
 }
 
 export interface Setting {
   name: SettingName,
   value: string,
-  last_update: Date,
-  history: Array<HistoryValue>
+  last_update?: Date,
+  history?: Array<HistoryValue>
+}
+
+export interface SettingError {
+  error: string,
+  id: number,
+  name: string
+}
+
+export interface SettingBulkResult {
+  status: boolean,
+  value?: any,
+  error?: string
 }

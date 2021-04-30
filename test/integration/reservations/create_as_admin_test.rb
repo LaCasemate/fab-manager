@@ -19,18 +19,20 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     invoice_items_count = InvoiceItem.count
     users_credit_count = UsersCredit.count
 
-    post reservations_path, params: { reservation: {
-      user_id: @user_without_subscription.id,
-      reservable_id: machine.id,
-      reservable_type: machine.class.name,
-      slots_attributes: [
-        {
-          start_at: availability.start_at.to_s(:iso8601),
-          end_at: (availability.start_at + 1.hour).to_s(:iso8601),
-          availability_id: availability.id
-        }
-      ]
-    } }.to_json, headers: default_headers
+    post reservations_path, params: {
+      customer_id: @user_without_subscription.id,
+      reservation: {
+        reservable_id: machine.id,
+        reservable_type: machine.class.name,
+        slots_attributes: [
+          {
+            start_at: availability.start_at.to_s(:iso8601),
+            end_at: (availability.start_at + 1.hour).to_s(:iso8601),
+            availability_id: availability.id
+          }
+        ]
+      }
+    }.to_json, headers: default_headers
 
     # general assertions
     assert_equal 201, response.status
@@ -52,7 +54,7 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    assert invoice.stp_payment_intent_id.blank?
+    assert invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
 
     # invoice_items assertions
@@ -76,18 +78,20 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     invoice_count = Invoice.count
     invoice_items_count = InvoiceItem.count
 
-    post reservations_path, params: { reservation: {
-      user_id: @user_without_subscription.id,
-      reservable_id: training.id,
-      reservable_type: training.class.name,
-      slots_attributes: [
-        {
-          start_at: availability.start_at.to_s(:iso8601),
-          end_at: (availability.start_at + 1.hour).to_s(:iso8601),
-          availability_id: availability.id
-        }
-      ]
-    } }.to_json, headers: default_headers
+    post reservations_path, params: {
+      customer_id: @user_without_subscription.id,
+      reservation: {
+        reservable_id: training.id,
+        reservable_type: training.class.name,
+        slots_attributes: [
+          {
+            start_at: availability.start_at.to_s(:iso8601),
+            end_at: (availability.start_at + 1.hour).to_s(:iso8601),
+            availability_id: availability.id
+          }
+        ]
+      }
+    }.to_json, headers: default_headers
 
     # general assertions
     assert_equal 201, response.status
@@ -108,7 +112,7 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    assert invoice.stp_payment_intent_id.blank?
+    assert invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     # invoice_items
     invoice_item = InvoiceItem.last
@@ -133,23 +137,25 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     invoice_items_count = InvoiceItem.count
     users_credit_count = UsersCredit.count
 
-    post reservations_path, params: { reservation: {
-      user_id: @user_with_subscription.id,
-      reservable_id: machine.id,
-      reservable_type: machine.class.name,
-      slots_attributes: [
-        {
-          start_at: availability.start_at.to_s(:iso8601),
-          end_at: (availability.start_at + 1.hour).to_s(:iso8601),
-          availability_id: availability.id
-        },
-        {
-          start_at: (availability.start_at + 1.hour).to_s(:iso8601),
-          end_at: (availability.start_at + 2.hours).to_s(:iso8601),
-          availability_id: availability.id
-        }
-      ]
-    } }.to_json, headers: default_headers
+    post reservations_path, params: {
+      customer_id: @user_with_subscription.id,
+      reservation: {
+        reservable_id: machine.id,
+        reservable_type: machine.class.name,
+        slots_attributes: [
+          {
+            start_at: availability.start_at.to_s(:iso8601),
+            end_at: (availability.start_at + 1.hour).to_s(:iso8601),
+            availability_id: availability.id
+          },
+          {
+            start_at: (availability.start_at + 1.hour).to_s(:iso8601),
+            end_at: (availability.start_at + 2.hours).to_s(:iso8601),
+            availability_id: availability.id
+          }
+        ]
+      }
+    }.to_json, headers: default_headers
 
     # general assertions
     assert_equal 201, response.status
@@ -172,7 +178,7 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    assert invoice.stp_payment_intent_id.blank?
+    assert invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
 
     # invoice_items assertions
@@ -206,18 +212,20 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     invoice_items_count = InvoiceItem.count
     users_credit_count = UsersCredit.count
 
-    post reservations_path, params: { reservation: {
-      user_id: @vlonchamp.id,
-      reservable_id: machine.id,
-      reservable_type: machine.class.name,
-      slots_attributes: [
-        {
-          start_at: availability.start_at.to_s(:iso8601),
-          end_at: (availability.start_at + 1.hour).to_s(:iso8601),
-          availability_id: availability.id
-        }
-      ]
-    } }.to_json, headers: default_headers
+    post reservations_path, params: {
+      customer_id: @vlonchamp.id,
+      reservation: {
+        reservable_id: machine.id,
+        reservable_type: machine.class.name,
+        slots_attributes: [
+          {
+            start_at: availability.start_at.to_s(:iso8601),
+            end_at: (availability.start_at + 1.hour).to_s(:iso8601),
+            availability_id: availability.id
+          }
+        ]
+      }
+    }.to_json, headers: default_headers
 
     # general assertions
     assert_equal 201, response.status
@@ -239,7 +247,7 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    assert invoice.stp_payment_intent_id.blank?
+    assert invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
 
     # invoice_items assertions
@@ -276,19 +284,23 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     users_credit_count = UsersCredit.count
     wallet_transactions_count = WalletTransaction.count
 
-    post reservations_path, params: { reservation: {
-      user_id: @vlonchamp.id,
-      reservable_id: machine.id,
-      reservable_type: machine.class.name,
-      plan_id: plan.id,
-      slots_attributes: [
-        {
-          start_at: availability.start_at.to_s(:iso8601),
-          end_at: (availability.start_at + 1.hour).to_s(:iso8601),
-          availability_id: availability.id
-        }
-      ]
-    } }.to_json, headers: default_headers
+    post reservations_path, params: {
+      customer_id: @vlonchamp.id,
+      subscription: {
+        plan_id: plan.id,
+      },
+      reservation: {
+        reservable_id: machine.id,
+        reservable_type: machine.class.name,
+        slots_attributes: [
+          {
+            start_at: availability.start_at.to_s(:iso8601),
+            end_at: (availability.start_at + 1.hour).to_s(:iso8601),
+            availability_id: availability.id
+          }
+        ]
+      }
+    }.to_json, headers: default_headers
 
     # general assertions
     assert_equal 201, response.status
@@ -312,7 +324,7 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    assert invoice.stp_payment_intent_id.blank?
+    assert invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert_equal invoice.total, 2000
 
@@ -343,18 +355,20 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     invoice_items_count = InvoiceItem.count
     users_credit_count = UsersCredit.count
 
-    post reservations_path, params: { reservation: {
-      user_id: @vlonchamp.id,
-      reservable_id: machine.id,
-      reservable_type: machine.class.name,
-      slots_attributes: [
-        {
-          start_at: availability.start_at.to_s(:iso8601),
-          end_at: (availability.start_at + 1.hour).to_s(:iso8601),
-          availability_id: availability.id
-        }
-      ]
-    } }.to_json, headers: default_headers
+    post reservations_path, params: {
+      customer_id: @vlonchamp.id,
+      reservation: {
+        reservable_id: machine.id,
+        reservable_type: machine.class.name,
+        slots_attributes: [
+          {
+            start_at: availability.start_at.to_s(:iso8601),
+            end_at: (availability.start_at + 1.hour).to_s(:iso8601),
+            availability_id: availability.id
+          }
+        ]
+      }
+    }.to_json, headers: default_headers
 
     # general assertions
     assert_equal 201, response.status
@@ -386,20 +400,24 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     invoice_items_count = InvoiceItem.count
     users_credit_count = UsersCredit.count
 
-    post reservations_path, params: { reservation: {
-      user_id: @user_without_subscription.id,
-      plan_id: plan.id,
-      reservable_id: training.id,
-      reservable_type: training.class.name,
-      slots_attributes: [
-        {
-          start_at: availability.start_at.to_s(:iso8601),
-          end_at: (availability.start_at + 1.hour).to_s(:iso8601),
-          offered: false,
-          availability_id: availability.id
-        }
-      ]
-    } }.to_json, headers: default_headers
+    post reservations_path, params: {
+      customer_id: @user_without_subscription.id,
+      reservation: {
+        reservable_id: training.id,
+        reservable_type: training.class.name,
+        slots_attributes: [
+          {
+            start_at: availability.start_at.to_s(:iso8601),
+            end_at: (availability.start_at + 1.hour).to_s(:iso8601),
+            offered: false,
+            availability_id: availability.id
+          }
+        ]
+      },
+      subscription: {
+        plan_id: plan.id,
+      }
+    }.to_json, headers: default_headers
 
     # general assertions
     assert_equal 201, response.status
@@ -431,7 +449,7 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    assert invoice.stp_payment_intent_id.blank?
+    assert invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert_equal plan.amount, invoice.total
 
@@ -463,21 +481,25 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     plan = Plan.find_by(group_id: @user_without_subscription.group.id, type: 'Plan', base_name: 'Abonnement mensualisable')
 
     VCR.use_cassette('reservations_admin_training_subscription_with_payment_schedule') do
-      post reservations_path, params: { reservation: {
-        user_id: @user_without_subscription.id,
+      post reservations_path, params: {
         payment_method: 'check',
-        reservable_id: training.id,
-        reservable_type: training.class.name,
-        slots_attributes: [
-          {
-            start_at: availability.start_at.to_s(:iso8601),
-            end_at: (availability.start_at + 1.hour).to_s(:iso8601),
-            availability_id: availability.id
-          }
-        ],
-        plan_id: plan.id,
-        payment_schedule: true
-      } }.to_json, headers: default_headers
+        payment_schedule: true,
+        customer_id: @user_without_subscription.id,
+        reservation: {
+          reservable_id: training.id,
+          reservable_type: training.class.name,
+          slots_attributes: [
+            {
+              start_at: availability.start_at.to_s(:iso8601),
+              end_at: (availability.start_at + 1.hour).to_s(:iso8601),
+              availability_id: availability.id
+            }
+          ]
+        },
+        subscription: {
+          plan_id: plan.id
+        }
+      }.to_json, headers: default_headers
     end
 
     # get the objects
@@ -513,8 +535,7 @@ class Reservations::CreateAsAdminTest < ActionDispatch::IntegrationTest
     # payment schedule assertions
     assert_not_nil payment_schedule.reference
     assert_equal 'check', payment_schedule.payment_method
-    assert_nil payment_schedule.stp_subscription_id
-    assert_nil payment_schedule.stp_setup_intent_id
+    assert_empty payment_schedule.payment_gateway_objects
     assert_nil payment_schedule.wallet_transaction
     assert_nil payment_schedule.wallet_amount
     assert_nil payment_schedule.coupon_id

@@ -109,6 +109,10 @@ zu:
           your_previous_trainings: "crwdns8693:0crwdne8693:0"
           your_approved_trainings: "crwdns8695:0crwdne8695:0"
           no_trainings: "crwdns8697:0crwdne8697:0"
+          your_training_credits: "crwdns21426:0crwdne21426:0"
+          subscribe_for_credits: "crwdns21428:0crwdne21428:0"
+          register_for_free: "crwdns21430:0crwdne21430:0"
+          book_here: "crwdns21432:0crwdne21432:0"
         #dashboard: my events
         events:
           your_next_events: "crwdns8699:0crwdne8699:0"
@@ -125,6 +129,9 @@ zu:
           download_the_invoice: "crwdns8717:0crwdne8717:0"
           download_the_credit_note: "crwdns8719:0crwdne8719:0"
           no_invoices_for_now: "crwdns8721:0crwdne8721:0"
+        payment_schedules:
+          no_payment_schedules: "crwdns21158:0crwdne21158:0"
+          load_more: "crwdns21160:0crwdne21160:0"
       #public profil of a member
       members_show:
         members_list: "crwdns8723:0crwdne8723:0"

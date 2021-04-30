@@ -5,7 +5,7 @@
           <div class="input-group-addon">
               <i class="fa {{faIcon}}"></i>
           </div>
-          <input type="number" class="form-control" id="setting-{{setting.name}}" ng-model="setting.value" min="{{min}}" ng-required="required">
+          <input type="number" class="form-control" id="setting-{{setting.name}}" ng-model="setting.value" min="{{min}}" ng-required="true">
       </div>
       <span class="help-block text-info text-xs" ng-show="helperText">
           <i class="fa fa-lightbulb-o"></i> {{ helperText | translate }}

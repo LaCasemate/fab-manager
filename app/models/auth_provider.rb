@@ -41,6 +41,11 @@ class AuthProvider < ApplicationRecord
     end
   end
 
+  ## Return the previously active provider
+  def self.previous
+    find_by(status: 'previous')
+  end
+
   ## Get the provider matching the omniAuth strategy name
   def self.from_strategy_name(strategy_name)
     return SimpleAuthProvider.new if strategy_name.blank? || all.empty?

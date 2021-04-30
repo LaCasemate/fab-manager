@@ -114,18 +114,24 @@ zu:
       member_select:
         select_a_member: "crwdns9571:0crwdne9571:0"
         start_typing: "crwdns9573:0crwdne9573:0"
-      #stripe payment modal
-      stripe:
+      #payment modal
+      payment:
         online_payment: "crwdns9575:0crwdne9575:0"
-        i_have_read_and_accept_: "crwdns9577:0crwdne9577:0"
+        i_have_read_and_accept_: "crwdns20916:0crwdne20916:0"
         _the_general_terms_and_conditions: "crwdns9579:0crwdne9579:0"
-        credit_amount_for_pay_reservation: "crwdns9581:0{amount}crwdnd9581:0{currency}crwdne9581:0"
-        client_credit_amount_for_pay_reservation: "crwdns9583:0{amount}crwdnd9583:0{currency}crwdne9583:0"
+        payment_schedule_html: "crwdns20918:0{DEADLINES}crwdne20918:0"
         confirm_payment_of_: "crwdns9585:0{AMOUNT}crwdne9585:0"
       #dialog of on site payment for reservations
       valid_reservation_modal:
         booking_confirmation: "crwdns9587:0crwdne9587:0"
         here_is_the_summary_of_the_slots_to_book_for_the_current_user: "crwdns9589:0crwdne9589:0"
+        subscription_confirmation: "crwdns20920:0crwdne20920:0"
+        here_is_the_subscription_summary: "crwdns20922:0crwdne20922:0"
+        payment_method: "crwdns20924:0crwdne20924:0"
+        method_card: "crwdns20926:0crwdne20926:0"
+        method_check: "crwdns20928:0crwdne20928:0"
+        card_collection_info: "crwdns20930:0crwdne20930:0"
+        check_collection_info: "crwdns20932:0{DEADLINES}crwdne20932:0"
       #event edition form
       event:
         title: "crwdns9591:0crwdne9591:0"
@@ -175,12 +181,17 @@ zu:
         period_is_required: "crwdns9671:0crwdne9671:0"
         subscription_price: "crwdns9673:0crwdne9673:0"
         price_is_required: "crwdns9675:0crwdne9675:0"
+        edit_amount_info: "crwdns20934:0crwdne20934:0"
         visual_prominence_of_the_subscription: "crwdns9677:0crwdne9677:0"
         on_the_subscriptions_page_the_most_prominent_subscriptions_will_be_placed_at_the_top_of_the_list: "crwdns9679:0crwdne9679:0"
         an_evelated_number_means_a_higher_prominence: "crwdns9681:0crwdne9681:0"
         rolling_subscription: "crwdns9683:0crwdne9683:0"
         a_rolling_subscription_will_begin_the_day_of_the_first_training: "crwdns9685:0crwdne9685:0"
         otherwise_it_will_begin_as_soon_as_it_is_bought: "crwdns9687:0crwdne9687:0"
+        monthly_payment: "crwdns20936:0crwdne20936:0"
+        monthly_payment_info: "crwdns20938:0crwdne20938:0"
+        description: "crwdns21422:0crwdne21422:0"
+        type_a_short_description: "crwdns21424:0crwdne21424:0"
         information_sheet: "crwdns9689:0crwdne9689:0"
         attach_an_information_sheet: "crwdns9691:0crwdne9691:0"
         notified_partner: "crwdns9693:0crwdne9693:0"
@@ -209,7 +220,7 @@ zu:
         number_of_tickets: "crwdns9735:0crwdne9735:0"
         public_page: "crwdns9737:0crwdne9737:0"
         disable_training: "crwdns9739:0crwdne9739:0"
-      #partial form to edit/create an user (admin view)
+      #partial form to edit/create a user (admin view)
       user_admin:
         user: "crwdns9741:0crwdne9741:0"
         incomplete_profile: "crwdns9743:0crwdne9743:0"
@@ -262,12 +273,12 @@ zu:
         do_you_want_to_change_NAME_s_booking_slot_initially_planned_at: "crwdns9825:0{NAME}crwdne9825:0"
         cancel_this_reservation: "crwdns9827:0crwdne9827:0"
         i_want_to_change_date: "crwdns9829:0crwdne9829:0"
-      #modal introducing that a training is requested before booking a machine
+      #modal telling users that they need to pass a training before booking a machine
       request_training_modal:
         to_book_the_MACHINE_you_must_have_completed_the_TRAINING: "crwdns9831:0{MACHINE}crwdnd9831:0{TRAINING}crwdne9831:0"
         register_for_the_training: "crwdns9833:0crwdne9833:0"
         i_dont_want_to_register_now: "crwdns9835:0crwdne9835:0"
-      #modal introducing that a user must wait for his training being validated before booking a machine
+      #modal telling users that they must wait for their training validation before booking a machine
       training_reservation_modal:
         machine_reservation: "crwdns9837:0crwdne9837:0"
         you_must_wait_for_your_training_is_being_validated_by_the_fablab_team_to_book_this_machine: "crwdns9839:0crwdne9839:0"
@@ -314,16 +325,24 @@ zu:
         amount_minimum_1: "crwdns9913:0crwdne9913:0"
         amount_confirm_is_required: "crwdns20224:0crwdne20224:0"
         amount_confirm_does_not_match: "crwdns20226:0crwdne20226:0"
-        you_have_amount_in_wallet: "crwdns9919:0{amount}crwdnd9919:0{currency}crwdne9919:0"
-        client_have_amount_in_wallet: "crwdns9921:0{amount}crwdnd9921:0{currency}crwdne9921:0"
-        wallet_pay_reservation: "crwdns20872:0crwdne20872:0"
-        client_wallet_pay_reservation: "crwdns20884:0crwdne20884:0"
         debit_subscription: "crwdns20876:0crwdne20876:0"
         debit_reservation_training: "crwdns20878:0crwdne20878:0"
         debit_reservation_machine: "crwdns20880:0crwdne20880:0"
         debit_reservation_event: "crwdns20882:0crwdne20882:0"
         warning_uneditable_credit: "crwdns9935:0crwdne9935:0"
-      #promotional coupon (creation/edition form)
+        wallet_info:
+          you_have_AMOUNT_in_wallet: "crwdns20940:0{AMOUNT}crwdne20940:0"
+          wallet_pay_ITEM: "crwdns20942:0{ITEM}crwdne20942:0"
+          item_reservation: "crwdns20944:0crwdne20944:0"
+          item_subscription: "crwdns20946:0crwdne20946:0"
+          item_first_deadline: "crwdns20948:0crwdne20948:0"
+          item_other: "crwdns20950:0crwdne20950:0"
+          credit_AMOUNT_for_pay_ITEM: "crwdns20952:0{AMOUNT}crwdnd20952:0{ITEM}crwdne20952:0"
+          client_have_AMOUNT_in_wallet: "crwdns20954:0{AMOUNT}crwdne20954:0"
+          client_wallet_pay_ITEM: "crwdns20956:0{ITEM}crwdne20956:0"
+          client_credit_AMOUNT_for_pay_ITEM: "crwdns20958:0{AMOUNT}crwdnd20958:0{ITEM}crwdne20958:0"
+          other_deadlines_no_wallet: "crwdns20960:0crwdne20960:0"
+      #coupon (promotional) (creation/edition form)
       coupon:
         name: "crwdns9937:0crwdne9937:0"
         name_is_required: "crwdns9939:0crwdne9939:0"
@@ -340,6 +359,8 @@ zu:
         validity_per_user: "crwdns9961:0crwdne9961:0"
         once: "crwdns9963:0crwdne9963:0"
         forever: "crwdns9965:0crwdne9965:0"
+        warn_validity_once: "crwdns20962:0crwdne20962:0"
+        warn_validity_forever: "crwdns20964:0crwdne20964:0"
         validity_per_user_is_required: "crwdns9967:0crwdne9967:0"
         valid_until: "crwdns9969:0crwdne9969:0"
         leave_empty_for_no_limit: "crwdns9971:0crwdne9971:0"
@@ -352,6 +373,7 @@ zu:
         code_: "crwdns9981:0crwdne9981:0"
         the_coupon_has_been_applied_you_get_PERCENT_discount: "crwdns9983:0{PERCENT}crwdne9983:0"
         the_coupon_has_been_applied_you_get_AMOUNT_CURRENCY: "crwdns9985:0{AMOUNT}crwdnd9985:0{CURRENCY}crwdne9985:0"
+        coupon_validity_once: "crwdns20966:0crwdne20966:0"
         unable_to_apply_the_coupon_because_disabled: "crwdns9987:0crwdne9987:0"
         unable_to_apply_the_coupon_because_expired: "crwdns9989:0crwdne9989:0"
         unable_to_apply_the_coupon_because_sold_out: "crwdns9991:0crwdne9991:0"
@@ -379,8 +401,9 @@ zu:
       cart:
         summary: "crwdns10029:0crwdne10029:0"
         select_one_or_more_slots_in_the_calendar: "crwdns10031:0SINGLE={SINGLE}crwdne10031:0"
+        select_a_plan: "crwdns20968:0crwdne20968:0"
         you_ve_just_selected_the_slot: "crwdns10033:0crwdne10033:0"
-        datetime_to_time: "crwdns10035:0{START_DATETIME}crwdnd10035:0{END_TIME}crwdne10035:0" #eg: Thursday, September 4 1986 8:30 PM to 10:00 PM
+        datetime_to_time: "crwdns10035:0{START_DATETIME}crwdnd10035:0{END_TIME}crwdne10035:0" #eg: Thursday, September 4, 1986 8:30 PM to 10:00 PM
         cost_of_TYPE: "crwdns20298:0TYPE={TYPE}crwdne20298:0"
         offer_this_slot: "crwdns10039:0crwdne10039:0"
         confirm_this_slot: "crwdns10041:0crwdne10041:0"
@@ -388,9 +411,16 @@ zu:
         to_benefit_from_attractive_prices: "crwdns10045:0crwdne10045:0"
         view_our_subscriptions: "crwdns10047:0crwdne10047:0"
         or: "crwdns10049:0crwdne10049:0"
-        you_ve_just_selected_a_: "crwdns10051:0crwdne10051:0"
-        _subscription: "crwdns10053:0crwdne10053:0"
         cost_of_the_subscription: "crwdns10055:0crwdne10055:0"
+        subscription_price: "crwdns20970:0crwdne20970:0"
+        you_ve_just_selected_a_subscription_html: "crwdns20972:0crwdne20972:0"
+        monthly_payment: "crwdns20974:0crwdne20974:0"
+        your_payment_schedule: "crwdns20976:0crwdne20976:0"
+        monthly_payment_NUMBER: "crwdns20978:0NUMBER={NUMBER}crwdnd20978:0NUMBER={NUMBER}crwdne20978:0"
+        NUMBER_monthly_payment_of_AMOUNT: "crwdns20980:0NUMBER={NUMBER}crwdnd20980:0NUMBER={NUMBER}crwdnd20980:0AMOUNT={AMOUNT}crwdne20980:0"
+        first_debit: "crwdns20982:0crwdne20982:0"
+        debit: "crwdns20984:0crwdne20984:0"
+        view_full_schedule: "crwdns20986:0crwdne20986:0"
         confirm_and_pay: "crwdns10057:0crwdne10057:0"
         you_have_settled_the_following_TYPE: "crwdns10059:0TYPE={TYPE}crwdne10059:0"
         you_have_settled_a_: "crwdns10061:0crwdne10061:0"
@@ -406,7 +436,7 @@ zu:
         tags_of_the_destination_slot: "crwdns10081:0crwdne10081:0"
         confirm_my_modification: "crwdns10083:0crwdne10083:0"
         your_booking_slot_was_successfully_moved_from_: "crwdns10085:0crwdne10085:0"
-        to_date: "crwdns20134:0crwdne20134:0" #eg. from 01/01 to 01/05
+        to_date: "crwdns20134:0crwdne20134:0" #eg. from 01 to 05 january.
         please_select_a_member_first: "crwdns10089:0crwdne10089:0"
         unable_to_select_plan_if_slots_in_the_past: "crwdns20136:0crwdne20136:0"
         unable_to_change_the_reservation: "crwdns10091:0crwdne10091:0"
@@ -414,7 +444,7 @@ zu:
         do_you_really_want_to_cancel_this_reservation_html: "crwdns20908:0crwdne20908:0"
         reservation_was_cancelled_successfully: "crwdns10097:0crwdne10097:0"
         cancellation_failed: "crwdns10099:0crwdne10099:0"
-        confirm_payment_of_html: "crwdns10101:0ROLE={ROLE}crwdnd10101:0AMOUNT={AMOUNT}crwdne10101:0" #eg. confirm my payment of $20.00
+        confirm_payment_of_html: "crwdns21420:0METHOD={METHOD}crwdnd21420:0AMOUNT={AMOUNT}crwdne21420:0"
         a_problem_occurred_during_the_payment_process_please_try_again_later: "crwdns10103:0crwdne10103:0"
         none: "crwdns10105:0crwdne10105:0"
         online_payment_disabled: "crwdns20228:0crwdne20228:0"
@@ -444,3 +474,38 @@ zu:
         what_to_do: "crwdns20232:0crwdne20232:0"
         tour: "crwdns20234:0crwdne20234:0"
         guide: "crwdns20236:0crwdne20236:0"
+      #2nd factor authentication for card payments
+      stripe_confirm:
+        pending: "crwdns20988:0crwdne20988:0"
+        success: "crwdns20990:0crwdne20990:0"
+      #the summary table of all payment schedules
+      schedules_table:
+        schedule_num: "crwdns20992:0crwdne20992:0"
+        date: "crwdns20994:0crwdne20994:0"
+        price: "crwdns20996:0crwdne20996:0"
+        customer: "crwdns20998:0crwdne20998:0"
+        deadline: "crwdns21000:0crwdne21000:0"
+        amount: "crwdns21002:0crwdne21002:0"
+        state: "crwdns21004:0crwdne21004:0"
+        download: "crwdns21006:0crwdne21006:0"
+        state_new: "crwdns21008:0crwdne21008:0"
+        state_pending: "crwdns21010:0crwdne21010:0"
+        state_requires_payment_method: "crwdns21012:0crwdne21012:0"
+        state_requires_action: "crwdns21014:0crwdne21014:0"
+        state_paid: "crwdns21016:0crwdne21016:0"
+        state_error: "crwdns21018:0crwdne21018:0"
+        state_canceled: "crwdns21020:0crwdne21020:0"
+        method_stripe: "crwdns21022:0crwdne21022:0"
+        method_check: "crwdns21024:0crwdne21024:0"
+        confirm_payment: "crwdns21026:0crwdne21026:0"
+        solve: "crwdns21028:0crwdne21028:0"
+        update_card: "crwdns21030:0crwdne21030:0"
+        confirm_check_cashing: "crwdns21032:0crwdne21032:0"
+        confirm_check_cashing_body: "crwdns21034:0{AMOUNT}crwdnd21034:0{DATE}crwdne21034:0"
+        confirm_button: "crwdns21036:0crwdne21036:0"
+        resolve_action: "crwdns21038:0crwdne21038:0"
+        ok_button: "crwdns21040:0crwdne21040:0"
+        validate_button: "crwdns21042:0crwdne21042:0"
+        cancel_subscription: "crwdns21044:0crwdne21044:0"
+        confirm_cancel_subscription: "crwdns21046:0crwdne21046:0"
+        please_ask_reception: "crwdns21048:0crwdne21048:0"

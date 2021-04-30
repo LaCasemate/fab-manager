@@ -13,7 +13,7 @@ class FreeDiskSpaceWorker
     return if mb_available > Rails.application.secrets.disk_space_mb_alert
 
     NotificationCenter.call type: 'notify_admin_free_disk_space',
-                            receiver: User.superadmin || User.admins,
+                            receiver: User.adminsys || User.admins,
                             attached_object: Role.first,
                             meta_data: {
                               mb_available: mb_available,

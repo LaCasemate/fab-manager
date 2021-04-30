@@ -22,7 +22,8 @@ class Availabilities::CreateAvailabilitiesService
         space_ids: availability.space_ids,
         tag_ids: availability.tag_ids,
         nb_total_places: availability.nb_total_places,
-        slot_duration: availability.slot_duration
+        slot_duration: availability.slot_duration,
+        plan_ids: availability.plan_ids
       ).save!
     end
   end

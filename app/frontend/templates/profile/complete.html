@@ -21,7 +21,7 @@
 
     <div class="row no-gutter">
         <div class="col-sm-12 col-md-12 b-r">
-            <div class="row">
+            <div class="row" ng-hide="hideNewAccountConfirmation()">
                 <div class="col-md-offset-2 col-md-8 m-t-md">
                     <section class="panel panel-default bg-light m-lg">
                         <div class="panel-body m-r">
@@ -34,19 +34,19 @@
                     </section>
                 </div>
             </div>
-            <div class="row col-md-2 col-md-offset-5 hidden-sm hidden-xs" ng-hide="user.merged_at">
+            <div class="row col-md-2 col-md-offset-5 hidden-sm hidden-xs" ng-hide="user.merged_at || hideNewAccountConfirmation()">
               <p class="font-felt fleche-left text-lg upper text-center">
                 <img src="../../images/arrow-left.png" class="fleche-left visible-lg visible-md fleche-left-from-top" />
                 <span class="or" translate>{{ 'app.logged.profile_completion.or' }}</span>
                 <img src="../../images/arrow-left.png" class="fleche-right visible-lg visible-md fleche-right-from-top" />
               </p>
-            </div>clear
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="m-lg panel panel-default bg-light pos-rlt" ng-hide="hasDuplicate()">
                         <div ng-class="{'disabling-overlay' : !!user.auth_token}">
                             <div class="panel-body">
-                              <h3 translate>{{ 'app.logged.profile_completion.new_on_this_platform' }}</h3>
+                              <h3 translate ng-hide="hideNewAccountConfirmation()">{{ 'app.logged.profile_completion.new_on_this_platform' }}</h3>
                               <p translate>{{ 'app.logged.profile_completion.please_fill_the_following_form'}}.</p>
                               <p class="text-italic">{{ 'app.logged.profile_completion.some_data_may_have_already_been_provided_by_provider_and_cannot_be_modified' | translate:{NAME:activeProvider.name} }}.<br/>
                                 {{ 'app.logged.profile_completion.then_click_on_' | translate }} <strong translate>{{ 'app.shared.buttons.confirm_changes' }}</strong> {{ 'app.logged.profile_completion._to_start_using_the_application' | translate }}.</p>
@@ -145,14 +145,14 @@
                         </div>
                     </section>
                 </div>
-              <div class="row col-xs-2 col-xs-offset-5 hidden-md hidden-lg">
+              <div class="row col-xs-2 col-xs-offset-5 hidden-md hidden-lg" ng-hide="hideNewAccountConfirmation()">
                 <p class="font-felt fleche-left text-lg upper text-center">
                   <span class="or" translate>{{ 'app.logged.profile_completion.or' }}</span>
                 </p>
               </div>
-                <div class="col-md-6 m-t-3xl-on-md" ng-hide="user.merged_at">
-                    <ng-include src="'/profile/_token.html'"></ng-include>
-                </div>
+              <div class="col-md-6 m-t-3xl-on-md" ng-hide="user.merged_at || hideNewAccountConfirmation()">
+                  <ng-include src="'/profile/_token.html'"></ng-include>
+              </div>
             </div>
         </div>
     </div>

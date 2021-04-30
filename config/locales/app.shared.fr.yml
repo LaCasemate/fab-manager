@@ -114,13 +114,11 @@ fr:
       member_select:
         select_a_member: "Sélectionnez un membre"
         start_typing: "Commencez à écrire..."
-      #stripe payment modal
-      stripe:
+      #payment modal
+      payment:
         online_payment: "Paiement en ligne"
         i_have_read_and_accept_: "J'ai bien pris connaissance, et accepte "
         _the_general_terms_and_conditions: "les conditions générales de vente."
-        credit_amount_for_pay_reservation: "Il vous reste {amount} {currency} à payer pour valider votre réservation"
-        client_credit_amount_for_pay_reservation: "Il reste {amount} {currency} à payer pour valider la réservation"
         payment_schedule_html: "<p>Vous êtes sur le point de souscrire à un échéancier de paiement de {DEADLINES} mois.</p><p>En payant cette facture, vous vous engagez à l'envoi d'instructions vers l'institution financière émettrice de votre carte, afin de prélever des paiements sur votre compte, pendant toute la durée de cet abonnement. Cela implique que les données de votre carte soient enregistrées par Stripe et qu'une série de paiements sera initiée en votre nom, conformément à l'échéancier de paiement précédemment affiché.</p>"
         confirm_payment_of_: "Payer : {AMOUNT}"
       #dialog of on site payment for reservations
@@ -130,9 +128,9 @@ fr:
         subscription_confirmation: "Validation de l'abonnement"
         here_is_the_subscription_summary: "Voici le récapitulatif de l'abonnement :"
         payment_method: "Moyen de paiement"
-        method_stripe: "Carte bancaire en ligne"
+        method_card: "Carte bancaire en ligne"
         method_check: "Par chèques"
-        stripe_collection_info: "En validant, vous serez invité à saisir les informations de carte bancaire du membre. Cette carte sera prélevée automatiquement aux échéances."
+        card_collection_info: "En validant, vous serez invité à saisir les informations de carte bancaire du membre. Cette carte sera prélevée automatiquement aux échéances."
         check_collection_info: "En validant, vous confirmez être en possession de {DEADLINES} chèques permettant d'encaisser l'ensemble des mensualité."
       #event edition form
       event:
@@ -192,6 +190,8 @@ fr:
         otherwise_it_will_begin_as_soon_as_it_is_bought: "Dans le cas contraire, il prendra effet dès sa date d'achat."
         monthly_payment: "Paiement mensuel ?"
         monthly_payment_info: "Si le paiement mensuel est activé, les membres pourront choisir entre un paiement unique ou un échéancier de paiement échelonné chaque mois."
+        description: "Description"
+        type_a_short_description: "Saisir une courte description"
         information_sheet: "Fiche descriptive"
         attach_an_information_sheet: "Joindre une fiche descriptive"
         notified_partner: "Partenaire notifié"
@@ -444,7 +444,7 @@ fr:
         do_you_really_want_to_cancel_this_reservation_html: "<p>Êtes-vous sur de vouloir annuler cette réservation ?</p><p>Attention : si cette réservation a été effectuée gratuitement, dans le cadre d'un abonnement, les crédits utilisés ne seront pas re-crédités.</p>"
         reservation_was_cancelled_successfully: "La réservation a bien été annulée."
         cancellation_failed: "L'annulation a échouée."
-        confirm_payment_of_html: "{METHOD, select, stripe{Payer par carte} other{Paiement sur place}} : {AMOUNT}" #eg. confirm my payment of $20.00
+        confirm_payment_of_html: "{METHOD, select, stripe{Payer par carte} other{Paiement sur place}} : {AMOUNT}"
         a_problem_occurred_during_the_payment_process_please_try_again_later: "Il y a eu un problème lors de la procédure de paiement. Veuillez réessayer plus tard."
         none: "Aucune"
         online_payment_disabled: "Le paiement par carte bancaire n'est pas disponible. Merci de contacter directement l'accueil du FabLab."
@@ -474,11 +474,11 @@ fr:
         what_to_do: "Que voulez-vous faire ?"
         tour: "Lancer la visite guidée"
         guide: "Ouvrir le manuel de l'utilisateur"
-      # 2nd factor authentication for card payments
+      #2nd factor authentication for card payments
       stripe_confirm:
         pending: "En attente de l'action ..."
         success: "Merci, la configuration de votre carte est terminée. Le paiement sera effectué sous peu."
-      # the summary table of all payment schedules
+      #the summary table of all payment schedules
       schedules_table:
         schedule_num: "Échéancier n°"
         date: "Date"

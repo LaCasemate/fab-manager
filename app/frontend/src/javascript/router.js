@@ -37,7 +37,7 @@ angular.module('application.router', ['ui.router'])
           logoFile: ['CustomAsset', function (CustomAsset) { return CustomAsset.get({ name: 'logo-file' }).$promise; }],
           logoBlackFile: ['CustomAsset', function (CustomAsset) { return CustomAsset.get({ name: 'logo-black-file' }).$promise; }],
           sharedTranslations: ['Translations', function (Translations) { return Translations.query(['app.shared', 'app.public.common']).$promise; }],
-          modulesPromise: ['Setting', function (Setting) { return Setting.query({ names: "['spaces_module', 'plans_module', 'invoicing_module', 'wallet_module', 'statistics_module']" }).$promise; }]
+          modulesPromise: ['Setting', function (Setting) { return Setting.query({ names: "['spaces_module', 'plans_module', 'invoicing_module', 'wallet_module', 'statistics_module', 'trainings_module']" }).$promise; }]
         },
         onEnter: ['$rootScope', 'logoFile', 'logoBlackFile', 'modulesPromise', 'CSRF', function ($rootScope, logoFile, logoBlackFile, modulesPromise, CSRF) {
           // Retrieve Anti-CSRF tokens from cookies
@@ -48,6 +48,7 @@ angular.module('application.router', ['ui.router'])
           $rootScope.modules = {
             spaces: (modulesPromise.spaces_module === 'true'),
             plans: (modulesPromise.plans_module === 'true'),
+            trainings: (modulesPromise.trainings_module === 'true'),
             invoicing: (modulesPromise.invoicing_module === 'true'),
             wallet: (modulesPromise.wallet_module === 'true'),
             statistics: (modulesPromise.statistics_module === 'true')
@@ -129,12 +130,11 @@ angular.module('application.router', ['ui.router'])
           }
         },
         resolve: {
-          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['fablab_name', 'name_genre']" }).$promise; }],
+          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['fablab_name', 'name_genre', 'phone_required', 'address_required']" }).$promise; }],
           activeProviderPromise: ['AuthProvider', function (AuthProvider) { return AuthProvider.active().$promise; }],
           groupsPromise: ['Group', function (Group) { return Group.query().$promise; }],
           cguFile: ['CustomAsset', function (CustomAsset) { return CustomAsset.get({ name: 'cgu-file' }).$promise; }],
-          memberPromise: ['Member', 'currentUser', function (Member, currentUser) { return Member.get({ id: currentUser.id }).$promise; }],
-          phoneRequiredPromise: ['Setting', function (Setting) { return Setting.get({ name: 'phone_required' }).$promise; }]
+          memberPromise: ['Member', 'currentUser', function (Member, currentUser) { return Member.get({ id: currentUser.id }).$promise; }]
         }
       })
 
@@ -143,7 +143,8 @@ angular.module('application.router', ['ui.router'])
         abstract: true,
         url: '/dashboard',
         resolve: {
-          memberPromise: ['Member', 'currentUser', function (Member, currentUser) { return Member.get({ id: currentUser.id }).$promise; }]
+          memberPromise: ['Member', 'currentUser', function (Member, currentUser) { return Member.get({ id: currentUser.id }).$promise; }],
+          trainingsPromise: ['Training', function (Training) { return Training.query().$promise; }]
         }
       })
       .state('app.logged.dashboard.profile', {
@@ -166,7 +167,7 @@ angular.module('application.router', ['ui.router'])
         resolve: {
           groups: ['Group', function (Group) { return Group.query().$promise; }],
           activeProviderPromise: ['AuthProvider', function (AuthProvider) { return AuthProvider.active().$promise; }],
-          phoneRequiredPromise: ['Setting', function (Setting) { return Setting.get({ name: 'phone_required' }).$promise; }]
+          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['phone_required', 'address_required']" }).$promise; }]
         }
       })
       .state('app.logged.dashboard.projects', {
@@ -362,7 +363,7 @@ angular.module('application.router', ['ui.router'])
             return Setting.query({
               names: "['machine_explications_alert', 'booking_window_start',  'booking_window_end',  'booking_move_enable', " +
                      "'booking_move_delay', 'booking_cancel_enable',  'booking_cancel_delay', 'subscription_explications_alert', " +
-                     "'online_payment_module']"
+                     "'online_payment_module', 'payment_gateway']"
             }).$promise;
           }]
         }
@@ -448,7 +449,7 @@ angular.module('application.router', ['ui.router'])
             return Setting.query({
               names: "['booking_window_start', 'booking_window_end', 'booking_move_enable',  'booking_move_delay', " +
                      "'booking_cancel_enable', 'booking_cancel_delay', 'subscription_explications_alert',  " +
-                     "'space_explications_alert', 'online_payment_module']"
+                     "'space_explications_alert', 'online_payment_module', 'payment_gateway']"
             }).$promise;
           }]
         }
@@ -457,6 +458,7 @@ angular.module('application.router', ['ui.router'])
       // trainings
       .state('app.public.trainings_list', {
         url: '/trainings',
+        abstract: !Fablab.trainingsModule,
         views: {
           'main@': {
             templateUrl: '/trainings/index.html',
@@ -469,6 +471,7 @@ angular.module('application.router', ['ui.router'])
       })
       .state('app.public.training_show', {
         url: '/trainings/:id',
+        abstract: !Fablab.trainingsModule,
         views: {
           'main@': {
             templateUrl: '/trainings/show.html',
@@ -481,6 +484,7 @@ angular.module('application.router', ['ui.router'])
       })
       .state('app.logged.trainings_reserve', {
         url: '/trainings/:id/reserve',
+        abstract: !Fablab.trainingsModule,
         views: {
           'main@': {
             templateUrl: '/trainings/reserve.html',
@@ -498,7 +502,8 @@ angular.module('application.router', ['ui.router'])
             return Setting.query({
               names: "['booking_window_start', 'booking_window_end', 'booking_move_enable', 'booking_move_delay', " +
                      "'booking_cancel_enable', 'booking_cancel_delay', 'subscription_explications_alert', " +
-                     "'training_explications_alert', 'training_information_message', 'online_payment_module']"
+                     "'training_explications_alert', 'training_information_message', 'online_payment_module', " +
+                     "'payment_gateway']"
             }).$promise;
           }]
         }
@@ -528,7 +533,7 @@ angular.module('application.router', ['ui.router'])
           subscriptionExplicationsPromise: ['Setting', function (Setting) { return Setting.get({ name: 'subscription_explications_alert' }).$promise; }],
           plansPromise: ['Plan', function (Plan) { return Plan.query().$promise; }],
           groupsPromise: ['Group', function (Group) { return Group.query().$promise; }],
-          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['online_payment_module']" }).$promise; }]
+          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['online_payment_module', 'payment_gateway']" }).$promise; }]
         }
       })
 
@@ -545,7 +550,6 @@ angular.module('application.router', ['ui.router'])
           categoriesPromise: ['Category', function (Category) { return Category.query().$promise; }],
           themesPromise: ['EventTheme', function (EventTheme) { return EventTheme.query().$promise; }],
           ageRangesPromise: ['AgeRange', function (AgeRange) { return AgeRange.query().$promise; }],
-          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['online_payment_module']" }).$promise; }]
         }
       })
       .state('app.public.events_show', {
@@ -651,6 +655,7 @@ angular.module('application.router', ['ui.router'])
       // trainings
       .state('app.admin.trainings', {
         url: '/admin/trainings',
+        abstract: !Fablab.trainingsModule,
         views: {
           'main@': {
             templateUrl: '/admin/trainings/index.html',
@@ -665,6 +670,7 @@ angular.module('application.router', ['ui.router'])
       })
       .state('app.admin.trainings_new', {
         url: '/admin/trainings/new',
+        abstract: !Fablab.trainingsModule,
         views: {
           'main@': {
             templateUrl: '/admin/trainings/new.html',
@@ -677,6 +683,7 @@ angular.module('application.router', ['ui.router'])
       })
       .state('app.admin.trainings_edit', {
         url: '/admin/trainings/:id/edit',
+        abstract: !Fablab.trainingsModule,
         views: {
           'main@': {
             templateUrl: '/admin/trainings/edit.html',
@@ -852,7 +859,7 @@ angular.module('application.router', ['ui.router'])
                      "'accounting_other_client_code', 'accounting_other_client_label', 'accounting_wallet_code', 'accounting_wallet_label', " +
                      "'accounting_VAT_code', 'accounting_VAT_label', 'accounting_subscription_code', 'accounting_subscription_label', " +
                      "'accounting_Machine_code', 'accounting_Machine_label', 'accounting_Training_code', 'accounting_Training_label', " +
-                     "'accounting_Event_code', 'accounting_Event_label', 'accounting_Space_code', 'accounting_Space_label', " +
+                     "'accounting_Event_code', 'accounting_Event_label', 'accounting_Space_code', 'accounting_Space_label', 'payment_gateway', " +
                      "'feature_tour_display', 'online_payment_module', 'stripe_public_key', 'stripe_currency', 'invoice_prefix']"
             }).$promise;
           }],
@@ -908,7 +915,7 @@ angular.module('application.router', ['ui.router'])
           }
         },
         resolve: {
-          phoneRequiredPromise: ['Setting', function (Setting) { return Setting.get({ name: 'phone_required' }).$promise; }]
+          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['phone_required', 'address_required']" }).$promise; }]
         }
       })
       .state('app.admin.members_import', {
@@ -949,7 +956,7 @@ angular.module('application.router', ['ui.router'])
           walletPromise: ['Wallet', '$stateParams', function (Wallet, $stateParams) { return Wallet.getWalletByUser({ user_id: $stateParams.id }).$promise; }],
           transactionsPromise: ['Wallet', 'walletPromise', function (Wallet, walletPromise) { return Wallet.transactions({ id: walletPromise.id }).$promise; }],
           tagsPromise: ['Tag', function (Tag) { return Tag.query().$promise; }],
-          phoneRequiredPromise: ['Setting', function (Setting) { return Setting.get({ name: 'phone_required' }).$promise; }]
+          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['phone_required', 'address_required']" }).$promise; }]
         }
       })
       .state('app.admin.admins_new', {
@@ -961,7 +968,7 @@ angular.module('application.router', ['ui.router'])
           }
         },
         resolve: {
-          phoneRequiredPromise: ['Setting', function (Setting) { return Setting.get({ name: 'phone_required' }).$promise; }]
+          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['phone_required', 'address_required']" }).$promise; }]
         }
       })
       .state('app.admin.managers_new', {
@@ -1053,8 +1060,8 @@ angular.module('application.router', ['ui.router'])
                      "'booking_move_enable', 'booking_move_delay', 'booking_cancel_enable', 'feature_tour_display', " +
                      "'booking_cancel_delay', 'main_color', 'secondary_color', 'spaces_module', 'twitter_analytics', " +
                      "'fablab_name', 'name_genre', 'reminder_enable', 'plans_module', 'confirmation_required', " +
-                     "'reminder_delay', 'visibility_yearly', 'visibility_others', 'wallet_module', " +
-                     "'display_name_enable', 'machines_sort_by', 'fab_analytics', 'statistics_module', " +
+                     "'reminder_delay', 'visibility_yearly', 'visibility_others', 'wallet_module', 'trainings_module', " +
+                     "'display_name_enable', 'machines_sort_by', 'fab_analytics', 'statistics_module', 'address_required', " +
                      "'link_name', 'home_content', 'home_css', 'phone_required', 'upcoming_events_shown']"
             }).$promise;
           }],

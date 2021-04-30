@@ -431,3 +431,69 @@ setting_73:
   created_at: 2020-06-17 10:48:19.002417000 Z
   updated_at: 2020-06-17 10:48:19.002417000 Z
 
+setting_74:
+  id: 74
+  name: upcoming_events_shown
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_75:
+  id: 75
+  name: payment_schedule_prefix
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_76:
+  id: 76
+  name: trainings_module
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_77:
+  id: 77
+  name: address_required
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_78:
+  id: 78
+  name: payment_gateway
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_79:
+  id: 79
+  name: payzen_username
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_80:
+  id: 80
+  name: payzen_password
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_81:
+  id: 81
+  name: payzen_endpoint
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_82:
+  id: 82
+  name: payzen_public_key
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_83:
+  id: 83
+  name: payzen_hmac
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+
+setting_84:
+  id: 84
+  name: payzen_currency
+  created_at: 2020-04-15 14:38:40.000421500 Z
+  updated_at: 2020-04-15 14:38:40.000421500 Z
+

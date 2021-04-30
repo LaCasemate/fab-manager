@@ -49,7 +49,8 @@ class PaymentScheduleService
     { payment_schedule: ps, items: items }
   end
 
-  def create(subscription, total, coupon: nil, operator: nil, payment_method: nil, reservation: nil, user: nil, setup_intent_id: nil)
+  def create(subscription, total, coupon: nil, operator: nil, payment_method: nil, reservation: nil, user: nil,
+             payment_id: nil, payment_type: nil)
     subscription = reservation.generate_subscription if !subscription && reservation&.plan_id
     raise InvalidSubscriptionError unless subscription&.persisted?
 
@@ -59,7 +60,14 @@ class PaymentScheduleService
 
     ps.scheduled = reservation || subscription
     ps.payment_method = payment_method
-    ps.stp_setup_intent_id = setup_intent_id
+    if !payment_id.nil? && !payment_type.nil?
+      pgo = PaymentGatewayObject.new(
+        gateway_object_id: payment_id,
+        gateway_object_type: payment_type,
+        item: ps
+      )
+      ps.payment_gateway_objects.push(pgo)
+    end
     ps.operator_profile = operator.invoicing_profile
     ps.invoicing_profile = user.invoicing_profile
     ps.statistic_profile = user.statistic_profile
@@ -72,18 +80,22 @@ class PaymentScheduleService
 
   ##
   # Generate the invoice associated with the given PaymentScheduleItem, with the children elements (InvoiceItems).
-  # @param stp_invoice is used to determine if the invoice was paid using stripe
+  # @param payment_method {String} the payment method or gateway in use
+  # @param payment_id {String} the identifier of the payment as provided by the payment gateway, in case of card payment
+  # @param payment_type {String} the object type of payment_id
   ##
-  def generate_invoice(payment_schedule_item, stp_invoice = nil)
+  def generate_invoice(payment_schedule_item, payment_method: nil, payment_id: nil, payment_type: nil)
     # build the base invoice
     invoice = Invoice.new(
       invoiced: payment_schedule_item.payment_schedule.scheduled,
       invoicing_profile: payment_schedule_item.payment_schedule.invoicing_profile,
       statistic_profile: payment_schedule_item.payment_schedule.statistic_profile,
       operator_profile_id: payment_schedule_item.payment_schedule.operator_profile_id,
-      stp_payment_intent_id: stp_invoice&.payment_intent,
-      payment_method: stp_invoice ? 'stripe' : nil
+      payment_method: payment_method
     )
+    unless payment_id.nil?
+      invoice.payment_gateway_object = PaymentGatewayObject.new(gateway_object_id: payment_id, gateway_object_type: payment_type)
+    end
     # complete the invoice with some InvoiceItem
     if payment_schedule_item.first?
       complete_first_invoice(payment_schedule_item, invoice)

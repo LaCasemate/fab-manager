@@ -8,16 +8,24 @@ class Footprintable < ApplicationRecord
     []
   end
 
-  def check_footprint
-    footprint == compute_footprint
+  def footprint_children
+    []
   end
 
-  def chain_record(sort_on = 'id')
+  def sort_on_field
+    'id'
+  end
+
+  def check_footprint
+    footprint_children.map(&:check_footprint).all? && footprint == compute_footprint
+  end
+
+  def chain_record
     self.footprint = compute_footprint
     save!
     FootprintDebug.create!(
       footprint: footprint,
-      data: FootprintService.footprint_data(self.class, self, sort_on),
+      data: FootprintService.footprint_data(self.class, self),
       klass: self.class.name
     )
   end
@@ -28,7 +36,7 @@ class Footprintable < ApplicationRecord
 
   protected
 
-  def compute_footprint(sort_on = 'id')
-    FootprintService.compute_footprint(self.class, self, sort_on)
+  def compute_footprint
+    FootprintService.compute_footprint(self.class, self)
   end
 end

@@ -60,7 +60,7 @@ test_docker_compose()
 }
 
 yq() {
-  docker run --rm -i -v "${FM_PATH}:/workdir" mikefarah/yq yq "$@"
+  docker run --rm -i -v "${FM_PATH}:/workdir" mikefarah/yq:4 "$@"
 }
 
 
@@ -71,7 +71,7 @@ docker_down()
 
 proceed_upgrade()
 {
-  yq w -i docker-compose.yml services.redis.image redis:6-alpine
+  yq -i eval '.services.redis.image = "redis:6-alpine"' docker-compose.yml
 }
 
 

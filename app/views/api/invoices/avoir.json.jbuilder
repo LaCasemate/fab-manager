@@ -8,7 +8,6 @@ json.date @avoir.avoir_date
 json.chained_footprint @avoir.check_footprint
 json.items @avoir.invoice_items do |item|
   json.id item.id
-  json.stp_invoice_item_id item.stp_invoice_item_id
   json.amount item.amount / 100.0
   json.description item.description
   json.invoice_item_id item.invoice_item_id

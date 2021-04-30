@@ -11,7 +11,7 @@ class SyncMembersOnStripeWorker
     User.online_payers.each_with_index do |member, index|
       logger.debug "#{index} / #{total}"
       begin
-        stp_customer = Stripe::Customer.retrieve(member.stp_customer_id, api_key: Setting.get('stripe_secret_key'))
+        stp_customer = member.payment_gateway_objects.gateway_object.retrieve
         StripeWorker.new.create_stripe_customer(member.id) if stp_customer.nil? || stp_customer[:deleted]
       rescue Stripe::InvalidRequestError
         StripeWorker.new.create_stripe_customer(member.id)

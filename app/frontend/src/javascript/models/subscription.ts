@@ -11,8 +11,5 @@ export interface Subscription {
 }
 
 export interface SubscriptionRequest {
-  plan_id: number,
-  user_id: number,
-  payment_schedule: boolean,
-  payment_method: PaymentMethod
+  plan_id: number
 }

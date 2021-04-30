@@ -10,11 +10,16 @@
                        settings="allSettings"
                        label="app.admin.invoices.payment.enable_online_payment"
                        classes="m-l"
-                       on-before-save="requireStripeKeys"
+                       on-before-save="selectPaymentGateway"
                        fa-icon="fa-font">
       </boolean-setting>
+      <select-gateway-modal is-open="openSelectGatewayModal"
+                            toggle-modal="toggleSelectGatewayModal"
+                            current-user="currentUser"
+                            on-success="onGatewayModalSuccess"
+                            on-error="onGatewayModalError" />
     </div>
-    <div class="row m-t" ng-show="allSettings.online_payment_module === 'true'">
+    <div class="row m-t" ng-show="allSettings.online_payment_module === 'true' && allSettings.payment_gateway === 'stripe'">
       <h3 class="m-l" translate>{{ 'app.admin.invoices.payment.stripe_keys' }}</h3>
       <div class="col-md-4 m-l">
         <label for="stripe_public_key" class="control-label">{{ 'app.admin.invoices.payment.public_key' | translate }}</label>
@@ -39,10 +44,10 @@
         </div>
       </div>
       <div class="col-md-1">
-        <button class="btn btn-default m-t-lg" ng-click="requireStripeKeys(allSettings.online_payment_module)" translate>{{ 'app.admin.invoices.payment.edit_keys' }}</button>
+        <button class="btn btn-default m-t-lg" ng-click="selectPaymentGateway(allSettings.online_payment_module)" translate>{{ 'app.admin.invoices.payment.edit_keys' }}</button>
       </div>
     </div>
-    <div class="row m-t" ng-show="allSettings.online_payment_module === 'true'">
+    <div class="row m-t" ng-show="allSettings.online_payment_module === 'true' && allSettings.payment_gateway === 'stripe'">
       <h3 class="m-l" translate>{{ 'app.admin.invoices.payment.currency' }}</h3>
       <p class="alert alert-warning m-h-md" ng-bind-html="'app.admin.invoices.payment.currency_info_html' | translate"></p>
       <p class="alert alert-danger m-h-md" ng-bind-html="'app.admin.invoices.payment.currency_alert_html' | translate"></p>
@@ -58,6 +63,9 @@
                       read-only="onlinePaymentStatus">
         </text-setting>
       </div>
+    </div>
+    <div class="row m-t" ng-show="allSettings.online_payment_module === 'true' && allSettings.payment_gateway === 'payzen'">
+      <payzen-settings on-edit-keys="selectPaymentGateway" on-currency-update-success="alertPayZenCurrencyUpdated" />
     </div>
   </div>
 </div>

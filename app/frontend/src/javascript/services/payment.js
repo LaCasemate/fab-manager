@@ -5,12 +5,12 @@ Application.Services.factory('Payment', ['$resource', function ($resource) {
     {}, {
       confirm: {
         method: 'POST',
-        url: '/api/payments/confirm_payment',
+        url: '/api/stripe/confirm_payment',
         isArray: false
       },
       onlinePaymentStatus: {
         method: 'GET',
-        url: '/api/payments/online_payment_status'
+        url: '/api/stripe/online_payment_status'
       }
     }
   );

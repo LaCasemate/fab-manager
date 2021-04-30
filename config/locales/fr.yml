@@ -213,7 +213,6 @@ fr:
     start_date: "Date de début"
     expiration_date: "Date d'expiration"
     amount: "Montant"
-    payment_method: "Méthode de paiement"
     local_payment: "Paiement à l'accueil"
     online_payment: "Paiement en ligne"
     deleted_user: "Utilisateur supprimé"

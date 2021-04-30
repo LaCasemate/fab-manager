@@ -12,7 +12,7 @@ class Subscriptions::CreateAsUserTest < ActionDispatch::IntegrationTest
     plan = Plan.find_by(group_id: @user.group.id, type: 'Plan', base_name: 'Mensuel')
 
     VCR.use_cassette('subscriptions_user_create_success') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
@@ -72,7 +72,7 @@ class Subscriptions::CreateAsUserTest < ActionDispatch::IntegrationTest
     plan = Plan.where.not(group_id: @user.group.id).first
 
     VCR.use_cassette('subscriptions_user_create_failed') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
@@ -100,7 +100,7 @@ class Subscriptions::CreateAsUserTest < ActionDispatch::IntegrationTest
     plan = Plan.find_by(group_id: @vlonchamp.group.id, type: 'Plan', base_name: 'Mensuel tarif réduit')
 
     VCR.use_cassette('subscriptions_user_create_success_with_wallet') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
@@ -175,7 +175,7 @@ class Subscriptions::CreateAsUserTest < ActionDispatch::IntegrationTest
     payment_schedule_items_count = PaymentScheduleItem.count
 
     VCR.use_cassette('subscriptions_user_create_with_payment_schedule') do
-      get "/api/payments/setup_intent/#{@user.id}"
+      get "/api/stripe/setup_intent/#{@user.id}"
 
       # Check response format & status
       assert_equal 200, response.status, response.body
@@ -200,7 +200,7 @@ class Subscriptions::CreateAsUserTest < ActionDispatch::IntegrationTest
       assert_equal 'off_session', stripe_res.usage
 
 
-      post '/api/payments/confirm_payment_schedule',
+      post '/api/stripe/confirm_payment_schedule',
            params: {
              setup_intent_id: setup_intent[:id],
              cart_items: {

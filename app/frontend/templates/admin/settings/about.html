@@ -30,18 +30,27 @@
 
         <div class="row about-fablab">
             <div class="col-md-4 col-md-offset-1">
-                <div class="text-justify" ng-model="aboutBodySetting.value" medium-editor options='{"placeholder": "{{ "app.admin.settings.input_the_main_content" | translate }}",
-                  "buttons": ["bold", "italic", "anchor", "header1", "header2" ]
-                  }'>
+                <div class="text-justify"
+                     ng-model="aboutBodySetting.value"
+                     medium-editor
+                     options='{
+                       "placeholder": "{{ "app.admin.settings.input_the_main_content" | translate }}",
+                       "buttons": ["bold", "italic", "anchor", "header1", "header2" ],
+                       "targetBlank": true
+                     }'>
 
                 </div>
                 <span class="help-block text-info text-xs"><i class="fa fa-lightbulb-o"></i> {{ 'app.admin.settings.drag_and_drop_to_insert_images' | translate }}</span>
                 <button name="button" class="btn btn-warning" ng-click="save(aboutBodySetting)" translate>{{ 'app.shared.buttons.save' }}</button>
             </div>
             <div class="col-md-4 col-md-offset-2">
-                <div ng-model="aboutContactsSetting.value" medium-editor options='{"placeholder": "{{ "app.admin.settings.input_the_fablab_contacts" | translate }}",
-                  "buttons": ["bold", "italic", "anchor", "header1", "header2" ]
-                  }'>
+                <div ng-model="aboutContactsSetting.value"
+                     medium-editor
+                     options='{
+                       "placeholder": "{{ "app.admin.settings.input_the_fablab_contacts" | translate }}",
+                       "buttons": ["bold", "italic", "anchor", "header1", "header2" ],
+                       "targetBlank": true
+                     }'>
 
                 </div>
                 <span class="help-block text-info text-xs"><i class="fa fa-lightbulb-o"></i> {{ 'app.admin.settings.shift_enter_to_force_carriage_return' | translate }}</span>

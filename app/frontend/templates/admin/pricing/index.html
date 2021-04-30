@@ -31,7 +31,7 @@
           <ng-include src="'/admin/pricing/subscriptions.html'"></ng-include>
         </uib-tab>
 
-        <uib-tab heading="{{ 'app.admin.pricing.trainings' | translate }}" index="1" class="trainings-tab">
+        <uib-tab heading="{{ 'app.admin.pricing.trainings' | translate }}" ng-show="$root.modules.trainings" index="1" class="trainings-tab">
           <ng-include src="'/admin/pricing/trainings.html'"></ng-include>
         </uib-tab>
 

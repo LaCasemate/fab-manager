@@ -12,24 +12,25 @@ class CouponService
   # @param user_id {Number} user's id against the coupon will be tested for usability
   # @return {Number}
   ##
-  def apply(total, coupon, user_id = nil)
+  def apply(total, coupon = nil, user_id = nil)
     price = total
 
-    coupon_object = nil
-    if coupon.instance_of? Coupon
-      coupon_object = coupon
-    elsif coupon.instance_of? String
-      coupon_object = Coupon.find_by(code: coupon)
-    end
+    coupon_object = if coupon.instance_of? Coupon
+                      coupon
+                    elsif coupon.instance_of? String
+                      Coupon.find_by(code: coupon)
+                    else
+                      nil
+                    end
 
-    unless coupon_object.nil?
-      if coupon_object.status(user_id, total) == 'active'
-        if coupon_object.type == 'percent_off'
-          price -= (price * coupon_object.percent_off / 100.00).truncate
-        elsif coupon_object.type == 'amount_off'
-          # do not apply cash coupon unless it has a lower amount that the total price
-          price -= coupon_object.amount_off if coupon_object.amount_off <= price
-        end
+    return price if coupon_object.nil?
+
+    if coupon_object.status(user_id, total) == 'active'
+      if coupon_object.type == 'percent_off'
+        price -= (price * coupon_object.percent_off / 100.00).truncate
+      elsif coupon_object.type == 'amount_off'
+        # do not apply cash coupon unless it has a lower amount that the total price
+        price -= coupon_object.amount_off if coupon_object.amount_off <= price
       end
     end
 

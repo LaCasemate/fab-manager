@@ -114,18 +114,24 @@ pt:
       member_select:
         select_a_member: "Selecionar um membro"
         start_typing: "Escrevendo..."
-      #stripe payment modal
-      stripe:
+      #payment modal
+      payment:
         online_payment: "Pagamento Online"
         i_have_read_and_accept_: "Eu li e aceito "
         _the_general_terms_and_conditions: "os termos e condições."
-        credit_amount_for_pay_reservation: "{amount} {currency} a ser pago para confirmar sua inscrição"
-        client_credit_amount_for_pay_reservation: "{amount} {currency}  a ser pago para confirmar a inscrição do cliente"
+        payment_schedule_html: "<p>You're about to subscribe to a payment schedule of {DEADLINES} months.</p><p>By paying this bill, you agree to send instructions to the financial institution that issue your card, to take payments from your card account, for the whole duration of this subscription. This imply that your card data are saved by Stripe and a series of payments will be initiated on your behalf, conforming to the payment schedule previously shown.</p>"
         confirm_payment_of_: "Pagamento: {AMOUNT}"
       #dialog of on site payment for reservations
       valid_reservation_modal:
         booking_confirmation: "Confirmação de reserva"
         here_is_the_summary_of_the_slots_to_book_for_the_current_user: "Aqui está um resumo das reservas para o usuário atual:"
+        subscription_confirmation: "Inscrição confirmada"
+        here_is_the_subscription_summary: "Here is the subscription summary:"
+        payment_method: "Payment method"
+        method_card: "Online by card"
+        method_check: "By check"
+        card_collection_info: "By validating, you'll be prompted for the member's card number. This card will be automatically charged at the deadlines."
+        check_collection_info: "By validating, you confirm that you have {DEADLINES} checks, allowing you to collect all the monthly payments."
       #event edition form
       event:
         title: "Título"
@@ -175,12 +181,17 @@ pt:
         period_is_required: "Período é obrigatório."
         subscription_price: "Preço de inscrição"
         price_is_required: "Preço é obrigatório."
+        edit_amount_info: "Please note that if you change the price of this plan, the new price will only apply to new subscribers. Current subscriptions will stay unchanged, even those with running payment schedule."
         visual_prominence_of_the_subscription: "Proeminência visual da assinatura"
         on_the_subscriptions_page_the_most_prominent_subscriptions_will_be_placed_at_the_top_of_the_list: "Na página de inscrições a inscrição mais relevante aparecerá no topo da lista."
         an_evelated_number_means_a_higher_prominence: "Um número elevado significa uma maior relevância."
         rolling_subscription: "Assinatura contínua?"
         a_rolling_subscription_will_begin_the_day_of_the_first_training: "A assinatura contínua começarrá no primeiro dia de treinamento."
         otherwise_it_will_begin_as_soon_as_it_is_bought: "Caso contrário, elecomeçará assim que for comprado."
+        monthly_payment: "Monthly payment?"
+        monthly_payment_info: "If monthly payment is enabled, the members will be able to choose between a one-time payment or a payment schedule staged each months."
+        description: "Description"
+        type_a_short_description: "Type a short description"
         information_sheet: "Folha de informação"
         attach_an_information_sheet: "Anexar folha de informação"
         notified_partner: "Parceiro notificado"
@@ -209,7 +220,7 @@ pt:
         number_of_tickets: "Número de vagas"
         public_page: "Mostrar na lista de treinamentos"
         disable_training: "Desativar treinamento"
-      #partial form to edit/create an user (admin view)
+      #partial form to edit/create a user (admin view)
       user_admin:
         user: "Usuário"
         incomplete_profile: "Perfil incompleto"
@@ -262,12 +273,12 @@ pt:
         do_you_want_to_change_NAME_s_booking_slot_initially_planned_at: "Você deseja alterar o agendamento do usuário {NAME}, inicialmente marcado para:"
         cancel_this_reservation: "Cancelar essa reserva"
         i_want_to_change_date: "Eu quero alterar a data"
-      #modal introducing that a training is requested before booking a machine
+      #modal telling users that they need to pass a training before booking a machine
       request_training_modal:
         to_book_the_MACHINE_you_must_have_completed_the_TRAINING: "Para agendar \"{MACHINE}\" você deve completar o treinamento {TRAINING}."
         register_for_the_training: "Inscrever-se no treinamento"
         i_dont_want_to_register_now: "Não desejo me inscrever agora"
-      #modal introducing that a user must wait for his training being validated before booking a machine
+      #modal telling users that they must wait for their training validation before booking a machine
       training_reservation_modal:
         machine_reservation: "Reserva de máquina"
         you_must_wait_for_your_training_is_being_validated_by_the_fablab_team_to_book_this_machine: "Você deve esperar que seu treinamento seja validado pela equipe do FabLab para reservar esta máquina."
@@ -314,16 +325,24 @@ pt:
         amount_minimum_1: "A quantia mínima é 1"
         amount_confirm_is_required: "A confirmação da quantia é obrigatório."
         amount_confirm_does_not_match: "A confirmação da quantia não é a mesma da quantia."
-        you_have_amount_in_wallet: "Você tem {amount} {currency} em sua carteira"
-        client_have_amount_in_wallet: "O cliente possui {amount} {currency} em sua carteira"
-        wallet_pay_reservation: "Você pode pagar diretamente a sua reserva"
-        client_wallet_pay_reservation: "O membro pode pagar diretamente sua reserva"
         debit_subscription: "Pagar por uma inscrição"
         debit_reservation_training: "Pague por uma reserva de treinamento"
         debit_reservation_machine: "Pague por uma reserva de máquina"
         debit_reservation_event: "Pague por uma reserva de evento"
         warning_uneditable_credit: "Aviso: uma vez validado, o valor creditado não será mais editado."
-      #promotional coupon (creation/edition form)
+        wallet_info:
+          you_have_AMOUNT_in_wallet: "Você tem {AMOUNT} em sua carteira"
+          wallet_pay_ITEM: "You pay your {ITEM} directly."
+          item_reservation: "reservation"
+          item_subscription: "subscription"
+          item_first_deadline: "first deadline"
+          item_other: "purchase"
+          credit_AMOUNT_for_pay_ITEM: "You still have {AMOUNT} to pay to validate your {ITEM}."
+          client_have_AMOUNT_in_wallet: "The member has {AMOUNT} on his wallet"
+          client_wallet_pay_ITEM: "The member can directly pay his {ITEM}."
+          client_credit_AMOUNT_for_pay_ITEM: "{AMOUNT} are remaining to pay to validate the {ITEM}"
+          other_deadlines_no_wallet: "Warning: the remaining wallet balance cannot be used for the next deadlines."
+      #coupon (promotional) (creation/edition form)
       coupon:
         name: "Nome"
         name_is_required: "Nome é obrigatório."
@@ -340,6 +359,8 @@ pt:
         validity_per_user: "Validar pelo usuário"
         once: "Apenas uma vez"
         forever: "Cada uso"
+        warn_validity_once: "Please note that when this coupon will be used with a payment schedule, the discount will be applied to the first deadline only."
+        warn_validity_forever: "Please note that when this coupon will be used with a payment schedule, the discount will be applied to each deadlines."
         validity_per_user_is_required: "Validação por usuário é obrigatório."
         valid_until: "Valido até (incluso)"
         leave_empty_for_no_limit: "Não especifique nenhum limite deixando o campo vazio."
@@ -352,6 +373,7 @@ pt:
         code_: "Código:"
         the_coupon_has_been_applied_you_get_PERCENT_discount: "O cupom foi aplicado. Você recebeu {PERCENT}% de desconto."
         the_coupon_has_been_applied_you_get_AMOUNT_CURRENCY: "O cupom foi aplicado. Você recebeu um desconto de {AMOUNT} {CURRENCY}."
+        coupon_validity_once: "This coupon is valid only once. In case of payment schedule, only for the first deadline."
         unable_to_apply_the_coupon_because_disabled: "Não é possível aplicar o cupom: este código foi desabilitado."
         unable_to_apply_the_coupon_because_expired: "Não é possível aplicar o cupom: este código expirou."
         unable_to_apply_the_coupon_because_sold_out: "Não é possível aplicar o cupom: este código atingiu sua quota."
@@ -379,8 +401,9 @@ pt:
       cart:
         summary: "Sumário"
         select_one_or_more_slots_in_the_calendar: "Selecionar um {SINGLE, select, true{slot} other{ou mais slots}} no calendário"
+        select_a_plan: "Select a plan here"
         you_ve_just_selected_the_slot: "Você selecionou apenas o slot:"
-        datetime_to_time: "{START_DATETIME} até {END_TIME}" #eg: Thursday, September 4 1986 8:30 PM to 10:00 PM
+        datetime_to_time: "{START_DATETIME} até {END_TIME}" #eg: Thursday, September 4, 1986 8:30 PM to 10:00 PM
         cost_of_TYPE: "Custo de {TYPE, select, Machine{máquina slot} Training{o treinamento} Space{espaço slot} other{o elemento}}"
         offer_this_slot: "Oferecer este slot"
         confirm_this_slot: "Confirmar este slot"
@@ -388,9 +411,16 @@ pt:
         to_benefit_from_attractive_prices: "Para se beneficiar de preços atractivos"
         view_our_subscriptions: "Ver suas inscrições"
         or: "ou"
-        you_ve_just_selected_a_: "Você selecionou apenas"
-        _subscription: "inscrição"
         cost_of_the_subscription: "Custo da inscrição"
+        subscription_price: "Subscription price"
+        you_ve_just_selected_a_subscription_html: "Você acabou de selecionar uma <strong>assinatura</strong>:"
+        monthly_payment: "Monthly payment"
+        your_payment_schedule: "Your payment schedule"
+        monthly_payment_NUMBER: "{NUMBER}{NUMBER, plural, =1{st} =2{nd} =3{rd} other{th}} monthly payment: "
+        NUMBER_monthly_payment_of_AMOUNT: "{NUMBER} monthly {NUMBER, plural, =1{payment} other{payments}} of {AMOUNT}"
+        first_debit: "First debit on the day of the order."
+        debit: "Debit on the day of the order."
+        view_full_schedule: "View the complete payement schedule"
         confirm_and_pay: "Confirmar e pagar"
         you_have_settled_the_following_TYPE: "Você liquidou o seguinte {TYPE, select, Machine{slots de máquina} Training{training} other{elements}}:"
         you_have_settled_a_: "Você tem liquidado:"
@@ -406,7 +436,7 @@ pt:
         tags_of_the_destination_slot: "Tags do slot de destino:"
         confirm_my_modification: "Confirmar minha modificação"
         your_booking_slot_was_successfully_moved_from_: "Seu slot de reserva foi movido com sucesso para"
-        to_date: "até" #eg. from 01/01 to 01/05
+        to_date: "até" #eg. from 01 to 05 january.
         please_select_a_member_first: "Por favor selecione o membro primeiramente"
         unable_to_select_plan_if_slots_in_the_past: "Não é possível selecionar um plano se algum dos slots selecionados estiver no passado"
         unable_to_change_the_reservation: "Não permitido alterar esta reserva"
@@ -414,7 +444,7 @@ pt:
         do_you_really_want_to_cancel_this_reservation_html: "<p>Você realmente quer cancelar essa reserva?</p><p>Warning: if this reservation was made free of charge, as part of a subscription, the credits used will not be re-credited.</p>"
         reservation_was_cancelled_successfully: "Reserva a foi cancelada com sucesso."
         cancellation_failed: "Cancelamento falhou."
-        confirm_payment_of_html: "{ROLE, select, admin{Pagamento pelo site} other{Pagar}}: {AMOUNT}" #eg. confirm my payment of $20.00
+        confirm_payment_of_html: "{METHOD, select, stripe{Pay by card} other{Pay on site}}: {AMOUNT}"
         a_problem_occurred_during_the_payment_process_please_try_again_later: "Um problema ocorreu durante o processo de pagamento. Por favor tente novamente mais tarde."
         none: "Vazio"
         online_payment_disabled: "O pagamento online não está disponível. Entre em contato diretamente com a recepção do FabLab."
@@ -444,3 +474,38 @@ pt:
         what_to_do: "O que deseja fazer?"
         tour: "Iniciar o tour em destaque"
         guide: "Abrir manual do usuário"
+      #2nd factor authentication for card payments
+      stripe_confirm:
+        pending: "Pending for action..."
+        success: "Thank you, your card setup is complete. The payment will be proceeded shortly."
+      #the summary table of all payment schedules
+      schedules_table:
+        schedule_num: "Schedule #"
+        date: "Date"
+        price: "Price"
+        customer: "Customer"
+        deadline: "Deadline"
+        amount: "Amount"
+        state: "State"
+        download: "Download"
+        state_new: "Not yet due"
+        state_pending: "Waiting for the cashing of the check"
+        state_requires_payment_method: "The credit card must be updated"
+        state_requires_action: "Action required"
+        state_paid: "Paid"
+        state_error: "Error"
+        state_canceled: "Canceled"
+        method_stripe: "by card"
+        method_check: "by check"
+        confirm_payment: "Confirm payment"
+        solve: "Solve"
+        update_card: "Update the card"
+        confirm_check_cashing: "Confirm the cashing of the check"
+        confirm_check_cashing_body: "You must cash a check of {AMOUNT} for the deadline of {DATE}. By confirming the cashing of the check, an invoice will be generated for this due date."
+        confirm_button: "Confirm"
+        resolve_action: "Resolve the action"
+        ok_button: "OK"
+        validate_button: "Validate the new card"
+        cancel_subscription: "Cancel the subscription"
+        confirm_cancel_subscription: "You're about to cancel this payment schedule and the related subscription. Are you sure?"
+        please_ask_reception: "For any questions, please contact the FabLab's reception."

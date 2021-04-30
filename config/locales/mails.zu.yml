@@ -100,6 +100,7 @@ zu:
       subject: "crwdns3983:0crwdne3983:0"
       body:
         new_account_created: "crwdns3985:0crwdne3985:0"
+        user_of_group_html: "crwdns21434:0%{GROUP}crwdne21434:0"
         account_for_organization: "crwdns3987:0crwdne3987:0"
     notify_admin_subscribed_plan:
       subject: "crwdns3989:0crwdne3989:0"
@@ -272,6 +273,7 @@ zu:
       subject: "crwdns4565:0crwdne4565:0"
       body:
         refund_created: "crwdns4567:0%{AMOUNT}crwdnd4567:0%{INVOICE}crwdnd4567:0%{USER}crwdne4567:0"
+        wallet_refund_created: "crwdns21122:0%{AMOUNT}crwdnd21122:0%{USER}crwdne21122:0"
         download: "crwdns4569:0crwdne4569:0"
     notify_admins_role_update:
       subject: "crwdns20456:0crwdne20456:0"
@@ -287,5 +289,30 @@ zu:
       subject: "crwdns20854:0crwdne20854:0"
       body:
         members_sync: "crwdns20856:0crwdne20856:0"
+    notify_member_payment_schedule_ready:
+      subject: "crwdns21124:0crwdne21124:0"
+      body:
+        please_find_attached_html: "crwdns21126:0DATE={DATE}crwdnd21126:0AMOUNT={AMOUNT}crwdnd21126:0TYPE={TYPE}crwdne21126:0" #messageFormat interpolation
+        schedule_in_your_dashboard_html: "crwdns21128:0%{DASHBOARD}crwdne21128:0"
+        your_dashboard: "crwdns21130:0crwdne21130:0"
+    notify_admin_payment_schedule_failed:
+      subject: "crwdns21132:0[URGENT]crwdne21132:0"
+      body:
+        remember: "crwdns21134:0%{REFERENCE}crwdnd21134:0%{AMOUNT}crwdnd21134:0%{DATE}crwdne21134:0"
+        error: "crwdns21136:0crwdne21136:0"
+        action: "crwdns21138:0crwdne21138:0"
+    notify_member_payment_schedule_failed:
+      subject: "crwdns21140:0[URGENT]crwdne21140:0"
+      body:
+        remember: "crwdns21142:0%{REFERENCE}crwdnd21142:0%{AMOUNT}crwdnd21142:0%{DATE}crwdne21142:0"
+        error: "crwdns21144:0crwdne21144:0"
+        action_html: "crwdns21146:0%{DASHBOARD}crwdne21146:0"
+        your_dashboard: "crwdns21148:0crwdne21148:0"
+    notify_admin_payment_schedule_check_deadline:
+      subject: "crwdns21150:0crwdne21150:0"
+      body:
+        remember: "crwdns21152:0%{REFERENCE}crwdnd21152:0%{AMOUNT}crwdnd21152:0%{DATE}crwdne21152:0"
+        date: "crwdns21154:0crwdne21154:0"
+        confirm: "crwdns21156:0crwdne21156:0"
     shared:
       hello: "crwdns4215:0%{user_name}crwdne4215:0"

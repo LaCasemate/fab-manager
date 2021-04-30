@@ -88,7 +88,7 @@ a {
 .app-generator a,
 .home-events h4 a,
 a.reinit-filters,
-.pricing-panel a,
+.plan-card a,
 .calendar-url a,
 .article a,
 a.project-author,
@@ -103,7 +103,7 @@ a.collected-infos {
 .app-generator a:hover,
 .home-events h4 a:hover,
 a.reinit-filters:hover,
-.pricing-panel a:hover,
+.plan-card a:hover,
 .calendar-url a:hover,
 .article a:hover,
 a.project-author:hover,
@@ -254,14 +254,19 @@ h5:after {
   color: $secondary-text-color;
 }
 
-.pricing-panel .plan-card .content .wrap,
-.pricing-panel .plan-card .content .wrap-monthly {
-  border-color: $secondary;
+.plan-card .content .wrap,
+.plan-card .content .wrap-monthly {
+  border-color: $secondary !important;
 }
 
-.pricing-panel .cta-button .btn:hover,
-.pricing-panel .cta-button .custom-invoice .modal-body .elements li:hover,
-.custom-invoice .modal-body .elements .pricing-panel .cta-button li:hover {
+.plan-card .content .price {
+  background-color: $primary !important;
+  color: $primary-text-color !important;
+}
+
+.plan-card .card-footer .cta-button .btn:hover,
+.plan-card .card-footer .cta-button .custom-invoice .modal-body .elements li:hover,
+.custom-invoice .modal-body .elements .plan-card .card-footer .cta-button li:hover {
   background-color: $secondary !important;
   color: $secondary-text-color;
 }
@@ -301,12 +306,21 @@ section#cookies-modal div.cookies-consent .cookies-actions button.accept {
   color: $secondary-text-color;
 }
 
-.pricing-panel  {
-  .cta-button {
-    button.subscribe-button {
-      border-color: $secondary;
-      &.selected-card {
-        background-color: $secondary;
+.list-of-plans {
+  .group-title:before {
+    background: linear-gradient(to left, white, $primary, white);
+  }
+}
+
+.plan-card  {
+  .card-footer {
+    .cta-button {
+      button.subscribe-button {
+        border-color: $secondary;
+
+        &.selected-card {
+          background-color: $secondary;
+        }
       }
     }
   }
@@ -337,6 +351,25 @@ section#cookies-modal div.cookies-consent .cookies-actions button.accept {
         background-color: $secondary-light;
         color: $secondary-lighter;
         border-color: $secondary-lighter;
+      }
+    }
+  }
+}
+
+.payzen-keys-form {
+  fieldset > legend {
+    background-color: $secondary;
+    color: $secondary-text-color;
+  }
+}
+
+.payzen-settings {
+  .payzen-currency {
+    .payzen-currency-form {
+      .save-currency {
+        background-color: $secondary;
+        border-color: $secondary;
+        color: $secondary-text-color;
       }
     }
   }

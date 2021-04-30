@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 yq() {
-  docker run --rm -i -v "${PWD}:/workdir" mikefarah/yq yq "$@"
+  docker run --rm -i -v "${PWD}:/workdir" mikefarah/yq:4 "$@"
 }
 
 config()
@@ -13,20 +13,16 @@ config()
       echo "current user is not allowed to use docker, exiting..."
       exit 1
   fi
-  if ! command -v awk || ! [[ $(awk -W version) =~ ^GNU ]]
-  then
-    echo "Please install GNU Awk before running this script."
-    echo "gawk was not found, exiting..."
-    exit 1
-  fi
-  SERVICE="$(yq r docker-compose.yml --printMode p 'services.*(.==sleede/fab-manager*)' | awk 'BEGIN { FS = "." } ; {print $2}')"
+  SERVICE="$(yq eval '.services.*.image | select(. == "sleede/fab-manager*") | path | .[-2]' docker-compose.yml)"
 }
 
 add_mount()
 {
-  # shellcheck disable=SC2016
-  # we don't want to expand ${PWD}
-  yq w -i docker-compose.yml "services.$SERVICE.volumes[+]" '${PWD}/payment_schedules:/usr/src/app/payment_schedules'
+  if [[ ! $(yq eval ".services.$SERVICE.volumes.[] | select (. == \"*payment_schedules\")" docker-compose.yml) ]]; then
+    # shellcheck disable=SC2016
+    # we don't want to expand ${PWD}
+    yq -i eval ".services.$SERVICE.volumes += [\"\${PWD}/payment_schedules:/usr/src/app/payment_schedules\"]" docker-compose.yml
+  fi
 }
 
 proceed()

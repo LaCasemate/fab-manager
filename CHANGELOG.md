@@ -1,6 +1,94 @@
 # Changelog Fab-manager
 
 ## Next release
+- Updated React and its dependencies to 17.0.3 and matching
+- Updated the dependencies of: webpack, lodash, eslint, webpack-dev-server, react2angular, auto-ngtemplate-loader, angular-bootstrap-switch, react-refresh-webpack-plugin and eslint-plugin-react
+- Improved error handling in upgrade script
+- Improved the development and production documentations
+- Improved the style of the titles of the subscription page
+- Fix a bug: build status badge is not working
+- Fix a bug: unable to set date formats during installation
+- Fix a bug: unable to cancel the upgrade before it begins
+- `SUPERADMIN_EMAIL` renamed to `ADMINSYS_EMAIL`
+- [BREAKING CHANGE] GET `open_api/v1/invoices` won't return `stp_invoice_id` OR `stp_payment_intent_id` anymore. The new field `payment_gateway_object` will contain some similar data if the invoice was paid online by card.   
+- [TODO DEPLOY] `rails fablab:stripe:set_gateway`
+- [TODO DEPLOY] `rails fablab:maintenance:rebuild_stylesheet`
+- [TODO DEPLOY] `\curl -sSL https://raw.githubusercontent.com/sleede/fab-manager/master/scripts/rename-adminsys.sh | bash`
+
+## v4.7.9
+- Updated dependency to OpenLab
+- Prevent the worker from crashing if OpenLab is not reachable in dev
+- Fix a bug: the notification sent to the project author when a collaborator has confirmed his participation is not sent
+
+## v4.7.8 2021 April 02
+- Updated mimemagic to 0.3.10 to fix [a build issue](https://github.com/mimemagicrb/mimemagic/issues/139)
+
+## v4.7.7 2021 April 02
+- Enforced validation on required input fields
+- Updated babeljs and its dependencies
+- Updated german translations (thanks to [@Piapat](https://crowdin.com/profile/piapat))
+- Fix a bug: the view is not refreshed when deleting a recurring slot
+- Fix a bug: unable to add a new authorized file type for project's CAD files
+- Fix a bug: unable to update a coupon
+- Fix a bug: create a training availability with calendar in month view result in wrong dates
+- Fix a security issue: updated y18n to 4.0.1 to fix [CVE-2020-7774](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-7774)
+
+## v4.7.6 2021 March 24
+- Ability to disable the trainings module
+- Ability to set the address as a mandatory field
+- The address is now requested when creating an account
+- The profile completion page is less fuzzy for people landing on it without enabled SSO
+- Prevent showing error message when testing for old versions during upgrade
+- In the email notification, sent to admins on account creation, show the group of the user
+- More explanations in the setup script
+- Send pre-compressed assets to the browsers instead of the regular ones
+- Links created using "medium editor" opens in new tabs
+- Improved style of public plans page
+- Improved the upgrade script
+- Fix a bug: subscriptions tab is selected by default in statistics, even if the module is disabled
+- Fix a bug: select all plans for slot restriction (through the dedicated button) also selects the disabled plans
+- Fix a bug: recurring availabilities are not restricted to subscribers
+- Fix a bug: accounting exports may ignore some invoices for the first and last days
+- Fix a bug: accounting export caching is not working
+- Fix a bug: unable to run the setup script if sudoers belong to another group than sudo
+- Fix a security issue: updated elliptic to 6.5.4 to fix [CVE-2020-28498](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-28498)
+- [TODO DEPLOY] `\curl -sSL https://raw.githubusercontent.com/sleede/fab-manager/master/scripts/nginx-packs-directive.sh | bash`
+- [TODO DEPLOY] `rails db:seed`
+- [TODO DEPLOY] `rails fablab:maintenance:rebuild_stylesheet`
+
+## v4.7.5 2021 March 08
+- Fix a bug: unable to compile the assets during the upgrade, if the env file has some whitespaces around the equal sign
+
+## v4.7.4 2021 March 08
+- Show remaining training credits in the dashboard
+- Allow writing short rich descriptions for each subscription plan
+- Allow inserting hyperlinks in customized info messages
+- Use the primary color to display plans' price in the public view
+- Do not close login modal when clicking on the backdrop
+- Improved scripts for mounting volumes
+- Increased verbosity of upgrade script
+- Fix a bug: mounting the payment-schedules volume in the docker-compose file results in an invalid file
+- [TODO DEPLOY] `rails fablab:maintenance:rebuild_stylesheet`
+
+## v4.7.3 2021 March 03
+- Improved the setup script
+- Fix a bug: unable to install a new instance with an external reverse proxy
+- Fix a bug: do not display "powered by disqus" if Disqus is disabled
+- Fix a bug: do not send notifications each hour for payment schedules deadlines
+- Fix a security issue: updated rails to 5.2.4.5 to fix [CVE-2021-22880](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-22880)
+- [TODO DEPLOY] -> (only dev) `bundle install`
+
+## v4.7.2 2021 March 1st
+- Updated yq to v4
+- Fix a bug: unable to upgrade using the easy upgrade command
+- Fix a security issue: possible SQL injection when dropping the database
+- Fix a security issue: restrict allowed keys when creating/updating credits
+- [TODO DEPLOY] `rails fablab:openlab:bulk_export` if you have enabled OpenLab (projects sharing)
+
+## v4.7.1 2021 February 24
+- Fix a security issue: updated axios to 0.21.1 to fix [CVE-2020-28168](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-28168)
+
+## v4.7.0 2021 February 23
 - Payment schedules on subscriptions
 - Refactored theme builder to use scss files
 - Updated stripe gem to 5.29.0
@@ -8,18 +96,25 @@
 - Improved coupon creation/deletion workflow
 - Default texts for the login modal
 - Updated caniuse to 1.0.30001191
+- Fix a bug: updated ffi to 1.14.2 to fix a segmentation fault with ruby 2.6.6
 - Fix a bug: unable to access embedded plan views
 - Fix a bug: warning message overflow in credit wallet modal
 - Fix a bug: when using a cash coupon, the amount shown in the statistics is invalid
 - Fix a bug: unable to create a coupon on stripe
 - Fix a bug: no notifications for refunds generated on wallet credit
+- Fix a bug: in staging environments, emails are not sent
+- Fix a security issue: updated carrierwave to 2.1.1 to fix [CVE-2021-21305](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-21305)
 - [TODO DEPLOY] `rails fablab:maintenance:rebuild_stylesheet`
 - [TODO DEPLOY] `rails fablab:stripe:set_product_id`
+- [TODO DEPLOY] `rails fablab:stripe:sync_coupons`
 - [TODO DEPLOY] `rails fablab:setup:add_schedule_reference`
 - [TODO DEPLOY] `rails db:seed`
 - [TODO DEPLOY] add the `INTL_LOCALE` environment variable (see [doc/environment.md](doc/environment.md#INTL_LOCALE) for configuration details)
 - [TODO DEPLOY] add the `INTL_CURRENCY` environment variable (see [doc/environment.md](doc/environment.md#INTL_CURRENCY) for configuration details)
 - [TODO DEPLOY] `\curl -sSL https://raw.githubusercontent.com/sleede/fab-manager/master/scripts/mount-payment-schedules.sh | bash`
+- [TODO DEPLOY] -> (only dev) `bundle install`
+
+- Fix a bug: unable to configure the app to use a german locale
 
 ## v4.6.6 2021 February 02
 - Full German translation (thanks to [@korrupt](https://crowdin.com/profile/korrupt))

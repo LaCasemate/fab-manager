@@ -72,8 +72,8 @@ Application.Controllers.controller('MembersController', ['$scope', 'Member', 'me
 /**
  * Controller used when editing the current user's profile (in dashboard)
  */
-Application.Controllers.controller('EditProfileController', ['$scope', '$rootScope', '$state', '$window', '$sce', '$cookies', '$injector', 'Member', 'Auth', 'Session', 'activeProviderPromise', 'phoneRequiredPromise', 'growl', 'dialogs', 'CSRF', 'memberPromise', 'groups', '_t',
-  function ($scope, $rootScope, $state, $window, $sce, $cookies, $injector, Member, Auth, Session, activeProviderPromise, phoneRequiredPromise, growl, dialogs, CSRF, memberPromise, groups, _t) {
+Application.Controllers.controller('EditProfileController', ['$scope', '$rootScope', '$state', '$window', '$sce', '$cookies', '$injector', 'Member', 'Auth', 'Session', 'activeProviderPromise', 'settingsPromise', 'growl', 'dialogs', 'CSRF', 'memberPromise', 'groups', '_t',
+  function ($scope, $rootScope, $state, $window, $sce, $cookies, $injector, Member, Auth, Session, activeProviderPromise, settingsPromise, growl, dialogs, CSRF, memberPromise, groups, _t) {
     /* PUBLIC SCOPE */
 
     // API URL where the form will be posted
@@ -111,7 +111,10 @@ Application.Controllers.controller('EditProfileController', ['$scope', '$rootSco
     $scope.password = { change: false };
 
     // is the phone number required in _member_form?
-    $scope.phoneRequired = (phoneRequiredPromise.setting.value === 'true');
+    $scope.phoneRequired = (settingsPromise.phone_required === 'true');
+
+    // is the address required in _member_form?
+    $scope.addressRequired = (settingsPromise.address_required === 'true');
 
     // Angular-Bootstrap datepicker configuration for birthday
     $scope.datePicker = {
@@ -122,8 +125,8 @@ Application.Controllers.controller('EditProfileController', ['$scope', '$rootSco
       }
     };
 
-    // This boolean value will tell if the current user is the super-admin
-    $scope.isSuperAdmin = memberPromise.id === Fablab.superadminId;
+    // This boolean value will tell if the current user is the system admin
+    $scope.isAdminSys = memberPromise.id === Fablab.adminSysId;
 
     /**
      * Return the group object, identified by the ID set in $scope.userGroup

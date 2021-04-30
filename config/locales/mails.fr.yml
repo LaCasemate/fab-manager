@@ -100,6 +100,7 @@ fr:
       subject: "Un compte utilisateur a été créé"
       body:
         new_account_created: "Un nouveau compte utilisateur vient d'être créé sur la plateforme :"
+        user_of_group_html: "L'utilisateur s'est inscrit dans le groupe <strong>%{GROUP}</strong>"
         account_for_organization: "Ce compte gère une structure :"
     notify_admin_subscribed_plan:
       subject: "Un abonnement a été souscrit"

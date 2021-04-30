@@ -41,7 +41,8 @@ class ApplicationController < ActionController::Base
                                         {
                                           profile_attributes: %i[phone last_name first_name interest software_mastered],
                                           invoicing_profile_attributes: [
-                                            organization_attributes: [:name, address_attributes: [:address]]
+                                            organization_attributes: [:name, address_attributes: [:address]],
+                                            address_attributes: [:address]
                                           ],
                                           statistic_profile_attributes: %i[gender birthday]
                                         },

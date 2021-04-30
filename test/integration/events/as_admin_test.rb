@@ -64,8 +64,8 @@ module Events
       # Now, let's make a reservation on this event
       post '/api/reservations',
            params: {
+             customer_id: User.find_by(username: 'pdurand').id,
              reservation: {
-               user_id: User.find_by(username: 'pdurand').id,
                reservable_id: e.id,
                reservable_type: 'Event',
                nb_reserve_places: 2,
@@ -158,8 +158,8 @@ module Events
       # Now, let's make a reservation on this event
       post '/api/reservations',
            params: {
+             customer_id: User.find_by(username: 'lseguin').id,
              reservation: {
-               user_id: User.find_by(username: 'lseguin').id,
                reservable_id: e.id,
                reservable_type: 'Event',
                nb_reserve_places: 4,

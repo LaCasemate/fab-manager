@@ -73,10 +73,13 @@ pt:
         labels: "Etiqueta(s):"
         none: "Nenhuma"
         slot_successfully_deleted: "O slot {START} - {END} foi deletado com sucesso"
-        slots_deleted: "O slot de {START}, e {COUNT, plural, =1{one other} other{{COUNT} outros}}}, foram excluídos"
+        slots_deleted: "O slot de {START}, e {COUNT, plural, =1{one other} other{{COUNT} outros}}, foram excluídos"
         unable_to_delete_the_slot: "Não é possível deletar o slot {START} - {END}, provavelmente porque já foi reservado por um membro"
         slots_not_deleted: "Em {TOTAL} slots, {COUNT, plural, one {} =1{um não foi deletado} other{{COUNT} não foram deletados}}. Talvez existam algumas reservas {COUNT, plural, =1{nela} other{nelas}}."
         you_should_select_at_least_a_machine: "Você deveria selecionar a última máquina neste slot."
+        inconsistent_times: "Error: the end of the availability is before its beginning."
+        min_one_slot: "The availability must be split in one slot at least."
+        min_slot_duration: "You must specify a valid duration for the slots."
         export_is_running_you_ll_be_notified_when_its_ready: "A Exportação está em andamento. Você será notificado quando terminar."
         actions: "Ações"
         block_reservations: "Impedir reservas"
@@ -346,7 +349,7 @@ pt:
         confirmation_required: "Confirmação obrigatória"
         do_you_really_want_to_delete_this_coupon: "Você realmente deseja deletar este cupom?"
         coupon_was_successfully_deleted: "O cupom foi deletado com sucesso."
-        unable_to_delete_the_specified_coupon_already_in_use: "Não é possível excluir o cupom especificado: ele já é usado com algumas faturas."
+        unable_to_delete_the_specified_coupon_already_in_use: "Unable to delete the specified coupon: it is already used with some invoices and/or some payment schedules."
         unable_to_delete_the_specified_coupon_an_unexpected_error_occurred: "Não é possível excluir o cupom especificado: ocorreu um erro inesperado."
         send_a_coupon: "Enviar cupom"
         coupon: "Cupom"
@@ -414,6 +417,7 @@ pt:
         credit_note: "Nota de crédito"
         display_more_invoices: "Mostrar mais faturas..."
         no_invoices_for_now: "Nenhuma fatura."
+        payment_schedules_list: "Payment schedules"
         invoicing_settings: "Configurações do faturamento"
         warning_invoices_disabled: "Aviso: As faturas não estão ativadas. Nenhuma fatura será gerada pelo Fab-manager. No entanto, você deve preencher corretamente as informações abaixo, especialmente o IVA."
         change_logo: "Mudar o logo"
@@ -440,6 +444,7 @@ pt:
         important_notes: "Notas importantes"
         address_and_legal_information: "Endereço e informações legais"
         invoice_reference: "Referencia de fatura"
+        text: "text"
         year: "Ano"
         month: "Mês"
         day: "Dia"
@@ -447,6 +452,7 @@ pt:
         online_sales: "Vendas online"
         wallet: "Carteira"
         refund: "Restituição"
+        payment_schedule: "Payment schedule"
         model: "Modelo"
         documentation: "Documentação"
         2_digits_year: "2 dígitos ano (ex 70)"
@@ -470,8 +476,9 @@ pt:
         add_a_notice_regarding_refunds_only_if_the_invoice_is_concerned: "Adicionar um aviso sobre reembolsos, apenas se a fatura estiver envolvida."
         this_will_never_be_added_when_an_online_sales_notice_is_present: "Isto nunca será adicionado quando uma notificação de vendas online estiver presente."
         eg_RA_will_add_A_to_the_refund_invoices: '(ed. R[/A] irá adicionar "/A" nas faturas reembolsadas)'
-        add_a_notice_regarding_the_wallet_only_if_the_invoice_is_concerned: "Adicionar um aviso sobre a carteira, somente se a fatura estiver em questão."
-        eg_WPM_will_add_PM_to_the_invoices_settled_with_wallet: '(ex. W[/PM] irá adicionar "/PM" às faturas liquidadas com a carteira)'
+        add_a_notice_regarding_payment_schedule: "Add a notice regarding the payment schedules, only for concerned documents."
+        this_will_never_be_added_with_other_notices: "This will never be added when any other notice is present."
+        eg_SE_to_schedules: '(eg. S[/E] will add "/E" to the payment schedules)'
         code: "Código"
         enable_the_code: "Ativar código"
         enabled: "Ativar"
@@ -636,6 +643,14 @@ pt:
           currency_info_html: "Por favor, especifique abaixo da moeda usada para pagamento online. Você deve fornecer um código ISO de três letras, da lista de <a href='https://stripe.com/docs/currencies' target='_blank'>moedas com suporte a Stripe</a>."
           currency_alert_html: "<strong>Aviso</strong>: a moeda não pode ser alterada após o primeiro pagamento online ter sido feito. Defina essa configuração cuidadosamente antes de abrir o Fab-manager para seus membros."
           stripe_currency: "Moeda do Stripe"
+        payment_schedules:
+          filter_schedules: "Filter schedules"
+          no_payment_schedules: "No payment schedules to display"
+          load_more: "Load more"
+        document_filters:
+          reference: "Reference"
+          customer: "Customer"
+          date: "Date"
       #management of users, labels, groups, and so on
       members:
         users_management: "Gerenciamento de usuários"
@@ -812,11 +827,13 @@ pt:
         credits_will_remain_unchanged: "O saldo de créditos gratuitos (treinamento / máquinas / espaços) do usuário permanecerá inalterado."
         you_intentionally_decide_to_extend_the_user_s_subscription_by_charging_him_again_for_his_current_subscription: "Você decide intencionalmente estender a assinatura do usuário cobrando-o novamente por sua assinatura atual."
         credits_will_be_reset: "O saldo de créditos gratuitos (treinamento / máquinas / espaços) do usuário será redefinido, os créditos não utilizados serão perdidos."
+        payment_scheduled: "If the previous subscription was charged through a payment schedule, this one will be charged the same way, the first deadline being charged right now, then each following month."
         until_expiration_date: "Até (data de expiração):"
         you_successfully_changed_the_expiration_date_of_the_user_s_subscription: "Você alterou com êxito a data de expiração da assinatura do usuário"
         a_problem_occurred_while_saving_the_date: "Um erro ocorreu ao salvar a data."
         new_subscription: "Nova inscrição"
         you_are_about_to_purchase_a_subscription_to_NAME: "Você está prestes a comprar uma assinatura para {NAME}."
+        with_schedule: "Subscribe with a monthly payment schedule"
         subscription_successfully_purchased: "Assinatura adquirida com êxito."
         a_problem_occurred_while_taking_the_subscription: "Ocorreu um problema ao fazer a assinatura"
         wallet: "Carteira"
@@ -1059,6 +1076,7 @@ pt:
         machines_sort_by: "ordem de exibição das máquinas"
         fab_analytics: "Fab Analytics"
         phone_required: "telefone é obrigatório"
+        address_required: "address required"
         tracking_id: "tracking ID"
         facebook_app_id: "ID de Utilizador do Facebook"
         twitter_analytics: "Analisador de conta Twitter"
@@ -1083,6 +1101,10 @@ pt:
         plans_info_html: "<p>As assinaturas fornecem uma maneira de segmentar seus preços e proporcionar benefícios aos usuários normais.</p><p><strong>Aviso:</strong> não é recomendável desativar os planos se pelo menos uma assinatura estiver ativa no sistema.</p>"
         enable_plans: "Ativar os planos"
         plans_module: "módulo de planos"
+        trainings: "Trainings"
+        trainings_info_html: "<p>Trainings are fully integrated into the Fab-manger's agenda. If enabled, your members will be able to book and pay trainings.</p><p>Trainings provides a way to prevent members to book some machines, if they do have not taken the prerequisite course.</p>"
+        enable_trainings: "Enable the trainings"
+        trainings_module: "trainings module"
         invoicing: "Faturamento"
         invoicing_info_html: "<p>Você pode desativar completamente o módulo de faturamento.</p><p>Isso é útil se você tiver o seu próprio sistema de faturação, e não quer que o Fab-manager gere e envie faturas para os membros.</p><p><strong>Aviso:</strong> mesmo se você desativar o módulo de faturação, você deve configurar o IVA para evitar erros na contabilidade e nos preços. Faça isso na seção « Faturas > Configurações de faturação ».</p>"
         enable_invoicing: "Habilitar faturamento"
@@ -1091,6 +1113,9 @@ pt:
         phone: "Telefone"
         phone_is_required: "Telefone é obrigatório"
         phone_required_info: "Você pode definir se o número de telefone deve ser exigido para registrar um novo usuário no Fab-manager."
+        address: "Address"
+        address_required_info_html: "You can define if the address should be required to register a new user on Fab-manager.<br/><strong>Please note</strong> that, depending on your country, the regulations may requires addresses for the invoices to be valid."
+        address_is_required: "Address is required"
         captcha: "Captcha"
         captcha_info_html: "Você pode configurar uma proteção contra robôs, para evitar que eles criem contas de membros. Esta proteção está usando o Google reCAPTCHA. Inscreva-se para <a href='http://www.google.com/recaptcha/admin' target='_blank'>um par de chaves de API</a> para começar a usar o captcha."
         site_key: "Chave do site"
@@ -1236,7 +1261,7 @@ pt:
       tour:
         conclusion:
           title: "Obrigado pela sua atenção"
-          content: "<p>Se você deseja reiniciar esta ajuda contextual, pressione <strong>F1</strong> a qualquer momento ou clique em [? Ajuda] do menu do usuário.</p><p>Se precisar de ajuda adicional, você pode <a href='https://github.com/sleede/fab-manager/raw/master/doc/fr/guide_utilisation_fab_manager_v4.5.pdf' target='_blank'>verificar o guia do usuário</a> (apenas em francês por enquanto).</p><p>A equipe do Fab-Gerente também fornece suporte personalizado (ajuda para começar, ajuda com a instalação, personalização, etc.), <a href='mailto:contact@fab-manager.com'>contacte-nos</a> para mais informações.</p>"
+          content: "<p>Se você deseja reiniciar esta ajuda contextual, pressione <strong>F1</strong> a qualquer momento ou clique em [? Ajuda] do menu do usuário.</p><p>Se precisar de ajuda adicional, você pode <a href='https://github.com/sleede/fab-manager/raw/master/doc/fr/guide_utilisation_fab_manager_v4.7.pdf' target='_blank'>verificar o guia do usuário</a> (apenas em francês por enquanto).</p><p>A equipe do Fab-Gerente também fornece suporte personalizado (ajuda para começar, ajuda com a instalação, personalização, etc.), <a href='mailto:contact@fab-manager.com'>contacte-nos</a> para mais informações.</p>"
         trainings:
           welcome:
             title: "Treinamentos"
@@ -1319,6 +1344,9 @@ pt:
           refund:
             title: "Nota de crédito"
             content: "Permite gerar uma nota de crédito para a fatura nesta linha ou alguns de seus sub-elementos. <strong>Aviso:</strong> Isto só irá gerar o documento de contabilidade, o reembolso real do usuário será sempre sua responsabilidade."
+          payment-schedules:
+            title: "Payment schedules"
+            content: "<p>Some subscription plans may be configured to allow the members to pay them with a monthly payment schedule.</p><p>Here you can view all existing payment schedules and manage their deadlines.</p><p>Click on [+] at the beginning of a row to display all deadlines associated with a payment schedule, and run some actions on them.</p>"
           settings:
             title: "Configurações"
             content: "<p>Aqui você pode modificar os parâmetros para a geração de faturas. Clique no item em que está interessado para começar a editar.</p><p>Em particular, é aqui que você pode definir se está sujeito a IVA e à taxa aplicável.</p>"

@@ -1,19 +1,19 @@
 <div class="modal-header">
   <img ng-src="{{logoBlack.custom_asset_file_attributes.attachment_url}}" alt="{{logo.custom_asset_file_attributes.attachment}}" class="modal-logo"/>
-  <h1 translate ng-show="reservation.slots_attributes.length > 0">{{ 'app.shared.valid_reservation_modal.booking_confirmation' }}</h1>
-  <h1 translate ng-show="reservation.slots_attributes.length === 0 && reservation.plan_id">{{ 'app.shared.valid_reservation_modal.subscription_confirmation' }}</h1>
+  <h1 translate ng-show="cartItems.reservation">{{ 'app.shared.valid_reservation_modal.booking_confirmation' }}</h1>
+  <h1 translate ng-show="!cartItems.reservation && cartItems.subscription">{{ 'app.shared.valid_reservation_modal.subscription_confirmation' }}</h1>
 </div>
 <div class="modal-body">
   <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
   <div class="row">
     <div ng-class="{'col-md-6': schedule, 'm-h-sm': !schedule}">
-      <div ng-if="reservation.slots_attributes.length > 0">
+      <div ng-if="cartItems.reservation.slots_attributes.length > 0">
         <p translate>{{ 'app.shared.valid_reservation_modal.here_is_the_summary_of_the_slots_to_book_for_the_current_user' }}</p>
-        <ul ng-repeat="slot in reservation.slots_attributes">
+        <ul ng-repeat="slot in cartItems.reservation.slots_attributes">
           <li><strong>{{slot.start_at | amDateFormat: 'LL'}} : {{slot.start_at | amDateFormat:'LT'}} - {{slot.end_at | amDateFormat:'LT'}}</strong></li>
         </ul>
       </div>
-      <div ng-if="reservation.plan_id">
+      <div ng-if="cartItems.subscription">
         <p translate>{{ 'app.shared.valid_reservation_modal.here_is_the_subscription_summary' }}</p>
         <p>{{ plan | humanReadablePlanName }}</p>
       </div>
@@ -22,10 +22,10 @@
         <select id="method"
                 class="form-control m-b"
                 ng-model="method.payment_method">
-          <option value="stripe" translate>{{ 'app.shared.valid_reservation_modal.method_stripe' }}</option>
+          <option value="card" translate>{{ 'app.shared.valid_reservation_modal.method_card' }}</option>
           <option value="check" translate>{{ 'app.shared.valid_reservation_modal.method_check' }}</option>
         </select>
-        <p ng-show="method.payment_method == 'stripe'" translate>{{ 'app.shared.valid_reservation_modal.stripe_collection_info' }}</p>
+        <p ng-show="method.payment_method == 'card'" translate>{{ 'app.shared.valid_reservation_modal.card_collection_info' }}</p>
         <p ng-show="method.payment_method == 'check'" translate translate-values="{DEADLINES: schedule.items.length}">{{ 'app.shared.valid_reservation_modal.check_collection_info' }}</p>
       </div>
     </div>
@@ -49,12 +49,12 @@
 <div class="modal-footer">
   <button class="btn btn-info" ng-click="ok()" ng-disabled="attempting" ng-bind-html="validButtonName"></button>
   <button class="btn btn-default" ng-click="cancel()" translate>{{ 'app.shared.buttons.cancel' }}</button>
-  <stripe-modal is-open="isOpenStripeModal"
-                toggle-modal="toggleStripeModal"
-                after-success="afterCreatePaymentSchedule"
-                cart-items="cartItems"
-                current-user="currentUser"
-                schedule="schedule"
-                customer="user"
-                processPayment="false"/>
+  <payment-modal is-open="isOpenOnlinePaymentModal"
+                 toggle-modal="toggleOnlinePaymentModal"
+                 after-success="afterCreatePaymentSchedule"
+                 cart-items="cartItems"
+                 current-user="currentUser"
+                 schedule="schedule"
+                 customer="user"
+                 processPayment="false"/>
 </div>

@@ -33,6 +33,7 @@ class AccountingExportService
     invoices = Invoice.where('created_at >= ? AND created_at <= ?', start_date, end_date).order('created_at ASC')
     invoices = invoices.where('total > 0') unless export_zeros
     invoices.each do |i|
+      puts "processing invoice #{i.id}..." unless Rails.env.test?
       content << generate_rows(i)
     end
 

@@ -92,7 +92,7 @@ Application.Controllers.controller('ApplicationController', ['$rootScope', '$sco
         templateUrl: '/shared/signupModal.html',
         size: 'md',
         resolve: {
-          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['phone_required', 'recaptcha_site_key', 'confirmation_required']" }).$promise; }]
+          settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['phone_required', 'recaptcha_site_key', 'confirmation_required', 'address_required']" }).$promise; }]
         },
         controller: ['$scope', '$uibModalInstance', 'Group', 'CustomAsset', 'settingsPromise', 'growl', '_t', function ($scope, $uibModalInstance, Group, CustomAsset, settingsPromise, growl, _t) {
           // default parameters for the date picker in the account creation modal
@@ -106,6 +106,9 @@ Application.Controllers.controller('ApplicationController', ['$rootScope', '$sco
 
           // is the phone number required to sign-up?
           $scope.phoneRequired = (settingsPromise.phone_required === 'true');
+
+          // is the address required to sign-up?
+          $scope.addressRequired = (settingsPromise.address_required === 'true');
 
           // reCaptcha v2 site key (or undefined)
           $scope.recaptchaSiteKey = settingsPromise.recaptcha_site_key;
@@ -408,6 +411,7 @@ Application.Controllers.controller('ApplicationController', ['$rootScope', '$sco
       <% else %>
       return $uibModal.open({
         templateUrl: '/shared/deviseModal.html',
+        backdrop: 'static',
         size: 'sm',
         resolve: {
           settingsPromise: ['Setting', function (Setting) { return Setting.query({ names: "['confirmation_required']" }).$promise; }]

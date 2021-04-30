@@ -3,7 +3,6 @@ subscription_1:
   id: 1
   plan_id: 2
   statistic_profile_id: 3
-  stp_subscription_id: sub_8DGB4ErIc2asOv
   created_at: <%= 10.days.ago.utc.strftime('%Y-%m-%d %H:%M:%S.%9N Z') %>
   updated_at: <%= 10.days.ago.utc.strftime('%Y-%m-%d %H:%M:%S.%9N Z') %>
   expiration_date: <%= (1.month.from_now - 11.days).utc.strftime('%Y-%m-%d %H:%M:%S.%9N Z') %>
@@ -13,7 +12,6 @@ subscription_2:
   id: 2
   plan_id: 3
   statistic_profile_id: 4
-  stp_subscription_id:
   created_at: <%= 10.days.ago.utc.strftime('%Y-%m-%d %H:%M:%S.%9N Z') %>
   updated_at: <%= 10.days.ago.utc.strftime('%Y-%m-%d %H:%M:%S.%9N Z') %>
   expiration_date: <%= (1.month.from_now - 11.days).utc.strftime('%Y-%m-%d %H:%M:%S.%9N Z') %>
@@ -24,7 +22,6 @@ subscription_3:
   id: 3
   plan_id: 1
   statistic_profile_id: 7
-  stp_subscription_id:
   created_at: 2012-03-12 11:03:31.651441000 Z
   updated_at: 2012-03-12 11:03:31.651441000 Z
   expiration_date: 2012-04-12 11:03:31.648274000 Z
@@ -35,7 +32,6 @@ subscription_4:
   id: 4
   plan_id: 1
   statistic_profile_id: 8
-  stp_subscription_id:
   created_at: 2018-06-11 14:27:12.427521000 Z
   updated_at: 2018-06-11 14:27:12.427521000 Z
   expiration_date: 2018-07-11 14:27:12.427521000 Z

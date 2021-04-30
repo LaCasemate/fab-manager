@@ -22,7 +22,7 @@ wb.add_worksheet(name: t('export_reservations.reservations')) do |sheet|
         resrv.reservable_type,
         (resrv.reservable.nil? ? '' : resrv.reservable.name),
         (resrv.reservable_type == 'Event') ? resrv.total_booked_seats: resrv.slots.count,
-        (resrv.invoice&.paid_with_stripe?) ? t('export_reservations.online_payment') : t('export_reservations.local_payment')
+        (resrv.invoice&.paid_by_card?) ? t('export_reservations.online_payment') : t('export_reservations.local_payment')
     ]
     styles = [nil, nil, nil, date, nil, nil, nil, nil]
     types = [:integer, :string, :string, :date, :string, :string, :integer, :string]

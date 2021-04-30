@@ -893,6 +893,8 @@ Setting.set('statistics_module', true) unless Setting.find_by(name: 'statistics_
 
 Setting.set('upcoming_events_shown', 'until_start') unless Setting.find_by(name: 'upcoming_events_shown').try(:value)
 
+Setting.set('trainings_module', true) unless Setting.find_by(name: 'trainings_module').try(:value)
+
 if StatisticCustomAggregation.count.zero?
   # available reservations hours for machines
   machine_hours = StatisticType.find_by(key: 'hour', statistic_index_id: 2)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.id @reservation.id
 json.user_id @reservation.statistic_profile.user_id
 json.user do
@@ -16,7 +18,7 @@ json.user do
   end
 end
 json.message @reservation.message
-json.slots @reservation.slots do |s|
+json.slots_attributes @reservation.slots do |s|
   json.id s.id
   json.start_at s.start_at.iso8601
   json.end_at s.end_at.iso8601

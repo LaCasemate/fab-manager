@@ -124,8 +124,8 @@ module Availabilities
                    'expected end_at = start_at + 4 slots of 90 minutes'
 
       # Check the recurrence
-      assert_equal (availability[:start_at].to_date + 2.weeks),
-                   availability[:end_date].to_date,
+      assert_equal (availability[:start_at].to_datetime + 2.weeks).to_date,
+                   availability[:end_date].to_datetime.utc.to_date,
                    'expected end_date = start_at + 2 weeks'
     end
   end

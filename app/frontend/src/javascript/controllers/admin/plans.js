@@ -64,6 +64,14 @@ class PlanController {
         return file._destroy = true;
       }
     };
+
+    /**
+     * Check and limit
+     * @param content
+     */
+    $scope.limitDescriptionSize = function (content) {
+      alert(content);
+    };
   }
 }
 

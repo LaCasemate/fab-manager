@@ -100,6 +100,7 @@ en:
       subject: "A user account has been created"
       body:
         new_account_created: "A new user account has been created on the website:"
+        user_of_group_html: "The user has registered in the group <strong>%{GROUP}</strong>"
         account_for_organization: "This account manage an organization:"
     notify_admin_subscribed_plan:
       subject: "A subscription has been purchased"

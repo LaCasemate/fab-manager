@@ -22,6 +22,7 @@
 @import "modules/stripe";
 @import "modules/tour";
 @import "modules/fab-modal";
+@import "modules/fab-input";
 @import "modules/fab-button";
 @import "modules/payment-schedule-summary";
 @import "modules/wallet-info";
@@ -32,5 +33,12 @@
 @import "modules/payment-schedules-list";
 @import "modules/stripe-confirm";
 @import "modules/payment-schedule-dashboard";
+@import "modules/plan-card";
+@import "modules/select-gateway-modal";
+@import "modules/stripe-keys-form";
+@import "modules/payzen-keys-form";
+@import "modules/payzen-settings";
+@import "modules/payment-modal";
+@import "modules/payzen-modal";
 
 @import "app.responsive";

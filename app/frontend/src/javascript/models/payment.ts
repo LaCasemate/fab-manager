@@ -15,14 +15,17 @@ export interface IntentConfirmation {
 }
 
 export enum PaymentMethod {
-  Stripe = 'stripe',
+  Card = 'card',
   Other = ''
 }
 
 export interface CartItems {
+  customer_id: number,
   reservation?: Reservation,
   subscription?: SubscriptionRequest,
-  coupon_code?: string
+  coupon_code?: string,
+  payment_schedule?: boolean,
+  payment_method: PaymentMethod
 }
 
 export interface UpdateCardResponse {

@@ -113,6 +113,18 @@ es:
     subscription_of_NAME_extended_starting_from_STARTDATE_until_ENDDATE: "Subscripción de %{NAME} extendida (días gratuitos) empezando desde %{STARTDATE} hasta %{ENDDATE}"
     and: 'y'
     invoice_text_example: "Nuestra asociación no está sujeta al IVA"
+  #PDF payment schedule generation
+  payment_schedules:
+    schedule_reference: "Payment schedule reference: %{REF}"
+    schedule_issued_on_DATE: "Schedule issued on %{DATE}"
+    object: "Object: Payment schedule for %{ITEM}"
+    subscription_of_NAME_for_DURATION_starting_from_DATE: "the subscription of %{NAME} for %{DURATION} starting from %{DATE}"
+    deadlines: "Table of your deadlines"
+    deadline_date: "Payment date"
+    deadline_amount: "Amount including tax"
+    total_amount: "Total amount"
+    settlement_by_METHOD: "Debits will be made by {METHOD, select, stripe{card} other{check}} for each deadlines."
+    settlement_by_wallet: "%{AMOUNT} will be debited from your wallet to settle the first deadline."
   #CVS accounting export (columns headers)
   accounting_export:
     journal_code: "Código de registro"
@@ -201,7 +213,6 @@ es:
     start_date: "Fecha de comienzo"
     expiration_date: "Fecha de fin"
     amount: "Cantidad"
-    payment_method: "Método de pago"
     local_payment: "Pago en recepción"
     online_payment: "Pago en línea"
     deleted_user: "Usario eliminado"
@@ -345,6 +356,14 @@ es:
         user_NAME_changed_ROLE_html: "User <strong><em>%{NAME}</strong></em> is now %{ROLE}."
       notify_admin_members_stripe_sync:
         all_members_sync: "All members were successfully synchronized on Stripe."
+      notify_user_when_payment_schedule_ready:
+        your_schedule_is_ready_html: "Your payment schedule #%{REFERENCE}, of %{AMOUNT}, is ready. <a href='api/payment_schedules/%{SCHEDULE_ID}/download' target='_blank'>Click here to download</a>."
+      notify_admin_payment_schedule_failed:
+        schedule_failed: "Failed card debit for the %{DATE} deadline, for schedule %{REFERENCE}"
+      notify_member_payment_schedule_failed:
+        schedule_failed: "Failed card debit for the %{DATE} deadline, for your schedule %{REFERENCE}"
+      notify_admin_payment_schedule_check_deadline:
+        schedule_deadline: "You must cash the check for the %{DATE} deadline, for schedule %{REFERENCE}"
   #statistics tools for admins
   statistics:
     subscriptions: "Suscripciones"

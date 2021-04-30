@@ -8,7 +8,7 @@ class API::AccountingExportsController < API::ApiController
   def export
     authorize :accounting_export
 
-    export = Export.where(category: 'accounting', export_type: 'accounting-software', key: params[:key])
+    export = Export.where(category: 'accounting', export_type: params[:type], key: params[:key])
                    .where(extension: params[:extension], query: params[:query])
                    .where('created_at > ?', Invoice.maximum('updated_at'))
                    .last

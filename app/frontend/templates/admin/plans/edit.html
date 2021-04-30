@@ -65,7 +65,7 @@
                       <td>
                           <div class="input-group" ng-class="{'has-error': planForm['plan[prices_attributes][][amount]'].$dirty && planForm['plan[prices_attributes][][amount]'].$invalid}">
                               <span class="input-group-addon">{{currencySymbol}}</span>
-                              <input type="number" class="form-control" name="plan[prices_attributes][][amount]" ng-value="price.amount" required="required"/>
+                              <input type="number" class="form-control" name="plan[prices_attributes][][amount]" ng-value="price.amount" required="true"/>
                               <input type="hidden" class="form-control" name="plan[prices_attributes][][id]" ng-value="price.id"/>
                           </div>
                       </td>
@@ -86,7 +86,7 @@
                   <td>
                     <div class="input-group" ng-class="{'has-error': planForm['plan[prices_attributes][][amount]'].$dirty && planForm['plan[prices_attributes][][amount]'].$invalid}">
                       <span class="input-group-addon">{{currencySymbol}}</span>
-                      <input type="number" class="form-control" name="plan[prices_attributes][][amount]" ng-value="price.amount" required="required"/>
+                      <input type="number" class="form-control" name="plan[prices_attributes][][amount]" ng-value="price.amount" required="true"/>
                       <input type="hidden" class="form-control" name="plan[prices_attributes][][id]" ng-value="price.id"/>
                     </div>
                   </td>

@@ -21,7 +21,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     subscriptions_count = Subscription.count
 
     VCR.use_cassette('reservations_create_for_machine_without_subscription_success') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
@@ -61,7 +61,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    refute invoice.stp_payment_intent_id.blank?
+    refute invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert invoice.check_footprint
 
@@ -91,7 +91,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     notifications_count = Notification.count
 
     VCR.use_cassette('reservations_create_for_machine_without_subscription_error') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method(error: :card_declined),
              cart_items: {
@@ -139,7 +139,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     invoice_items_count = InvoiceItem.count
 
     VCR.use_cassette('reservations_create_for_training_without_subscription_success') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
@@ -177,7 +177,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    refute invoice.stp_payment_intent_id.blank?
+    refute invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert invoice.check_footprint
 
@@ -208,7 +208,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     users_credit_count = UsersCredit.count
 
     VCR.use_cassette('reservations_create_for_machine_with_subscription_success') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
@@ -253,7 +253,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    refute invoice.stp_payment_intent_id.blank?
+    refute invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert invoice.check_footprint
 
@@ -328,7 +328,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    assert invoice.stp_payment_intent_id.blank?
+    assert invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert invoice.check_footprint
 
@@ -363,15 +363,14 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     wallet_transactions_count = WalletTransaction.count
 
     VCR.use_cassette('reservations_create_for_machine_and_pay_wallet_success') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
+               customer_id: @vlonchamp.id,
                reservation: {
-                 user_id: @vlonchamp.id,
                  reservable_id: machine.id,
                  reservable_type: machine.class.name,
-                 card_token: stripe_payment_method,
                  slots_attributes: [
                    {
                      start_at: availability.start_at.to_s(:iso8601),
@@ -407,7 +406,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    refute invoice.stp_payment_intent_id.blank?
+    refute invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert invoice.check_footprint
 
@@ -447,14 +446,13 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     wallet_transactions_count = WalletTransaction.count
 
     VCR.use_cassette('reservations_create_for_training_and_plan_by_pay_wallet_success') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
                reservation: {
                  reservable_id: training.id,
                  reservable_type: training.class.name,
-                 plan_id: plan.id,
                  slots_attributes: [
                    {
                      start_at: availability.start_at.to_s(:iso8601),
@@ -462,6 +460,9 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
                      availability_id: availability.id
                    }
                  ]
+               },
+               subscription: {
+                 plan_id: plan.id
                }
              }
            }.to_json, headers: default_headers
@@ -490,7 +491,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    refute invoice.stp_payment_intent_id.blank?
+    refute invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert_equal invoice.total, 2000
     assert invoice.check_footprint
@@ -525,7 +526,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     users_credit_count = UsersCredit.count
 
     VCR.use_cassette('reservations_machine_and_plan_using_coupon_success') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
@@ -538,7 +539,9 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
                      end_at: (availability.start_at + 1.hour).to_s(:iso8601),
                      availability_id: availability.id
                    }
-                 ],
+                 ]
+               },
+               subscription: {
                  plan_id: plan.id
                },
                coupon_code: 'SUNNYFABLAB'
@@ -568,7 +571,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     # invoice assertions
     invoice = reservation.invoice
 
-    refute invoice.stp_payment_intent_id.blank?
+    refute invoice.payment_gateway_object.blank?
     refute invoice.total.blank?
     assert invoice.check_footprint
 
@@ -595,7 +598,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     assert_invoice_pdf invoice
 
     VCR.use_cassette('reservations_machine_and_plan_using_coupon_retrieve_invoice_from_stripe') do
-      stp_intent = Stripe::PaymentIntent.retrieve(invoice.stp_payment_intent_id, api_key: Setting.get('stripe_secret_key'))
+      stp_intent = invoice.payment_gateway_object.gateway_object.retrieve
       assert_equal stp_intent.amount, invoice.total
     end
 
@@ -616,12 +619,12 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     notifications_count = Notification.count
 
     VCR.use_cassette('reservations_training_with_expired_coupon_error') do
-      post '/api/payments/confirm_payment',
+      post '/api/stripe/confirm_payment',
            params: {
              payment_method_id: stripe_payment_method,
              cart_items: {
+               customer_id: @user_without_subscription.id,
                reservation: {
-                 user_id: @user_without_subscription.id,
                  reservable_id: training.id,
                  reservable_type: training.class.name,
                  card_token: stripe_payment_method,
@@ -667,7 +670,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     plan = Plan.find_by(group_id: @user_without_subscription.group.id, type: 'Plan', base_name: 'Abonnement mensualisable')
 
     VCR.use_cassette('reservations_training_subscription_with_payment_schedule') do
-      get "/api/payments/setup_intent/#{@user_without_subscription.id}"
+      get "/api/stripe/setup_intent/#{@user_without_subscription.id}"
 
       # Check response format & status
       assert_equal 200, response.status, response.body
@@ -692,10 +695,11 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
       assert_equal 'off_session', stripe_res.usage
 
 
-      post '/api/payments/confirm_payment_schedule',
+      post '/api/stripe/confirm_payment_schedule',
            params: {
              setup_intent_id: setup_intent[:id],
              cart_items: {
+               payment_schedule: true,
                reservation: {
                  reservable_id: training.id,
                  reservable_type: training.class.name,
@@ -706,8 +710,9 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
                      availability_id: availability.id
                    }
                  ],
+               },
+               subscription: {
                  plan_id: plan.id,
-                 payment_schedule: true
                }
              }
            }.to_json, headers: default_headers
@@ -761,7 +766,7 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
     plan = Plan.find_by(group_id: user.group.id, type: 'Plan', base_name: 'Abonnement mensualisable')
 
     VCR.use_cassette('reservations_machine_subscription_with_payment_schedule_coupon_wallet') do
-      get "/api/payments/setup_intent/#{user.id}"
+      get "/api/stripe/setup_intent/#{user.id}"
 
       # Check response format & status
       assert_equal 200, response.status, response.body
@@ -786,14 +791,16 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
       assert_equal 'off_session', stripe_res.usage
 
 
-      post '/api/payments/confirm_payment_schedule',
+      post '/api/stripe/confirm_payment_schedule',
            params: {
              setup_intent_id: setup_intent[:id],
              cart_items: {
                coupon_code: 'GIME3EUR',
-               reservation: {
+               payment_schedule: true,
+               subscription: {
                  plan_id: plan.id,
-                 payment_schedule: true,
+               },
+               reservation: {
                  reservable_id: machine.id,
                  reservable_type: machine.class.name,
                  slots_attributes: [
@@ -838,9 +845,9 @@ class Reservations::CreateTest < ActionDispatch::IntegrationTest
 
     # payment schedule assertions
     assert_not_nil payment_schedule.reference
-    assert_equal 'stripe', payment_schedule.payment_method
-    assert_not_nil payment_schedule.stp_subscription_id
-    assert_not_nil payment_schedule.stp_setup_intent_id
+    assert_equal 'card', payment_schedule.payment_method
+    assert_equal 2, payment_schedule.payment_gateway_objects.count
+    assert_not_nil payment_schedule.gateway_payment_mean
     assert_not_nil payment_schedule.wallet_transaction
     assert_equal payment_schedule.ordered_items.first.amount, payment_schedule.wallet_amount
     assert_equal Coupon.find_by(code: 'GIME3EUR').id, payment_schedule.coupon_id

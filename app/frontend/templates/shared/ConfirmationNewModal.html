@@ -17,7 +17,7 @@
                        name="email"
                        class="form-control"
                        ng-model="user.email"
-                       required="required"
+                       required="true"
                        ng-blur="emailError = !!confirmationNewForm.email.$error.email"
                        ng-focus="emailError = false"
                        placeholder="{{ 'app.public.common.your_email_address' | translate }}" />

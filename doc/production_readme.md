@@ -1,7 +1,6 @@
 # Install Fab-manager in production with docker-compose
 
 This document will guide you through all the steps needed to set up your Fab-manager app on a production server, based on a solution using Docker and Docker-compose.
-We recommend DigitalOcean, but these steps will work on any Docker-compatible cloud provider or local server.
 
 In order to make it work, please use the same directories structure as described in this guide in your Fab-manager app folder.
 You will need to be root through the rest of the setup.
@@ -42,25 +41,22 @@ Choose one, depending on your budget, on the server's location, on the uptime gu
 You will need at least 2GB of addressable memory (RAM + swap) to install and use Fab-manager.
 We recommend 4 GB RAM for larger communities.
 
-On DigitalOcean, create a Droplet with One-click apps **"Docker on Ubuntu 16.04 LTS"**.
-This way, Docker and Docker-compose are pre-installed.
-Choose a datacenter and set your domain name as the hostname.
-
-With other providers, choose a [supported operating system](../README.md#software-stack) and install docker on it:
+Choose a [supported operating system](../README.md#software-stack) and install docker on it:
 - Install [Docker on Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian/)
 - Install [Docker on Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/)
 
 Then install [Docker Compose](https://docs.docker.com/compose/install/)
 
 <a name="setup-the-domain-name"></a>
-### Setup the domain name
+### Set up the domain name
 
 There are many domain name registrars on the internet, you may choose one that fit your needs.
 You can find an exhaustive list [on the ICANN website](https://www.icann.org/registrar-reports/accredited-list.html)
 
 1. Once done, buy a domain name on it
-2. Replace the IP address of the domain with the IP address of your VPS (This is a DNS record type A)
+2. Replace the IP address of the domain with the IP address of your VPS (This is a DNS record of **type A**)
 3. **Do not** try to access your domain name right away, DNS are not aware of the change yet so **WAIT** and be patient.
+4. You may want to bind the subdomain `www.` to your main domain name. You can achieve this by creating a DNS record of **type CNAME**.
 
 <a name="connect-through-ssh"></a>
 ### Connect through SSH
@@ -73,9 +69,9 @@ connect to the server with `ssh root@your-domain-name`.
 
 Before installing Fab-manager, we recommend you to:
 - Upgrade your system
-- Setup the server timezone
-- Add at least 2GB of swap memory
-- Protect your SSH connection by forcing it through a RSA key
+- Set up the server timezone
+- Add at least 2 GB of swap memory
+- Protect your SSH connection by forcing it through an RSA key
 
 You can run the following script as root to easily perform all these operations:
 
@@ -136,11 +132,11 @@ docker-compose run --rm -e VAR1=xxx -e VAR2=xxx fabmanager bundle exec rails my:
 ## Easy upgrade
 
 Starting with Fab-manager v4.5.0, you can upgrade Fab-manager in one single easy command, that automates the procedure below.
-To upgrade with ease, using this command, read the GitHub release notes of all versions between your current version and the target version.
+To upgrade with ease, using this command, read the GitHub release notes of all versions between your current version, and the target version.
 
 **You MUST append all the arguments** of the easy upgrade commands, for **each version**, to the command you run.
 
-Eg.
+E.g.
 If you upgrade from 1.2.3 to 1.2.5, with the following release notes:
 ```markdown
 ## 1.2.4
@@ -156,6 +152,7 @@ Then, you'll need to perform the upgrade with the following command:
 ## Update Fab-manager
 
 *This procedure updates Fab-manager to the most recent version by default.*
+**If you upgrade Fab-manager from a version >= 4.5.0, we recommend using the easy upgrade script above instead.**
 
 > ⚠ If you are upgrading from a very outdated version, you must first upgrade to v2.8.3, then to v3.1.2, then to 4.0.4, then to 4.4.6 and finally to the last version
 
@@ -181,7 +178,7 @@ You can subscribe to [this atom feed](https://github.com/sleede/fab-manager/rele
 
 4. remove old assets
 
-   `rm -Rf public/packs/`
+   `rm -Rf public/packs/ public/assets/`
 
 5. compile new assets
 
@@ -193,8 +190,8 @@ You can subscribe to [this atom feed](https://github.com/sleede/fab-manager/rele
    are always specified in the [CHANGELOG](https://github.com/sleede/fab-manager/blob/master/CHANGELOG.md) and prefixed by **[TODO DEPLOY]**. 
    They are also present in the [releases page](https://github.com/sleede/fab-manager/releases).
  
-   Those commands execute specific tasks and have to be run by hand.
-   Using docker, you must prefix the commands starting by `rails...` or `rake...` with: `docker-compose run --rm fabmanager bundle exec`.
+   Those commands execute specific tasks and have to be run manually.
+   You must prefix the commands starting by `rails...` or `rake...` with: `docker-compose run --rm fabmanager bundle exec`.
    In any other cases, the other commands (like those invoking curl `\curl -sSL... | bash`) must not be prefixed.
    You can also ignore commands only applicable to development environnement, which are prefixed by `(dev)` in the CHANGELOG.
 
@@ -205,14 +202,14 @@ You can subscribe to [this atom feed](https://github.com/sleede/fab-manager/rele
      docker-compose up -d
    ```
 
-You can check that all containers are running with `docker ps`.
+You can check that all containers are running with `docker-compose ps`.
 
 <a name="upgrade-to-the-last-version"></a>
 ### Upgrade to the last version
 
 It's the default behaviour as `docker-compose pull` command will fetch the latest versions of the docker images. 
-Be sure to run all the specific commands listed in the [CHANGELOG](https://github.com/sleede/fab-manager/blob/master/CHANGELOG.md) between your actual
-and the new version in sequential order. (Example: to update from 2.4.0 to 2.4.3, you will run the specific commands for the 2.4.1, then for the 2.4.2 and then for the 2.4.3).
+Be sure to run all the specific commands listed in the [CHANGELOG](https://github.com/sleede/fab-manager/blob/master/CHANGELOG.md) between your actual, and the new version in sequential order. 
+__Example:__ to update from 2.4.0 to 2.4.3, you will run the specific commands for the 2.4.1, then for the 2.4.2 and then for the 2.4.3.
 
 <a name="upgrade-to-a-specific-version"></a>
 ### Upgrade to a specific version

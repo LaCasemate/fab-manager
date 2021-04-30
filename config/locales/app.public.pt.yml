@@ -19,6 +19,7 @@ pt:
         my_trainings: "Meus Treinamentos"
         my_events: "Meus Eventos"
         my_invoices: "Minhas Contas"
+        my_payment_schedules: "My payment schedules"
         my_wallet: "Minha Carteira"
         #contextual help
         help: "Ajuda"
@@ -83,6 +84,8 @@ pt:
         birth_date_is_required: "Data de nascimento é obrigatório."
         phone_number: "Número de telefone"
         phone_number_is_required: "Número de telefone é obrigatório."
+        address: "Address"
+        address_is_required: "Address is required"
         i_authorize_Fablab_users_registered_on_the_site_to_contact_me: "Eu autorizo usuários do FabLab, registrados no site, a entrarem em contato comigo"
         i_accept_to_receive_information_from_the_fablab: "Eu aceito receber informações do FabLab"
         i_ve_read_and_i_accept_: "Eu li e aceito"
@@ -241,6 +244,7 @@ pt:
         more_information: "Mais informação"
         your_subscription_expires_on_the_DATE: "Sua inscrição expira em {DATE}"
         no_plans: "Não há planos disponíveis para o seu grupo"
+        AMOUNT_per_month: "{AMOUNT} / month"
         my_group: "Meu grupo"
         his_group: "{GENDER, select, male{Ele} female{Ela} other{Esses}} grupo"
         he_wants_to_change_group: "{ROLE, select, member{Eu quero} other{O usuário quer}} trocar de grupo"
@@ -248,8 +252,6 @@ pt:
         summary: "Sumário"
         your_subscription_has_expired_on_the_DATE: "Sua inscrição expirou em {DATE}"
         subscription_price: "Preço da assinatura"
-        you_ve_just_selected_a_subscription_html: "Você acabou de selecionar uma <strong>assinatura</strong>:"
-        confirm_and_pay: "Confirmar e pagar"
         you_ve_just_payed_the_subscription_html: "Você acabou de pagar o <strong>inscrição</strong>:"
         thank_you_your_subscription_is_successful: "Obrigado. Sua inscrição foi feita com sucesso!"
         your_invoice_will_be_available_soon_from_your_dashboard: "Sua fatura estará disponível em breve a partir do seu painel de controle"
@@ -257,11 +259,6 @@ pt:
         the_user_s_group_was_successfully_changed: "O grupo de usuários foi alterado com sucesso."
         an_error_prevented_your_group_from_being_changed: "Um erro impediu que seu grupo fosse alterado."
         an_error_prevented_to_change_the_user_s_group: "Um erro impediu que o grupo de usuários fosse alterado com sucesso."
-        an_error_occured_during_the_payment_process_please_try_again_later: "Um erro ocorreu durante o processo de pagamento. Por favor tente novamente mais tarde."
-        subscription_confirmation: "Inscrição confirmada"
-        here_is_the_NAME_subscription_summary: "Aqui é o sumário de inscrição do {NAME}:"
-        confirm_payment_of_html: "{ROLE, select, admin{Pagamento pelo site} other{Pagamento}}: {AMOUNT}" #(contexte : validate a payment of $20,00)
-        online_payment_disabled: "Pagamento por cartão de crédito não está disponível. Por favor, contate a recepção do FabLab diretamente."
       #Fablab's events list
       events_list:
         the_fablab_s_events: "Eventos do Fablab"
@@ -359,7 +356,7 @@ pt:
       tour:
         conclusion:
           title: "Obrigado pela sua atenção"
-          content: "<p>Se você deseja reiniciar esta ajuda contextual, pressione <strong>F1</strong> a qualquer momento ou clique em « ? Ajuda » no menu do usuário.</p><p>Se precisar de ajuda adicional, você pode <a href='https://github.com/sleede/fab-manager/raw/master/doc/fr/guide_utilisation_fab_manager_v4.5.pdf' target='_blank'>verificar o guia do usuário</a> (apenas em francês por enquanto).</p><p>A equipe do Fab-Gerente também fornece suporte personalizado (ajuda para começar, ajuda com a instalação, personalização, etc.) , <a href='mailto:contact@fab-manager.com'>contacte-nos</a> para mais informações.</p>"
+          content: "<p>Se você deseja reiniciar esta ajuda contextual, pressione <strong>F1</strong> a qualquer momento ou clique em « ? Ajuda » no menu do usuário.</p><p>Se precisar de ajuda adicional, você pode <a href='https://github.com/sleede/fab-manager/raw/master/doc/fr/guide_utilisation_fab_manager_v4.7.pdf' target='_blank'>verificar o guia do usuário</a> (apenas em francês por enquanto).</p><p>A equipe do Fab-Gerente também fornece suporte personalizado (ajuda para começar, ajuda com a instalação, personalização, etc.) , <a href='mailto:contact@fab-manager.com'>contacte-nos</a> para mais informações.</p>"
         welcome:
           welcome:
             title: "Bem-vindo ao Fab-manager"

@@ -114,13 +114,11 @@ en:
       member_select:
         select_a_member: "Select a member"
         start_typing: "Start typing..."
-      #stripe payment modal
-      stripe:
+      #payment modal
+      payment:
         online_payment: "Online payment"
         i_have_read_and_accept_: "I have read, and accept "
         _the_general_terms_and_conditions: "the general terms and conditions."
-        credit_amount_for_pay_reservation: "{amount} {currency} remains to be paid to confirm your reservation"
-        client_credit_amount_for_pay_reservation: "{amount} {currency} remains to be paid to confirm reservation of client"
         payment_schedule_html: "<p>You're about to subscribe to a payment schedule of {DEADLINES} months.</p><p>By paying this bill, you agree to send instructions to the financial institution that issue your card, to take payments from your card account, for the whole duration of this subscription. This imply that your card data are saved by Stripe and a series of payments will be initiated on your behalf, conforming to the payment schedule previously shown.</p>"
         confirm_payment_of_: "Pay: {AMOUNT}"
       #dialog of on site payment for reservations
@@ -130,9 +128,9 @@ en:
         subscription_confirmation: "Subscription confirmation"
         here_is_the_subscription_summary: "Here is the subscription summary:"
         payment_method: "Payment method"
-        method_stripe: "Online by card"
+        method_card: "Online by card"
         method_check: "By check"
-        stripe_collection_info: "By validating, you'll be prompted for the member's card number. This card will be automatically charged at the deadlines."
+        card_collection_info: "By validating, you'll be prompted for the member's card number. This card will be automatically charged at the deadlines."
         check_collection_info: "By validating, you confirm that you have {DEADLINES} checks, allowing you to collect all the monthly payments."
       #event edition form
       event:
@@ -192,6 +190,8 @@ en:
         otherwise_it_will_begin_as_soon_as_it_is_bought: "Otherwise, it will begin as soon as it is bought."
         monthly_payment: "Monthly payment?"
         monthly_payment_info: "If monthly payment is enabled, the members will be able to choose between a one-time payment or a payment schedule staged each months."
+        description: "Description"
+        type_a_short_description: "Type a short description"
         information_sheet: "Information sheet"
         attach_an_information_sheet: "Attach an information sheet"
         notified_partner: "Notified partner"
@@ -444,7 +444,7 @@ en:
         do_you_really_want_to_cancel_this_reservation_html: "<p>Do you really want to cancel this reservation?</p><p>Warning: if this reservation was made free of charge, as part of a subscription, the credits used will not be re-credited.</p>"
         reservation_was_cancelled_successfully: "Reservation was cancelled successfully."
         cancellation_failed: "Cancellation failed."
-        confirm_payment_of_html: "{ROLE, select, admin{Payment on site} other{Pay}}: {AMOUNT}"  #eg. confirm my payment of $20.00
+        confirm_payment_of_html: "{METHOD, select, stripe{Pay by card} other{Pay on site}}: {AMOUNT}"
         a_problem_occurred_during_the_payment_process_please_try_again_later: "A problem occurred during the payment process. Please try again later."
         none: "None"
         online_payment_disabled: "Online payment is not available. Please contact the FabLab's reception directly."
