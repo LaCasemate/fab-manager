@@ -126,7 +126,10 @@ compile_assets()
   PG_NET_ID=$(docker inspect "$PG_ID" -f "{{json .NetworkSettings.Networks }}" | jq -r '.[] .NetworkID')
   clean_env_file
   # shellcheck disable=SC2068
-  docker run --rm --env-file ./config/env ${ENV_ARGS[@]} --link "$PG_ID" --net "$PG_NET_ID" -v "${PWD}/public/new_packs:/usr/src/app/public/packs" "$IMAGE" bundle exec rake assets:precompile
+  if ! docker run --rm --env-file ./config/env ${ENV_ARGS[@]} --link "$PG_ID" --net "$PG_NET_ID" -v "${PWD}/public/new_packs:/usr/src/app/public/packs" "$IMAGE" bundle exec rake assets:precompile; then
+    printf "\e[91m[ ❌ ] Something went wrong while compiling the assets, please check the logs above.\e[39m\nExiting...\n"
+    exit 4
+  fi
   docker-compose down
   rm -rf public/packs
   mv public/new_packs public/packs

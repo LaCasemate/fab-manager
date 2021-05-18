@@ -39,7 +39,7 @@ const SelectGatewayModal: React.FC<SelectGatewayModalModalProps> = ({ isOpen, to
 
   useEffect(() => {
     const gateway = paymentGateway.read();
-    setSelectedGateway(gateway.value);
+    setSelectedGateway(gateway.value ? gateway.value  : '');
   }, []);
 
   /**
@@ -80,11 +80,18 @@ const SelectGatewayModal: React.FC<SelectGatewayModalModalProps> = ({ isOpen, to
   }
 
   /**
-   * Callback triggered when the embedded for has validated all the PayZen keys
+   * Callback triggered when the embedded form has validated all the PayZen keys
    */
   const handleValidPayZenKeys = (payZenKeys: Map<SettingName, string>): void => {
     setGatewayConfig(payZenKeys);
     setPreventConfirmGateway(false);
+  }
+
+  /**
+   * Callback triggered when the embedded form has not validated all keys
+   */
+  const handleInvalidKeys = (): void => {
+    setPreventConfirmGateway(true);
   }
 
   /**
@@ -124,8 +131,8 @@ const SelectGatewayModal: React.FC<SelectGatewayModalModalProps> = ({ isOpen, to
         <option value={Gateway.Stripe}>{t('app.admin.invoices.payment.gateway_modal.stripe')}</option>
         <option value={Gateway.PayZen}>{t('app.admin.invoices.payment.gateway_modal.payzen')}</option>
       </select>
-      {selectedGateway === Gateway.Stripe && <StripeKeysForm onValidKeys={handleValidStripeKeys} />}
-      {selectedGateway === Gateway.PayZen && <PayZenKeysForm onValidKeys={handleValidPayZenKeys} />}
+      {selectedGateway === Gateway.Stripe && <StripeKeysForm onValidKeys={handleValidStripeKeys} onInvalidKeys={handleInvalidKeys} />}
+      {selectedGateway === Gateway.PayZen && <PayZenKeysForm onValidKeys={handleValidPayZenKeys} onInvalidKeys={handleInvalidKeys} />}
     </FabModal>
   );
 };

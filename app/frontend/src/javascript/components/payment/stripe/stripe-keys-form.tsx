@@ -9,13 +9,14 @@ import SettingAPI from '../../../api/setting';
 
 
 interface StripeKeysFormProps {
-  onValidKeys: (stripePublic: string, stripeSecret:string) => void
+  onValidKeys: (stripePublic: string, stripeSecret:string) => void,
+  onInvalidKeys: () => void,
 }
 
 /**
  * Form to set the stripe's public and private keys
  */
-const StripeKeysFormComponent: React.FC<StripeKeysFormProps> = ({ onValidKeys }) => {
+const StripeKeysFormComponent: React.FC<StripeKeysFormProps> = ({ onValidKeys, onInvalidKeys }) => {
   const { t } = useTranslation('admin');
 
   // used to prevent promises from resolving if the component was unmounted
@@ -62,6 +63,8 @@ const StripeKeysFormComponent: React.FC<StripeKeysFormProps> = ({ onValidKeys })
     const validClassName = 'key-valid';
     if (publicKeyAddOnClassName === validClassName && secretKeyAddOnClassName === validClassName) {
       onValidKeys(publicKey, secretKey);
+    } else {
+      onInvalidKeys();
     }
   }, [publicKeyAddOnClassName, secretKeyAddOnClassName]);
 
@@ -149,10 +152,10 @@ const StripeKeysFormComponent: React.FC<StripeKeysFormProps> = ({ onValidKeys })
   );
 }
 
-export const StripeKeysForm: React.FC<StripeKeysFormProps> = ({ onValidKeys }) => {
+export const StripeKeysForm: React.FC<StripeKeysFormProps> = ({ onValidKeys, onInvalidKeys }) => {
   return (
     <Loader>
-      <StripeKeysFormComponent onValidKeys={onValidKeys} />
+      <StripeKeysFormComponent onValidKeys={onValidKeys} onInvalidKeys={onInvalidKeys} />
     </Loader>
   );
 }

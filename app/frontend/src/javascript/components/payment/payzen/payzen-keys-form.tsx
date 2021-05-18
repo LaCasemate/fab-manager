@@ -12,7 +12,8 @@ import PayzenAPI from '../../../api/payzen';
 enableMapSet();
 
 interface PayZenKeysFormProps {
-  onValidKeys: (payZenSettings: Map<SettingName, string>) => void
+  onValidKeys: (payZenSettings: Map<SettingName, string>) => void,
+  onInvalidKeys: () => void,
 }
 
 // all settings related to PayZen that are requested by this form
@@ -27,7 +28,7 @@ let pendingKeysValidation = false;
 /**
  * Form to set the PayZen's username, password and public key
  */
-const PayZenKeysFormComponent: React.FC<PayZenKeysFormProps> = ({ onValidKeys }) => {
+const PayZenKeysFormComponent: React.FC<PayZenKeysFormProps> = ({ onValidKeys, onInvalidKeys }) => {
   const { t } = useTranslation('admin');
 
   // values of the PayZen settings
@@ -53,12 +54,14 @@ const PayZenKeysFormComponent: React.FC<PayZenKeysFormProps> = ({ onValidKeys })
 
   /**
    * When the style class for the public key, and the REST API are updated, check if they indicate valid keys.
-   * If both are valid, run the 'onValidKeys' callback
+   * If both are valid, run the 'onValidKeys' callback, else run 'onInvalidKeys'
    */
   useEffect(() => {
     const validClassName = 'key-valid';
     if (publicKeyAddOnClassName === validClassName && restApiAddOnClassName === validClassName) {
       onValidKeys(settings);
+    } else {
+      onInvalidKeys();
     }
   }, [publicKeyAddOnClassName, restApiAddOnClassName, settings]);
 
@@ -68,7 +71,7 @@ const PayZenKeysFormComponent: React.FC<PayZenKeysFormProps> = ({ onValidKeys })
 
   /**
    * Assign the inputted key to the settings and check if it is valid.
-   * Depending on the test result, assign an add-on icon and a style to notify the user.
+   * Depending on the test result, assign an add-on icon plus a style to notify the user.
    */
   const testPublicKey = (key: string) => {
     if (!key) return;
@@ -205,10 +208,10 @@ const PayZenKeysFormComponent: React.FC<PayZenKeysFormProps> = ({ onValidKeys })
   );
 }
 
-export const PayZenKeysForm: React.FC<PayZenKeysFormProps> = ({ onValidKeys }) => {
+export const PayZenKeysForm: React.FC<PayZenKeysFormProps> = ({ onValidKeys, onInvalidKeys }) => {
   return (
     <Loader>
-      <PayZenKeysFormComponent onValidKeys={onValidKeys} />
+      <PayZenKeysFormComponent onValidKeys={onValidKeys} onInvalidKeys={onInvalidKeys} />
     </Loader>
   );
 }

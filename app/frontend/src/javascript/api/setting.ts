@@ -14,7 +14,7 @@ export default class SettingAPI {
     params.append('names', `['${names.join("','")}']`);
 
     const res: AxiosResponse = await apiClient.get(`/api/settings?${params.toString()}`);
-    return SettingAPI.toSettingsMap(res?.data);
+    return SettingAPI.toSettingsMap(names, res?.data);
   }
 
   async update (name: SettingName, value: any): Promise<Setting> {
@@ -48,11 +48,10 @@ export default class SettingAPI {
     return wrapPromise(api.isPresent(name));
   }
 
-  private static toSettingsMap(data: Object): Map<SettingName, any> {
-    const dataArray: Array<Array<string | any>> = Object.entries(data);
+  private static toSettingsMap(names: Array<SettingName>, data: Object): Map<SettingName, any> {
     const map = new Map();
-    dataArray.forEach(item => {
-      map.set(item[0] as SettingName, item[1] || '');
+    names.forEach(name => {
+      map.set(name, data[name] || '');
     });
     return map;
   }
