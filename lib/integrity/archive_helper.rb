@@ -15,7 +15,7 @@ class Integrity::ArchiveHelper
         Invoice.where('created_at > ?', last_period.end_at).order(:id).each do |i|
           next if i.check_footprint
 
-          puts i.debug_footprint
+          i.debug_footprint
           raise "Invalid footprint for invoice #{i.id}"
         end
       else
@@ -23,7 +23,7 @@ class Integrity::ArchiveHelper
         Invoice.order(:id).all.each do |i|
           next if i.check_footprint
 
-          puts i.debug_footprint
+          i.debug_footprint
           raise "Invalid footprint for invoice #{i.id}"
         end
       end

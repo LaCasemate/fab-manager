@@ -177,10 +177,13 @@ class MigrateStripeIdsToPaymentGatewayObjects < ActiveRecord::Migration[5.2]
              when 'Stripe::Customer'
                'stp_customer_id'
              else
-               raise "Unknown gateway_object_type #{pgo.gateway_object_type}"
+               puts "Unknown gateway_object_type #{pgo.gateway_object_type}, ignoring..."
+               nil
              end
-      item = pgo.item
-      item.update_column(attr, pgo.gateway_object_id)
+      if attr
+        item = pgo.item
+        item.update_column(attr, pgo.gateway_object_id)
+      end
     end
 
     # chain all records

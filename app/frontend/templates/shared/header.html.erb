@@ -1,7 +1,12 @@
 
   <div class="navbar-header">
-    <a ng-click="toggleNavSize($event)" class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav"><i class="fa fa-bars"></i></a>
-    <a ui-sref="app.public.home" class="navbar-brand" ng-click="goabout = false">
+    <a ng-click="toggleNavSize($event)" class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav" ng-hide="aboutPage">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a ui-sref="app.public.home"  class="btn btn-link visible-xs" ng-show="aboutPage">
+      <i class="fa fa-caret-up"></i>
+    </a>
+    <a ui-sref="app.public.home" class="navbar-brand">
       <img ng-src="{{logo.custom_asset_file_attributes.attachment_url}}" alt="{{logo.custom_asset_file_attributes.attachment}}" class="m-r-sm"/>
       <%= "<label class='label-staging label label-warning text-sm hidden-sm hidden-xs'>Staging</label>".html_safe if Rails.env.staging? %>
     </a>
@@ -9,12 +14,12 @@
 
   <ul class="nav navbar-nav hidden-xs">
     <li class="about-page-link">
-      <a href class="about-link font-sbold text-sm" ng-click="goabout = !goabout" ui-sref="app.public.about" ng-show="!goabout">
+      <a href class="about-link font-sbold text-sm" ui-sref="app.public.about" ng-show="!aboutPage">
         <span class="label label-theme rounded text-lg text-white m-r-sm font-ebold">?</span>
           {{ linkName }}
       </a>
-      <a href class="about-link font-sbold text-sm" ng-click="goabout = !goabout" ui-sref="app.public.home" ng-show="goabout">
-        <span class="label label-theme label-icon rounded text-lg text-white m-r-sm font-ebold"><i class="fa fa-caret-up" ng-show="goabout"></i></span>
+      <a href class="about-link font-sbold text-sm" ui-sref="app.public.home" ng-show="aboutPage">
+        <span class="label label-theme label-icon rounded text-lg text-white m-r-sm font-ebold"><i class="fa fa-caret-up" ng-show="aboutPage"></i></span>
           {{ 'app.public.common.return' | translate }}
       </a>
     </li>

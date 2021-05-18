@@ -155,8 +155,10 @@ zu:
         standard_rate: "crwdns9627:0crwdne9627:0"
         0_equal_free: "crwdns9629:0crwdne9629:0"
         tickets_available: "crwdns9631:0crwdne9631:0"
-        event_theme: "crwdns9633:0crwdne9633:0"
+        event_themes: "crwdns21464:0crwdne21464:0"
+        select_theme: "crwdns21466:0crwdne21466:0"
         age_range: "crwdns9635:0crwdne9635:0"
+        add_price: "crwdns21468:0crwdne21468:0"
       #subscription plan edition form
       plan:
         general_information: "crwdns9637:0crwdne9637:0"

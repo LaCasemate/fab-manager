@@ -14,6 +14,7 @@ config()
       exit 1
   fi
   SERVICE="$(yq eval '.services.*.image | select(. == "sleede/fab-manager*") | path | .[-2]' docker-compose.yml)"
+  echo -e "\n"
 }
 
 add_mount()

@@ -21,6 +21,7 @@
  *
  * Provides :
  *  - $scope.datePicker = {}
+ *  - $scope.event_themes = []
  *  - $scope.submited(content)
  *  - $scope.cancel()
  *  - $scope.addFile()
@@ -31,9 +32,11 @@
  *  - $scope.toggleRecurrenceEnd(e)
  *  - $scope.addPrice()
  *  - $scope.removePrice(price, $event)
+ *  - $scope.handleEventChange(?)
  *
  * Requires :
  *  - $scope.event.event_files_attributes = []
+ *  - $scope.event.
  *  - $state (Ui-Router) [ 'app.public.events_list' ]
  */
 class EventsController {
@@ -48,6 +51,9 @@ class EventsController {
         startingDay: Fablab.weekStartingDay
       }
     };
+
+    // themes of the current event
+    $scope.event_themes = $scope.event.event_theme_ids;
 
     /**
      * For use with ngUpload (https://github.com/twilson63/ngUpload).
@@ -146,6 +152,14 @@ class EventsController {
         const index = $scope.event.prices.indexOf(price);
         $scope.event.prices.splice(index, 1);
       }
+    };
+
+    /**
+     * When the theme selection has changes, extract the IDs to populate the form
+     * @param themes {Array<EventTheme>}
+     */
+    $scope.handleEventChange = function (themes) {
+      $scope.event_themes = themes.map(t => t.id);
     };
   }
 }

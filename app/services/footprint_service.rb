@@ -48,16 +48,20 @@ class FootprintService
       columns = FootprintService.footprint_columns(klass)
       current = FootprintService.footprint_data(klass, item, array: true)
       saved = FootprintDebug.find_by(footprint: item.footprint, klass: klass.name)
-      others = FootprintDebug.where('klass = ? AND data LIKE ? AND id != ?', klass, "#{item.id}%", saved.id)
-      puts "Debug footprint for #{klass} [ id: #{item.id} ]"
-      puts '-----------------------------------------'
-      puts "columns: [ #{columns.join(', ')} ]"
-      puts "current: #{current}"
-      puts "  saved: #{saved.format_data(item.id)}"
-      puts '-----------------------------------------'
-      puts "other possible matches IDs: #{others.map(&:id)}"
-      puts '-----------------------------------------'
-      item.footprint_children.map(&:debug_footprint)
+      if saved.nil?
+        puts "Debug data not found for #{klass} [ id: #{item.id} ]"
+      else
+        others = FootprintDebug.where('klass = ? AND data LIKE ? AND id != ?', klass, "#{item.id}%", saved.id)
+        puts "Debug footprint for #{klass} [ id: #{item.id} ]"
+        puts '-----------------------------------------'
+        puts "columns: [ #{columns.join(', ')} ]"
+        puts "current: #{current}"
+        puts "  saved: #{saved.format_data(item.id)}"
+        puts '-----------------------------------------'
+        puts "other possible matches IDs: #{others.map(&:id)}"
+        puts '-----------------------------------------'
+        item.footprint_children.map(&:debug_footprint)
+      end
     end
 
     private

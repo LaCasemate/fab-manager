@@ -77,6 +77,9 @@ You will also need to translate the invoice watermark, located in `app/pdfs/data
 You'll find there the [GIMP source of the image](app/pdfs/data/watermark.xcf), which is using [Rubik Mono One](https://fonts.google.com/specimen/Rubik+Mono+One) as font.
 Use it to generate a similar localised PNG image which keep the default image size, as PDF are not responsive.
 
+Also, please create a [base.LOCALE.yml](../config/locales/base.en.yml) and fill it with the time-only format in use in your locale.
+
+Finally, add your new locale and its derivatives to the `available_locales` array in [initializers/locale.rb](../config/initializers/locale.rb) to make it available in Fab-manager.
 
 <a name="configuration"></a>
 ## Configuration

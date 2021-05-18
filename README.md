@@ -10,15 +10,11 @@ Fab-manager is the Fab Lab management solution. It provides a comprehensive, web
 ##### Table of Contents
 1. [Software stack](#software-stack)
 2. [Contributing](#contributing)
-3. [Setup a production environment](#setup-a-production-environment)
-4. [Setup a development environment](#setup-a-development-environment)
-5. [Internationalization (i18n)](#i18n)
-6. [Open Projects](#open-projects)
-7. [Plugins](#plugins)
-8. [Single Sign-On](#sso)
-9. [Known issues](#known-issues)
-10. [Related Documentation](#related-documentation)
-
+3. [Documentation](#documentation)
+4. [Open Projects](#open-projects)
+5. [Plugins](#plugins)
+6. [Single Sign-On](#sso)
+7. [Related Documentation](#related-documentation)
 
 
 <a name="software-stack"></a>
@@ -38,26 +34,10 @@ Fab-manager is a Ruby on Rails / AngularJS web application that runs on the foll
 
 Contributions are welcome. Please read [the contribution guidelines](CONTRIBUTING.md) for more information about the contribution process.
 
-<a name="setup-a-production-environment"></a>
-## Setup a production environment
+<a name="documentation"></a>
+## Documentation
 
-To run Fab-manager as a production application, you must follow the procedure described in the [production readme](doc/production_readme.md).
-This procedure is using [Docker-compose](https://docs.docker.com/compose/overview/) to manage the application and its dependencies.
-
-<a name="setup-a-development-environment"></a>
-## Setup a development environment
-
-In you intend to run Fab-manager on your local machine to contribute to the project development, you can set it up by following the [development readme](doc/development_readme.md). 
-This procedure relies on [Docker-compose](https://docs.docker.com/compose/overview/) to set-up the dependencies.
-
-Optionally, you can use a virtual development environment that relies on Vagrant and Virtual Box by following the [virtual machine instructions](doc/virtual-machine.md).
-
-<a name="i18n"></a>
-## Internationalization (i18n)
-
-The Fab-manager application can only run in a single language but this language can easily be changed.
-
-Please refer to the [translation readme](doc/translation_readme.md) for instructions about configuring the language or to contribute to the translation.
+The full documentation is available at [doc.fab.mn](http://doc.fab.mn).
 
 <a name="open-projects"></a>
 ## Open Projects
@@ -101,11 +81,6 @@ Fab-manager can be connected to a [Single Sign-On](https://en.wikipedia.org/wiki
 Currently, OAuth 2 is the only supported protocol for SSO authentication.
 
 For an example of how to use configure an SSO in Fab-manager, please read [sso_with_github.md](doc/sso_with_github.md).
-
-<a name="known-issues"></a>
-## Known issues
-
-Before reporting an issue, please check if your issue is not listed in the [know issues](doc/known-issues.md) with its solution. 
 
 <a name="related-documentation"></a>
 ## Related Documentation

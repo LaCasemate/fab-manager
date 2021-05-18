@@ -9,16 +9,41 @@
 - Fix a bug: build status badge is not working
 - Fix a bug: unable to set date formats during installation
 - Fix a bug: unable to cancel the upgrade before it begins
+- Fix a bug: unable to use run.fab.mn
 - `SUPERADMIN_EMAIL` renamed to `ADMINSYS_EMAIL`
-- [BREAKING CHANGE] GET `open_api/v1/invoices` won't return `stp_invoice_id` OR `stp_payment_intent_id` anymore. The new field `payment_gateway_object` will contain some similar data if the invoice was paid online by card.   
+- [BREAKING CHANGE] GET `open_api/v1/invoices` won't return `stp_invoice_id` OR `stp_payment_intent_id` anymore. The new field `payment_gateway_object` will contain some similar data if the invoice was paid online by card.
 - [TODO DEPLOY] `rails fablab:stripe:set_gateway`
 - [TODO DEPLOY] `rails fablab:maintenance:rebuild_stylesheet`
 - [TODO DEPLOY] `\curl -sSL https://raw.githubusercontent.com/sleede/fab-manager/master/scripts/rename-adminsys.sh | bash`
 
-## v4.7.9
+## v4.7.9 2021 May 17
+
 - Updated dependency to OpenLab
+- Updated i18next to 19.9.3
 - Prevent the worker from crashing if OpenLab is not reachable in dev
+- Allow setting multiple themes for a single event
+- Increased the width of the input field for the prices of the events
+- Script to run a rails command with ease in production (`run.fab.mn`)
+- Fix a bug: invalid currency in notifications for locales with region (eg. fr-CM)
 - Fix a bug: the notification sent to the project author when a collaborator has confirmed his participation is not sent
+- Fix a bug: the event themes are not kept when editing the event again
+- Fix a bug: the count of successfully updated events was not correct
+- Fix a bug: german watermark was missing
+- Fix a bug: invoices are not generated in test/development for locale with region (eg. fr-CA)
+- Fix a bug: cannot access to "about" page on small devices
+- Fix a bug: "about" page shows a non-functional menu icon
+- Fix a bug: responsiveness of the "about" page title
+− Fix a bug: unable to change the slots durations for a new availability
+- Fix a bug: some invoices does not have the name of the user
+- Fix a bug: unable to sort invoices by date
+- Fix a security issue: updated underscore to 1.12.1 to fix [CVE-2021-23358](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-23358)
+- Fix a security issue: updated lodash to 4.17.21 to fix [CVE-2021-23337](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-23337)
+- Fix a security issue: updated url-parse to 1.5.1 to fix [CVE-2021-27515](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-27515)
+- Fix a security issue: updated hosted-git-info to 2.8.9 to fix [CVE-2021-23362](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-23362)
+- Fix a security issue: updated codemirror to 5.58.2 to fix [CVE-2020-7760](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-7760)
+- Fix a security issue: updated rails to 5.2.6 to fix [CVE-2021-22904](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-22904)
+- Fix a security issue: updated react-i18next to 11.8.15 to fix [CVE-2021-23346](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-23346)
+- [TODO DEPLOY] `rails fablab:fix:invoices_without_names`
 
 ## v4.7.8 2021 April 02
 - Updated mimemagic to 0.3.10 to fix [a build issue](https://github.com/mimemagicrb/mimemagic/issues/139)

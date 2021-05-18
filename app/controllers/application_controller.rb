@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   respond_to :html, :json
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  around_action :switch_locale
 
   # Globally rescue Authorization Errors in controller.
   # Returning 403 Forbidden if permission is denied
@@ -59,6 +60,13 @@ class ApplicationController < ActionController::Base
 
   def permission_denied
     head 403
+  end
+
+  # Set the configured locale for each action (API call)
+  # @see https://guides.rubyonrails.org/i18n.html
+  def switch_locale(&action)
+    locale = params[:locale] || Rails.application.secrets.rails_locale
+    I18n.with_locale(locale, &action)
   end
 
   # @return [User]

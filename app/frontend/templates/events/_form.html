@@ -109,23 +109,9 @@
       </div>
     </div>
 
-    <div class="widget panel b-a m m-t-lg" ng-show="themes.length > 0">
-      <div class="panel-heading b-b small">
-        <h3 translate>{{ 'app.shared.event.event_theme' }}</h3>
-      </div>
-      <div class="widget-content no-bg wrapper">
-        <input type="hidden" name="event[event_theme_ids][]" value="" />
-        <ui-select ng-model="event.event_theme_ids" name="event[event_theme_ids][]">
-          <ui-select-match>
-            <span ng-bind="$select.selected.name"></span>
-            <input type="hidden" name="event[event_theme_ids][]" value="{{$select.selected.id}}" />
-          </ui-select-match>
-          <ui-select-choices repeat="t.id as t in (themes | filter: $select.search)">
-            <span ng-bind-html="t.name | highlight: $select.search"></span>
-          </ui-select-choices>
-        </ui-select>
-      </div>
-    </div>
+    <event-themes event="event" on-change="handleEventChange"></event-themes>
+    <input type="hidden" name="event[event_theme_ids][]" ng-repeat="id in event_themes" value="{{id}}" />
+    <input type="hidden" name="event[event_theme_ids][]" value="" ng-if="event_themes.length === 0" />
 
     <div class="widget panel b-a m m-t-lg" ng-show="ageRanges.length > 0">
       <div class="panel-heading b-b small">
@@ -243,7 +229,7 @@
       <div class="widget-content no-bg wrapper">
         <div class="form-group">
           <label for="event_amount" class="col-sm-5 control-label" translate>{{ 'app.shared.event.standard_rate' }}</label>
-          <div class="col-sm-5">
+          <div class="col-sm-6 p-h-0">
             <div class="input-group">
               <input ng-model="event.amount" type="number" name="event[amount]" class="form-control" id="event_amount" required>
               <div class="input-group-addon">{{currencySymbol}}</div>
@@ -260,7 +246,7 @@
                     ng-options="cat as cat.name for cat in priceCategories track by cat.id">
             </select>
           </div>
-          <div class="col-sm-5">
+          <div class="col-sm-6 p-h-0">
             <div class="input-group">
               <input ng-model="price.amount"
                      type="number"
@@ -271,17 +257,17 @@
           </div>
           <div class="col-sm-1">
             <input type="hidden" name="event[event_price_categories_attributes][][_destroy]" ng-value="price._destroy">
-            <a class="btn" ng-click="removePrice(price, $event)" href="#"><i class="fa fa-times text-danger"></i></a>
+            <a class="btn p-h-0" ng-click="removePrice(price, $event)" href="#"><i class="fa fa-times text-danger"></i></a>
           </div>
         </div>
         <div class="link-icon m-b" ng-hide="event.prices.length == priceCategories.length">
           <div class="col-sm-offset-5">
-            <i class="fa fa-plus"></i> <span ng-click="addPrice()">Ajouter un tarif</span>
+            <i class="fa fa-plus"></i> <span ng-click="addPrice()" translate>{{ 'app.shared.event.add_price' }}</span>
           </div>
         </div>
         <div class="form-group">
           <label for="event_nb_total_places" class="col-sm-5 control-label" translate>{{ 'app.shared.event.tickets_available' }}</label>
-          <div class="col-sm-6">
+          <div class="col-sm-6 p-h-0">
             <div class="input-group">
               <input ng-model="event.nb_total_places" type="number" name="event[nb_total_places]" class="form-control" id="event_nb_total_places">
               <div class="input-group-addon"><i class="fa fa-ticket"></i> </div>

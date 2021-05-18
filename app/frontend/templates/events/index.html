@@ -59,7 +59,9 @@
               <h6 class="m-n" ng-if="event.amount">{{ 'app.public.events_list.full_price_' | translate }} {{event.amount | currency}} <span ng-repeat="price in event.prices">/ {{ price.category.name }} {{price.amount | currency}}</span></h6>
 
               <div>
-                <span class="text-black-light text-xs" ng-if="event.event_themes[0]"><i class="fa fa-tags" aria-hidden="true"></i> {{event.event_themes[0].name}}</span>
+                <span class="text-black-light text-xs m-r-xs" ng-repeat="theme in event.event_themes">
+                  <i class="fa fa-tags" aria-hidden="true"></i> {{theme.name}}
+                </span>
                 <span class="text-black-light text-xs" ng-if="event.age_range"><i class="fa fa-users" aria-hidden="true"></i> {{event.age_range.name}}</span>
               </div>
 

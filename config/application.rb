@@ -40,9 +40,6 @@ module Fablab
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = Rails.application.secrets.time_zone
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-
     config.to_prepare do
       Devise::Mailer.layout 'notifications_mailer'
     end
@@ -65,6 +62,10 @@ module Fablab
 
     # enable the app to find locales in plugins locales directory
     config.i18n.load_path += Dir["#{Rails.root}/plugins/*/config/locales/*.yml"]
+
+    # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+    # the I18n.default_locale when a translation cannot be found).
+    config.i18n.fallbacks = true
 
     # enable the app to find views in plugins views directory
     Dir["#{Rails.root}/plugins/*/views"].each do |path|

@@ -1,0 +1,5 @@
+de:
+  time:
+    formats:
+      # See http://apidock.com/ruby/DateTime/strftime for a list of available directives
+      hour_minute: "%I:%M %p"

@@ -86,12 +86,12 @@ Run the following command to install Fab-manager.
 This script will guide you through the installation process by checking the requirements and asking you the configuration elements.
 
 ```bash
-\curl -sSL setup.fab-manager.com | bash
+\curl -sSL setup.fab.mn | bash
 ```
 
 **OR**, if you don't want to install Fab-manager in `/apps/fabmanager`, use the following instead:
 ```bash
-\curl -sSL setup.fab-manager.com | bash -s "/my/custom/path"
+\curl -sSL setup.fab.mn | bash -s "/my/custom/path"
 ```
 
 ## Fab-manager for small configurations
@@ -140,13 +140,13 @@ E.g.
 If you upgrade from 1.2.3 to 1.2.5, with the following release notes:
 ```markdown
 ## 1.2.4
-\curl -sSL upgrade.fab-manager.com | bash -s -- -e "VAR=value"
+\curl -sSL upgrade.fab.mn | bash -s -- -e "VAR=value"
 ## 1.2.5
-\curl -sSL upgrade.fab-manager.com | bash -s -- -c "rails fablab:setup:command"
+\curl -sSL upgrade.fab.mn | bash -s -- -c "rails fablab:setup:command"
 ```
 Then, you'll need to perform the upgrade with the following command:
 ```bash
-\curl -sSL upgrade.fab-manager.com | bash -s -- -e "VAR=value" -c "rails fablab:setup:command"
+\curl -sSL upgrade.fab.mn | bash -s -- -e "VAR=value" -c "rails fablab:setup:command"
 ```
 
 ## Update Fab-manager

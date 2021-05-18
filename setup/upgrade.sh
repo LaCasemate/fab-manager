@@ -58,6 +58,7 @@ config()
     echo -e "\e[91m[ ❌ ] The service name was not determined. Please check your docker-compose.yml file. Exiting... \e[39m"
     exit 1
   fi
+  echo -e "\n"
 }
 
 # compare versions utilities
@@ -72,7 +73,7 @@ verlt() {
 version_error()
 {
   printf "\n\n\e[91m[ ❌ ] You are running Fab-manager version %s\n\e[39m" "${VERSION:-undetermined}"
-  printf "You must upgrade Fab-manager to %s first.\nPlease refer to https://github.com/sleede/fab-manager/blob/master/doc/production_readme.md#update-fab-manager for instructions\n" "$1" 1>&2
+  printf "You must upgrade Fab-manager to %s first.\nPlease refer to http://update.doc.fab.mn for instructions\n" "$1" 1>&2
   exit 3
 }
 
@@ -101,7 +102,7 @@ add_environments()
       printf "\e[91m::\e[0m \e[1mInserting variable %s..\e[0m.\n" "$ENV"
       printf "# added on %s\n%s\n" "$(date +%Y-%m-%d\ %R)" "$ENV" >> "config/env"
     else
-      printf "\e[93m[ ⚠ ] Ignoring invalid option: -e %s.\e[39m\n Given value is not valid environment variable, please see https://huit.re/environment-doc\n" "$ENV"
+      printf "\e[93m[ ⚠ ] Ignoring invalid option: -e %s.\e[39m\n Given value is not valid environment variable, please see http://env.doc.fab.mn\n" "$ENV"
     fi
   done
 }

@@ -64,7 +64,9 @@ class API::EventsController < API::ApiController
   def update
     authorize Event
     res = EventService.update(@event, event_params.permit!, params[:edit_mode])
-    render json: { action: 'update', total: res.length, updated: res.select { |r| r[:status] }.length, details: res }, status: :ok, location: @event
+    render json: { action: 'update', total: res[:events].length, updated: res[:events].select { |r| r[:status] }.length, details: res },
+           status: :ok,
+           location: @event
   end
 
   def destroy

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.extract! event, :id, :title, :description, :age_range_id
+json.extract! event, :id, :title, :description
 json.event_image event.event_image.attachment_url if event.event_image
 json.event_files_attributes event.event_files do |f|
   json.id f.id

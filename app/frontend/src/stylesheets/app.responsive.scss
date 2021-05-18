@@ -10,7 +10,8 @@
   }
 
   .about-fablab {
-    .about-title {
+    .about-title,
+    .about-title p {
       font-size: rem-calc(30);
       line-height: rem-calc(28);
       text-align: center;

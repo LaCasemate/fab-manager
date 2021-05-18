@@ -62,6 +62,11 @@
                 </a>
             </li>
             <!-- Common menu entries -->
+            <li class="hidden-sm hidden-md hidden-lg">
+              <a class="auto pointer" ui-sref="app.public.about">
+                <i class="fa fa-question-circle-o"></i> <span>{{ linkName }}</span>
+              </a>
+            </li>
             <li class="{{navLink.class}}" ng-repeat="navLink in navLinks">
               <a ng-click="toggleNavSize($event)" ui-sref="{{navLink.state}}" ui-sref-active="active" class="auto" data-toggle="class:nav-off-screen" data-target="#nav" ng-if="navLink.state">
                 <i class="fa fa-{{navLink.linkIcon}} fa-lg"></i>

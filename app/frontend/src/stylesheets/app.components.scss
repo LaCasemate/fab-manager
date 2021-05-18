@@ -466,11 +466,12 @@
     font-size: rem-calc(18);
   }
 
-  p {
+  .about-title,
+  .about-title p
+  {
     font-size: rem-calc(18);
     line-height: rem-calc(30);
-    color: $black-light;
-    text-align: justify;
+    text-align: left;
   }
 
   &.ng-hide {

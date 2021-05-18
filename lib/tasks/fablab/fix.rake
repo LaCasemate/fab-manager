@@ -187,5 +187,13 @@ namespace :fablab do
         end
       end
     end
+
+    desc '[release 4.7.9] fix invoicing profiles without names'
+    task invoices_without_names: :environment do
+      InvoicingProfile.where('(first_name IS NULL OR last_name IS NULL) AND user_id IS NOT NULL').each do |ip|
+        ip.update_attribute('first_name', ip.user.profile.first_name)
+        ip.update_attribute('last_name', ip.user.profile.last_name)
+      end
+    end
   end
 end

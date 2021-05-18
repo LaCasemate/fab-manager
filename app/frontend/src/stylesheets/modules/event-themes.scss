@@ -1,0 +1,20 @@
+.event-themes {
+  &--panel {
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin: 30px 15px;
+
+    h3 {
+      padding: 15px 15px;
+      border-bottom: 1px solid #dddddd;
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    .content {
+      font-size: 1.4rem;
+      padding: 15px;
+    }
+  }
+}

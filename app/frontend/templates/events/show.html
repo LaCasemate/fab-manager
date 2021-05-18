@@ -75,7 +75,9 @@
 
         <h5>{{event.category.name}}</h5>
         <dl class="text-sm">
-          <dt ng-if="event.event_themes.length > 0"><i class="fa fa-tags" aria-hidden="true"></i> {{event.event_themes[0].name}}</dt>
+          <dt ng-repeat="theme in event.event_themes">
+            <i class="fa fa-tags" aria-hidden="true"></i> {{theme.name}}
+          </dt>
           <dt ng-if="event.age_range"><i class="fa fa-users" aria-hidden="true"></i> {{event.age_range.name}}</dt>
         </dl>
         <dl class="text-sm">

@@ -102,7 +102,10 @@ class EventService
     private
 
     def update_events(event, events, event_params)
-      results = []
+      results = {
+        events: [],
+        slots: []
+      }
       events.each do |e|
         next unless e.id != event.id
 
@@ -164,18 +167,18 @@ class EventService
           event_files_attributes: ef_attributes
         )
         begin
-          results.push status: !!e.update(e_params.permit!), event: e # rubocop:disable Style/DoubleNegation
+          results[:events].push status: !!e.update(e_params.permit!), event: e # rubocop:disable Style/DoubleNegation
         rescue StandardError => err
-          results.push status: false, event: e, error: err.try(:record).try(:class).try(:name), message: err.message
+          results[:events].push status: false, event: e, error: err.try(:record).try(:class).try(:name), message: err.message
         end
-        results.concat(update_slots(e.availability_id))
+        results[:slots].concat(update_slots(e.availability_id))
       end
       begin
-        results.push status: !!event.update(event_params), event: event # rubocop:disable Style/DoubleNegation
+        results[:events].push status: !!event.update(event_params), event: event # rubocop:disable Style/DoubleNegation
       rescue StandardError => err
-        results.push status: false, event: event, error: err.try(:record).try(:class).try(:name), message: err.message
+        results[:events].push status: false, event: event, error: err.try(:record).try(:class).try(:name), message: err.message
       end
-      results.concat(update_slots(event.availability_id))
+      results[:slots].concat(update_slots(event.availability_id))
       results
     end
 

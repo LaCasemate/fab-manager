@@ -440,7 +440,9 @@ class User < ApplicationRecord
     raise NoProfileError if invoicing_profile.nil?
 
     invoicing_profile.update_attributes(
-      email: email
+      email: email,
+      first_name: first_name,
+      last_name: last_name
     )
   end
 end

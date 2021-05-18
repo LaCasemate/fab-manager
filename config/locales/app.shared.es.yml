@@ -155,8 +155,10 @@ es:
         standard_rate: "Puntuación estándar"
         0_equal_free: "0 = Gratis"
         tickets_available: "Entradas disponibles"
-        event_theme: "Tema del evento"
+        event_themes: "Temas del evento"
+        select_theme: "Pick up a theme..."
         age_range: "Rango de edades"
+        add_price: "Add a price"
       #subscription plan edition form
       plan:
         general_information: "Información general"
