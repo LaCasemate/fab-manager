@@ -1088,7 +1088,7 @@ de:
         error_SETTING_locked: "Die Einstellung konnte nicht aktualisiert werden: {SETTING} ist gesperrt. Bitte kontaktieren Sie Ihren Systemadministrator."
         an_error_occurred_saving_the_setting: "Beim Speichern der Einstellung ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut."
         book_overlapping_slots_info: "Erlauben / Verhindern der Reservierung von überlappenden Slots"
-        allow_booking: "Buchungen erlauben"
+        prevent_booking: "Buchungen verhindern"
         default_slot_duration: "Standarddauer für Slots"
         duration_minutes: "Dauer (in Minuten)"
         default_slot_duration_info: "Die Verfügbarkeit von Maschinen und Räumen ist in mehrere Slots dieser Dauer aufgeteilt. Dieser Wert kann je Verfügbarkeit überschrieben werden."

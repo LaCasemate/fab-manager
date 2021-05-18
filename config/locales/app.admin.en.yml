@@ -1114,7 +1114,7 @@ en:
         error_SETTING_locked: "Unable to update the setting: {SETTING} is locked. Please contact your system administrator."
         an_error_occurred_saving_the_setting: "An error occurred while saving the setting. Please try again later."
         book_overlapping_slots_info: "Allow / prevent the reservation of overlapping slots"
-        allow_booking: "Allow booking"
+        prevent_booking: "Prevent booking"
         default_slot_duration: "Default duration for slots"
         duration_minutes: "Duration (in minutes)"
         default_slot_duration_info: "Machine and space availabilities are divided in multiple slots of this duration. This value can be overridden per availability."

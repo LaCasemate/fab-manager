@@ -10,6 +10,7 @@
 - Fix a bug: unable to set date formats during installation
 - Fix a bug: unable to cancel the upgrade before it begins
 - Fix a bug: unable to use run.fab.mn
+- Fix a bug: typo in allow/prevent booking overlapping slots
 - `SUPERADMIN_EMAIL` renamed to `ADMINSYS_EMAIL`
 - [BREAKING CHANGE] GET `open_api/v1/invoices` won't return `stp_invoice_id` OR `stp_payment_intent_id` anymore. The new field `payment_gateway_object` will contain some similar data if the invoice was paid online by card.
 - [TODO DEPLOY] `rails fablab:stripe:set_gateway`

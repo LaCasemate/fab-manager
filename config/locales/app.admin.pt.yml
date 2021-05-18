@@ -1088,7 +1088,7 @@ pt:
         error_SETTING_locked: "Não foi possível atualizar a configuração: {SETTING} está bloqueado. Por favor contate o administrador do sistema."
         an_error_occurred_saving_the_setting: "Ocorreu um erro ao salvar a configuração. Por favor, tente novamente mais tarde."
         book_overlapping_slots_info: "Permitir / impedir a reserva de slots sobrepostos"
-        allow_booking: "Permitir reserva"
+        prevent_booking: "Permitir reserva"
         default_slot_duration: "Duração padrão para slots"
         duration_minutes: "Duração (em minutos)"
         default_slot_duration_info: "Máquina e espaço disponíveis são divididos em vários slots desta duração. Esse valor pode ser substituído por disponibilidade."

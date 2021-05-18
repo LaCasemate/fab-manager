@@ -1114,7 +1114,7 @@ fr:
         error_SETTING_locked: "Impossible de mettre à jour le paramètre : {SETTING} est verrouillé. Veuillez contacter votre administrateur système."
         an_error_occurred_saving_the_setting: "Une erreur est survenue pendant l'enregistrement du paramètre. Veuillez réessayer plus tard."
         book_overlapping_slots_info: "Autoriser / empêcher la réservation de créneaux qui se chevauchent"
-        allow_booking: "Autoriser la réservation"
+        prevent_booking: "Empêcher la réservation"
         default_slot_duration: "Durée par défaut pour les créneaux"
         duration_minutes: "Durée (en minutes)"
         default_slot_duration_info: "Les disponibilités des machines et des espaces sont divisées en plusieurs créneaux de cette durée. Cette valeur peur être changée pour chaque disponibilité."

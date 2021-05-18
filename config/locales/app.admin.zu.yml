@@ -1088,7 +1088,7 @@ zu:
         error_SETTING_locked: "crwdns20640:0{SETTING}crwdne20640:0"
         an_error_occurred_saving_the_setting: "crwdns20380:0crwdne20380:0"
         book_overlapping_slots_info: "crwdns20642:0crwdne20642:0"
-        allow_booking: "crwdns20644:0crwdne20644:0"
+        prevent_booking: "crwdns20644:0crwdne20644:0"
         default_slot_duration: "crwdns20646:0crwdne20646:0"
         duration_minutes: "crwdns20648:0crwdne20648:0"
         default_slot_duration_info: "crwdns20650:0crwdne20650:0"
