@@ -41,6 +41,7 @@
     "@babel/preset-typescript": "^7.12.1",
     "@claviska/jquery-minicolors": "^2.3.5",
     "@fortawesome/fontawesome-free": "5.14.0",
+    "@lyracom/embedded-form-glue": "^0.3.3",
     "@rails/webpacker": "5.4.0",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",
