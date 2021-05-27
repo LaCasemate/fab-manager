@@ -861,6 +861,7 @@ angular.module('application.router', ['ui.router'])
                      "'accounting_VAT_code', 'accounting_VAT_label', 'accounting_subscription_code', 'accounting_subscription_label', " +
                      "'accounting_Machine_code', 'accounting_Machine_label', 'accounting_Training_code', 'accounting_Training_label', " +
                      "'accounting_Event_code', 'accounting_Event_label', 'accounting_Space_code', 'accounting_Space_label', 'payment_gateway', " +
+                     "'accounting_Error_code', 'accounting_Error_label', " +
                      "'feature_tour_display', 'online_payment_module', 'stripe_public_key', 'stripe_currency', 'invoice_prefix']"
             }).$promise;
           }],

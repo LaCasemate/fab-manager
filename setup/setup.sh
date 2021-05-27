@@ -213,10 +213,11 @@ prepare_nginx()
     if [ "$confirm" != "n" ]; then
       echo "Adding a network configuration to the docker-compose.yml file..."
       yq -i eval '.networks.web.external = "true"' docker-compose.yml
-      yq -i eval '.networks.db = null' docker-compose.yml
+      yq -i eval -n '.networks.db = "" | .networks.db="!!null"' docker-compose.yml
       yq -i eval '.services.fabmanager.networks += ["web"]' docker-compose.yml
       yq -i eval '.services.fabmanager.networks += ["db"]' docker-compose.yml
       yq -i eval '.services.postgres.networks += ["db"]' docker-compose.yml
+      yq -i eval '.services.elasticsearch.networks += ["db"]' docker-compose.yml
       yq -i eval '.services.redis.networks += ["db"]' docker-compose.yml
     fi
     read -rp "- Do you want to rename the Fab-manager's service? (Y/n) " confirm </dev/tty

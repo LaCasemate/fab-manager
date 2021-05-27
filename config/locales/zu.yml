@@ -88,7 +88,6 @@ zu:
     other_rate_ticket:
       one: "crwdns3327:1%{NAME}crwdne3327:1"
       other: "crwdns3327:5%{count}crwdnd3327:5%{NAME}crwdne3327:5"
-    reservation_other: "crwdns3329:0crwdne3329:0"
     coupon_CODE_discount_of_DISCOUNT: "crwdns3331:0CODE={CODE}crwdnd3331:0DISCOUNT={DISCOUNT}crwdnd3331:0TYPE={TYPE}crwdne3331:0" #messageFormat interpolation
     total_including_all_taxes: "crwdns3333:0crwdne3333:0"
     including_VAT_RATE: "crwdns3335:0%{RATE}crwdne3335:0"
@@ -113,6 +112,7 @@ zu:
     subscription_of_NAME_extended_starting_from_STARTDATE_until_ENDDATE: "crwdns3373:0%{NAME}crwdnd3373:0%{STARTDATE}crwdnd3373:0%{ENDDATE}crwdne3373:0"
     and: 'crwdns3375:0crwdne3375:0'
     invoice_text_example: "crwdns20848:0crwdne20848:0"
+    error_invoice: "crwdns21480:0crwdne21480:0"
   #PDF payment schedule generation
   payment_schedules:
     schedule_reference: "crwdns21094:0%{REF}crwdne21094:0"

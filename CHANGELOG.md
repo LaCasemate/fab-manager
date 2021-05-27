@@ -10,13 +10,33 @@
 - Fix a bug: build status badge is not working
 - Fix a bug: unable to set date formats during installation
 - Fix a bug: unable to cancel the upgrade before it begins
-- Fix a bug: unable to use run.fab.mn
-- Fix a bug: typo in allow/prevent booking overlapping slots
 - `SUPERADMIN_EMAIL` renamed to `ADMINSYS_EMAIL`
 - [BREAKING CHANGE] GET `open_api/v1/invoices` won't return `stp_invoice_id` OR `stp_payment_intent_id` anymore. The new field `payment_gateway_object` will contain some similar data if the invoice was paid online by card.
 - [TODO DEPLOY] `rails fablab:stripe:set_gateway`
 - [TODO DEPLOY] `rails fablab:maintenance:rebuild_stylesheet`
 - [TODO DEPLOY] `\curl -sSL https://raw.githubusercontent.com/sleede/fab-manager/master/scripts/rename-adminsys.sh | bash`
+
+## v4.7.11 2021 May 26
+
+- Updated ffi to 1.15.1
+- Updated GitHub issue templates
+- Fix a bug: zero-decimal currencies were charged multiplied by 100
+- Fix a bug: fablab:fix_invoices task fails to recreate the data if the date is in english
+
+## v4.7.10 2021 May 25
+
+- CAD lists of types and extensions are now ordered alphabetically
+- Fix a bug: reservation of slots restricted to subscribers leads to invoices without invoiced_id
+- Fix a bug: new installation with mapping to an external network does not connect fab-manager to elasticsearch
+- Fix a bug: typo in allow/prevent booking overlapping slots
+- Fix a bug: unable to use run.fab.mn
+- Fix a bug: parse error while compiling the assets
+- Fix a security issue: updated @rails/webpacker to 5.4.0 to fix [CVE-2021-28092](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-28092) and [CVE-2021-23368](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-23368)
+- Fix a security issue: updated ruby to 2.6.7 to fix [CVE-2020-25613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-25613) and [CVE-2021-28965](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-28965)
+- Fix a security issue: updated puma to 4.3.8 to fix [CVE-2019-16770](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16770)
+- Fix a security issue: updated nokogiri to 1.11.4 to fix [GHSA-7rrm-v45f-jp64](https://github.com/advisories/GHSA-7rrm-v45f-jp64)
+- [TODO DEPLOY] `rails fablab:fix_invoices`
+- [TODO DEPLOY] `rails fablab:maintenance:regenerate_invoices[year,month]` Depending on the status of the above command, you'll need to run that one for the months with erroneous invoices
 
 ## v4.7.9 2021 May 17
 

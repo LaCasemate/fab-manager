@@ -106,6 +106,16 @@
         <input type="text" id="spaceLabel" ng-model="settings.spaceLabel.value" class="form-control" placeholder="{{ 'app.admin.invoices.general_space_label' | translate }}"/>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="spaceCode" translate>{{ 'app.admin.invoices.accounting_Error_code' }}</label>
+        <input type="text" id="errorCode" ng-model="settings.errorCode.value" class="form-control" placeholder="{{ 'app.admin.invoices.general_error_code' | translate }}" />
+      </div>
+      <div class="col-md-6">
+        <label for="spaceLabel" translate>{{ 'app.admin.invoices.accounting_Error_label' }}</label>
+        <input type="text" id="errorLabel" ng-model="settings.errorLabel.value" class="form-control" placeholder="{{ 'app.admin.invoices.general_error_label' | translate }}"/>
+      </div>
+    </div>
     <button name="button" class="btn btn-warning m-t-lg" ng-click="save()" translate>{{ 'app.shared.buttons.save' }}</button>
   </div>
 </div>

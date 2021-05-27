@@ -70,6 +70,11 @@ class AccountingExportService
       end
     elsif invoice.invoiced_type == 'WalletTransaction'
       rows << "#{wallet_row(invoice)}\n"
+    elsif invoice.invoiced_type == 'Error'
+      items = invoice.invoice_items.select { |ii| ii.subscription.nil? }
+      items.each do |item|
+        rows << "#{error_row(invoice, item)}\n"
+      end
     end
     rows
   end
@@ -142,6 +147,16 @@ class AccountingExportService
     )
   end
 
+  def error_row(invoice, item)
+    row(
+      invoice,
+      account(invoice, :error),
+      account(invoice, :error, type: :label),
+      item.net_amount / 100.00,
+      line_label: label(invoice)
+    )
+  end
+
   # Generate a row of the export, filling the configured columns with the provided values
   def row(invoice, account_code, account_label, amount, line_label: '', debit_method: :debit, credit_method: :credit)
     row = ''
@@ -202,6 +217,8 @@ class AccountingExportService
       else
         puts "WARN: Invoice #{invoice.id} is not a wallet credit"
       end
+    when :error
+      Setting.find_by(name: "accounting_Error_#{type}")&.value
     else
       puts "Unsupported account #{account}"
     end || ''

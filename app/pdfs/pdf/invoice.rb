@@ -108,6 +108,8 @@ class PDF::Invoice < Prawn::Document
           object = subscription_verbose(invoice.invoiced, name)
         when 'OfferDay'
           object = offer_day_verbose(invoice.invoiced, name)
+        when 'Error'
+          object = I18n.t('invoices.error_invoice')
         else
           puts "ERROR : specified invoiced type (#{invoice.invoiced_type}) is unknown"
         end
@@ -174,13 +176,8 @@ class PDF::Invoice < Prawn::Document
                                          count: t.booked,
                                          NAME: t.event_price_category.price_category.name)
             end
-          ### wallet credit
-          when nil
-            details = item.description
-
-          ### Other cases (not expected)
           else
-            details += I18n.t('invoices.reservation_other')
+            details += item.description
           end
         end
 

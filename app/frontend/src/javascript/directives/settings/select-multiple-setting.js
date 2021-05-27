@@ -21,7 +21,7 @@ Application.Directives.directive('selectMultipleSetting', ['Setting', 'growl', '
         };
 
         // the options
-        $scope.options = $scope.settings[$scope.name].split(' ');
+        $scope.options = $scope.settings[$scope.name].split(' ').sort();
 
         // the selected options
         $scope.selection = [];

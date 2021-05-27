@@ -88,7 +88,6 @@ es:
     other_rate_ticket:
       one: "Un %{NAME} entrada"
       other: "%{count} %{NAME} entradas"
-    reservation_other: "Reserva (other)"
     coupon_CODE_discount_of_DISCOUNT: "Cupón {CODE}: descuento de {DISCOUNT}{TYPE, select, percent_off{%} other{}}" #messageFormat interpolation
     total_including_all_taxes: "Total impuestos incluidos"
     including_VAT_RATE: "Incluyendo IVA %{RATE}%"
@@ -113,6 +112,7 @@ es:
     subscription_of_NAME_extended_starting_from_STARTDATE_until_ENDDATE: "Subscripción de %{NAME} extendida (días gratuitos) empezando desde %{STARTDATE} hasta %{ENDDATE}"
     and: 'y'
     invoice_text_example: "Nuestra asociación no está sujeta al IVA"
+    error_invoice: "Erroneous invoice. The items below ware not booked. Please contact the FabLab for a refund."
   #PDF payment schedule generation
   payment_schedules:
     schedule_reference: "Payment schedule reference: %{REF}"

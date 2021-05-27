@@ -88,7 +88,6 @@ fr:
     other_rate_ticket:
       one: "Une place %{NAME}"
       other: "%{count} places %{NAME}"
-    reservation_other: "Réservation (autre)"
     coupon_CODE_discount_of_DISCOUNT: "Code {CODE} : remise de {DISCOUNT} {TYPE, select, percent_off{%} other{}}" #messageFormat interpolation
     total_including_all_taxes: "Total TTC"
     including_VAT_RATE: "Dont TVA %{RATE}%"
@@ -113,6 +112,7 @@ fr:
     subscription_of_NAME_extended_starting_from_STARTDATE_until_ENDDATE: "Prolongement Abonnement (Jours gratuits) de %{NAME} à compter du %{STARTDATE} jusqu'au %{ENDDATE}"
     and: 'et'
     invoice_text_example: "Notre association n'est pas assujettie à la TVA"
+    error_invoice: "Facture en erreur. Les éléments ci-dessous n'ont pas été réservés. Veuillez contacter le Fablab pour un remboursement."
   #PDF payment schedule generation
   payment_schedules:
     schedule_reference: "Référence de l'échéancier : %{REF}"

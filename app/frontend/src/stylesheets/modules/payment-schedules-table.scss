@@ -156,7 +156,7 @@
 
       .payment-pending {
         @extend .submit-card-btn;
-        @extend .submit-card-btn[disabled];
+        background-color: lighten(#1d98ec, 20%);
         text-align: center;
         padding: 4px;
       }

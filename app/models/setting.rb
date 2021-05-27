@@ -110,6 +110,9 @@ class Setting < ApplicationRecord
                              payment_schedule_prefix
                              trainings_module
                              address_required
+                             accounting_Error_code
+                             accounting_Error_label
+                             address_required
                              payment_gateway
                              payzen_username
                              payzen_password
