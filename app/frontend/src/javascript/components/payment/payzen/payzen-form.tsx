@@ -67,7 +67,7 @@ export const PayzenForm: React.FC<GatewayFormProps> = ({ onSubmit, onSuccess, on
             PayZenKR.current.removeForms().then(() => {
               onSuccess(confirmation);
             });
-          })
+          }).catch(e => onError(e))
         } else {
           const error = `${transaction?.errorMessage}. ${transaction?.detailedErrorMessage || ''}`;
           onError(error || event.clientAnswer.orderStatus);
