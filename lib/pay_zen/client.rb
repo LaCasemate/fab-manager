@@ -27,10 +27,10 @@ class PayZen::Client
     }
 
     res = Net::HTTP.post(uri, payload.to_json, headers)
-    raise PayzenError unless res.is_a?(Net::HTTPSuccess)
+    raise ::PayzenError unless res.is_a?(Net::HTTPSuccess)
 
     json = JSON.parse(res.body)
-    raise PayzenError(json['answer']['errorMessage']) if json['status'] == 'ERROR'
+    raise ::PayzenError, json['answer']['errorMessage'] if json['status'] == 'ERROR'
 
     json
   end

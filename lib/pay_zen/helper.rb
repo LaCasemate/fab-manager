@@ -76,7 +76,7 @@ class PayZen::Helper
       supported_hash_algorithm = ['sha256_hmac']
 
       # check if the hash algorithm is supported
-      raise PayzenError("hash algorithm not supported: #{algorithm}. Update your SDK") unless supported_hash_algorithm.include? algorithm
+      raise ::PayzenError, "hash algorithm not supported: #{algorithm}. Update your SDK" unless supported_hash_algorithm.include? algorithm
 
       # if key is not defined, we use kr-hash-key parameter to choose it
       if key.nil?
@@ -85,7 +85,7 @@ class PayZen::Helper
         elsif hash_key == 'password'
           key = Setting.get('payzen_password')
         else
-          raise PayzenError('invalid hash-key parameter')
+          raise ::PayzenError, 'invalid hash-key parameter'
         end
       end
 

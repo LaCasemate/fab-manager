@@ -74,7 +74,7 @@ class Stripe::Service < Payment::Service
   def create_or_update_product(klass, id)
     StripeWorker.perform_async(:create_or_update_stp_product, klass, id)
   rescue Stripe::InvalidRequestError => e
-    raise PaymentGatewayError(e)
+    raise ::PaymentGatewayError, e
   end
 
   private
